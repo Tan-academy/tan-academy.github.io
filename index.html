@@ -10,7 +10,7 @@
   --write:#B5377A; --write-deep:#86225A; --write-soft:#F9DDEB;
   --star:#F2B200; --star-soft:#FFF2C2;
   --good:#1F8445; --good-soft:#DDF4E4; --bad:#C23838; --bad-soft:#FBE3E3; --try:#9A6400; --try-soft:#FFF1D1;
-  --grape:#6E56F0; --grape-soft:#ECE8FF; --sky:#1C86D6; --sky-soft:#DDEFFF; --leaf:#2A9A4A; --leaf-soft:#DEF4E3;
+  --grape:#6E56F0; --grape-deep:#4B34C4; --grape-soft:#ECE8FF; --sky:#1C86D6; --sky-deep:#10609E; --sky-soft:#DDEFFF; --leaf:#2A9A4A; --leaf-soft:#DEF4E3;
   --on-c:#FFFFFF; --sheet:#FFFFFF; --paper-line:#C6D6EF; --margin-line:#F0A3A3;
   --shadow:0 1px 2px rgba(28,37,65,.05),0 8px 24px rgba(28,37,65,.06);
   --display:"Baloo 2","Trebuchet MS",system-ui,sans-serif;
@@ -27,7 +27,7 @@
     --write:#EF6CAC; --write-deep:#A83A72; --write-soft:#3A1830;
     --star:#FFCE3A; --star-soft:#3A3110;
     --good:#52CC7F; --good-soft:#123222; --bad:#F47272; --bad-soft:#3B1818; --try:#FFC24D; --try-soft:#3A2D10;
-    --grape:#A595FF; --grape-soft:#28214A; --sky:#5DB3F5; --sky-soft:#12293F; --leaf:#5ACB78; --leaf-soft:#13301D;
+    --grape:#A595FF; --grape-deep:#6E56F0; --grape-soft:#28214A; --sky:#5DB3F5; --sky-deep:#2F7FC0; --sky-soft:#12293F; --leaf:#5ACB78; --leaf-soft:#13301D;
     --on-c:#0F1629; --sheet:#131B30; --paper-line:#2B3959; --margin-line:#6E3442;
     --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
   }
@@ -40,7 +40,7 @@
   --write:#EF6CAC; --write-deep:#A83A72; --write-soft:#3A1830;
   --star:#FFCE3A; --star-soft:#3A3110;
   --good:#52CC7F; --good-soft:#123222; --bad:#F47272; --bad-soft:#3B1818; --try:#FFC24D; --try-soft:#3A2D10;
-  --grape:#A595FF; --grape-soft:#28214A; --sky:#5DB3F5; --sky-soft:#12293F; --leaf:#5ACB78; --leaf-soft:#13301D;
+  --grape:#A595FF; --grape-deep:#6E56F0; --grape-soft:#28214A; --sky:#5DB3F5; --sky-deep:#2F7FC0; --sky-soft:#12293F; --leaf:#5ACB78; --leaf-soft:#13301D;
     --on-c:#0F1629; --sheet:#131B30; --paper-line:#2B3959; --margin-line:#6E3442;
   --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
 }
@@ -59,6 +59,8 @@ button{cursor:pointer}
 .lede{color:var(--muted);font-size:1.05rem;max-width:60ch}
 .subject-math{--c:var(--math);--c-deep:var(--math-deep);--c-soft:var(--math-soft)}
 .subject-read{--c:var(--read);--c-deep:var(--read-deep);--c-soft:var(--read-soft)}
+.subject-social{--c:var(--sky);--c-deep:var(--sky-deep);--c-soft:var(--sky-soft)}
+.subject-prep{--c:var(--grape);--c-deep:var(--grape-deep);--c-soft:var(--grape-soft)}
 .subject-write{--c:var(--write);--c-deep:var(--write-deep);--c-soft:var(--write-soft)}
 
 /* Header */
@@ -96,7 +98,8 @@ main{padding-block:28px 80px}
 
 /* Home */
 .hello{display:grid;gap:8px}
-.missions{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.missions{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media (min-width:821px) and (max-width:1040px){.missions{grid-template-columns:repeat(2,1fr)}}
 .mission{background:var(--card);border:2px solid var(--line);border-radius:24px;overflow:hidden;display:flex;flex-direction:column}
 .mtop{background:var(--c-soft);color:var(--c);padding:20px 22px;display:flex;justify-content:space-between;align-items:flex-start;min-height:110px}
 .mtop svg.icon{width:58px;height:58px}
@@ -120,6 +123,7 @@ main{padding-block:28px 80px}
 .dots i.m.on{background:var(--math);border-color:var(--math)}
 .dots i.r.on{background:var(--read);border-color:var(--read)}
 .dots i.w.on{background:var(--write);border-color:var(--write)}
+.dots i.s.on{background:var(--sky);border-color:var(--sky)}
 .legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;font-size:.82rem;color:var(--muted)}
 .legend span{display:inline-flex;align-items:center;gap:6px}
 .legend i{width:9px;height:9px;border-radius:50%;display:inline-block}
@@ -253,6 +257,7 @@ main{padding-block:28px 80px}
 .journal details{border-top:1px solid var(--line);padding-block:12px}
 .journal summary{cursor:pointer;font-weight:600;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
 .journal summary small{color:var(--muted);font-weight:400}
+.journal details.fresh{background:var(--good-soft);border-radius:12px;padding-inline:12px}
 .journal .jtext{font-family:var(--read-font);font-size:1.1rem;white-space:pre-wrap;margin-top:10px;line-height:1.7}
 .fix-opts{display:grid;gap:10px}
 .fix-opts .opt{font-size:1.25rem;padding:16px 18px}
@@ -314,6 +319,82 @@ td.dim{color:var(--muted)}
 .evcard:hover{border-color:var(--c)}
 .donebox{grid-template-columns:auto 1fr;align-items:center;gap:14px}
 .donebox .pip{width:80px;height:80px}
+/* Social studies */
+.lhead{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.lhead .gicon,.gicon{flex:none}
+.lcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.lcard{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:18px;display:grid;gap:8px;align-content:start}
+.lnum{width:34px;height:34px;border-radius:12px;background:var(--c);color:var(--on-c);display:grid;place-items:center;font:800 1.1rem/1 var(--display)}
+.lcard p{font-family:var(--read-font);font-size:1.12rem;line-height:1.6}
+.bigwords{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:12px 0 0}
+.bigwords div{background:var(--star-soft);border-radius:14px;padding:12px 14px}
+.bigwords dt{font:800 1.2rem/1.1 var(--display)}
+.bigwords dd{margin:4px 0 0;font-size:.95rem}
+.backlink{justify-self:start}
+.mapwrap{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start;justify-content:center;margin-top:18px}
+.tmap{display:grid;grid-template-columns:24px repeat(5,minmax(0,64px));gap:3px;flex:0 1 350px}
+.mh{display:grid;place-items:center;font:800 1rem/1 var(--display);color:var(--muted);min-height:24px}
+.tile{aspect-ratio:1;border:0;border-radius:8px;background:#C9E8B2;padding:5px;display:grid;place-items:center;cursor:default}
+.tile svg{width:100%;height:100%}
+.t-river,.t-bridge{background:#5DADE2}
+.t-bridge{padding:0}
+.tile.hit{outline:4px solid var(--good);outline-offset:-2px}
+.tile.nope{animation:shake .4s;outline:4px solid var(--bad);outline-offset:-2px}
+.tapmode .tile{cursor:pointer}
+.tapmode .tile:hover{filter:brightness(1.1)}
+.mapside{display:grid;gap:12px;justify-items:center}
+.compass-svg{width:96px;height:96px}
+.mkey{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;font-size:.85rem}
+.mkey .eyebrow{grid-column:1/-1}
+.mkey span{display:flex;align-items:center;gap:6px}
+.mkey svg{width:26px;height:26px;flex:none;border-radius:6px;background:#C9E8B2;padding:2px}
+.mkey .k-river svg,.mkey .k-bridge svg{background:#5DADE2}
+.keysym{width:90px;height:90px;border-radius:16px;background:#C9E8B2;padding:10px;margin:8px auto 0}
+.keysym.t-river,.keysym.t-bridge{background:#5DADE2}
+.choice.small{font-size:1.2rem;min-height:56px}
+.sortcard{margin:18px auto;max-width:360px;min-height:110px;display:grid;place-items:center;text-align:center;padding:18px;border-radius:22px;background:var(--card);border:3px solid var(--c);font:800 1.6rem/1.2 var(--display);box-shadow:0 6px 0 color-mix(in srgb,var(--c) 35%,transparent)}
+.sortcard.fly{animation:fly .5s ease-in forwards}
+@keyframes fly{to{transform:translateY(70px) scale(.6);opacity:0}}
+.bins{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px}
+.bin{border:3px dashed var(--line-strong);background:var(--paper);border-radius:20px;padding:18px 10px;display:grid;gap:6px;justify-items:center}
+.bin:hover{border-color:var(--c)}
+.bin .bname{font:800 1.3rem/1 var(--display)}
+.bin .bcount{font-size:.85rem;color:var(--muted)}
+.bin.hit{border-style:solid;border-color:var(--good);background:var(--good-soft)}
+.tlyear{margin-left:auto;font:800 .95rem/1 var(--display);color:var(--c);flex:none}
+.evcard .yr{display:block;font:800 .95rem/1 var(--display);color:var(--c);margin-bottom:4px}
+/* Test prep */
+.prose{display:grid;gap:12px}
+.ptable{overflow-x:auto}
+.ptable td,.ptable th{white-space:normal;min-width:120px;vertical-align:top}
+.facts{margin:0;padding-left:20px;display:grid;gap:8px;max-width:75ch}
+.prose a{color:var(--c)}
+.nmatrix{display:grid;grid-template-columns:repeat(var(--n),minmax(0,110px));gap:8px;justify-content:center;padding:14px;background:#EEF2FA;border-radius:18px;border:3px solid #1B2A4A;width:max-content;max-width:100%;margin:0 auto}
+.ncellbox{aspect-ratio:1;background:#fff;border:2px solid #1B2A4A;border-radius:8px;display:grid;place-items:center;overflow:hidden}
+.ncellbox.nq{font:800 2.6rem/1 var(--display);color:#1B2A4A;border-style:dashed;background:#FFF7DA}
+.ncell{width:100%;height:100%;display:block}
+.nbig{max-width:440px;margin:0 auto}
+.nbig svg{width:100%;height:auto;display:block}
+.npuzzle{margin:18px 0 10px}
+.nopts{display:grid;grid-template-columns:repeat(5,minmax(0,96px));gap:10px;justify-content:center;margin-top:8px}
+.nopt{position:relative;aspect-ratio:1;padding:6px;border:3px solid var(--line-strong);border-radius:14px;background:#fff;box-shadow:0 3px 0 var(--line-strong)}
+.nopt:hover:not(:disabled){border-color:var(--c)}
+.nopt .nlet{position:absolute;top:-10px;left:-8px;width:24px;height:24px;border-radius:50%;background:var(--ink);color:var(--paper);font:800 .8rem/24px var(--display);text-align:center}
+.nopt.right{background:#fff!important}
+.ntime{font:800 1.1rem/1 var(--display);color:var(--c);font-variant-numeric:tabular-nums}
+.ptypes{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin-top:12px}
+.ptype{display:grid;gap:6px;justify-items:center;text-align:center;font-size:.9rem}
+.pmini{width:100%;max-width:170px;pointer-events:none}
+.pmini .nmatrix{padding:6px;gap:3px;border-width:2px;border-radius:10px;grid-template-columns:repeat(var(--n),minmax(0,44px))}
+.pmini .ncellbox{border-width:1px;border-radius:4px}
+.pmini .ncellbox.nq{font-size:1.2rem}
+.nreview{display:grid;gap:16px;margin-top:12px}
+.nrev{display:grid;grid-template-columns:170px 1fr;gap:16px;align-items:center}
+.nans{display:inline-block;width:44px;height:44px;vertical-align:middle;border:2px solid #1B2A4A;border-radius:6px;background:#fff}
+.cmq{font:800 clamp(1.4rem,4.5vw,2rem)/1.3 var(--display);text-align:center;margin:22px auto 18px;max-width:30ch}
+.wpq{font-family:var(--read-font);font-size:1.4rem;line-height:1.6;text-align:center;margin:22px auto 6px;max-width:40ch}
+.wpq b{color:var(--c);text-decoration:underline;text-underline-offset:4px}
+@media (max-width:520px){.nopts{grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}.nrev{grid-template-columns:1fr}.nmatrix{grid-template-columns:repeat(var(--n),minmax(0,1fr));width:100%}}
 /* Math games */
 #mathStage{display:grid;gap:20px}
 .menu-top{display:flex;gap:20px;align-items:center}
@@ -437,6 +518,8 @@ div.numin{min-height:62px;display:grid;place-items:center}
     <button type="button" data-go="math">Math</button>
     <button type="button" data-go="reading">Reading</button>
     <button type="button" data-go="writing">Writing</button>
+    <button type="button" data-go="social">Social Studies</button>
+    <button type="button" data-go="prep">Test Prep</button>
     <button type="button" data-go="grownups">Grown-ups</button>
   </nav>
 </header>
@@ -448,7 +531,7 @@ div.numin{min-height:62px;display:grid;place-items:center}
     <div class="hello">
       <p class="eyebrow" id="todayDate"></p>
       <h1 id="hello">Hello!</h1>
-      <p class="lede" id="missionSummary">Three missions today: math, reading and writing.</p>
+      <p class="lede" id="missionSummary">Four missions today: math, reading, writing and social studies.</p>
     </div>
     <div class="missions">
       <article class="mission subject-math" id="mcMath">
@@ -472,12 +555,19 @@ div.numin{min-height:62px;display:grid;place-items:center}
         </div>
         <div class="mbody"><h2>Writing</h2><p class="mstatus" id="msWrite"></p><button class="btn" type="button" data-go="writing">Start writing</button></div>
       </article>
+      <article class="mission subject-social" id="mcSocial">
+        <div class="mtop">
+          <svg class="icon" viewBox="0 0 48 48" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="17"/><path d="M7 24h34M24 7c6 5 6 29 0 34M24 7c-6 5-6 29 0 34"/></g></svg>
+          <span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+        </div>
+        <div class="mbody"><h2>Social Studies</h2><p class="mstatus" id="msSocial"></p><button class="btn" type="button" data-go="social">Start exploring</button></div>
+      </article>
     </div>
     <div class="home-row">
       <section class="panel">
         <h2>This week</h2>
         <div class="week" id="week"></div>
-        <p class="legend"><span><i style="background:var(--math)"></i>Math</span><span><i style="background:var(--read)"></i>Reading</span><span><i style="background:var(--write)"></i>Writing</span></p>
+        <p class="legend"><span><i style="background:var(--math)"></i>Math</span><span><i style="background:var(--read)"></i>Reading</span><span><i style="background:var(--write)"></i>Writing</span><span><i style="background:var(--sky)"></i>Social studies</span></p>
       </section>
       <section class="panel subject-read" id="homeWord"></section>
     </div>
@@ -561,7 +651,8 @@ div.numin{min-height:62px;display:grid;place-items:center}
             <h3>Check my writing</h3>
             <div class="checks" id="checks" style="margin-top:12px"></div>
           </section>
-          <button class="btn big" type="button" id="finishStory" disabled>Save to my journal</button>
+          <button class="btn big" type="button" id="finishStory">Save to my journal</button>
+          <p class="feedback" id="saveMsg" aria-live="polite"></p>
         </div>
       </div>
       <section class="panel journal">
@@ -572,6 +663,30 @@ div.numin{min-height:62px;display:grid;place-items:center}
 
     <div id="wFix" class="panel" hidden></div>
     <div id="wSpell" class="panel" hidden></div>
+  </section>
+
+  <!-- SOCIAL STUDIES -->
+  <section id="view-social" class="view subject-social" hidden>
+    <div class="view-head">
+      <div><p class="eyebrow">Social Studies</p><h1>Explore the World</h1></div>
+      <p class="lede">Communities, maps, government, money, history and cultures.</p>
+    </div>
+    <div id="socialStage" class="view"></div>
+  </section>
+
+  <!-- TEST PREP -->
+  <section id="view-prep" class="view subject-prep" hidden>
+    <div class="view-head">
+      <div><p class="eyebrow">GATE &amp; APAAS</p><h1>Test Prep</h1></div>
+      <div class="tabs" role="tablist" aria-label="Test prep activities">
+        <button type="button" class="chip" data-ptab="overview">For parents</button>
+        <button type="button" class="chip" data-ptab="nnat">NNAT Puzzles</button>
+        <button type="button" class="chip" data-ptab="cmath">Challenge Math</button>
+        <button type="button" class="chip" data-ptab="words">Word Power</button>
+        <button type="button" class="chip" data-ptab="write">Creative Writing</button>
+      </div>
+    </div>
+    <div id="prepStage" class="view"></div>
   </section>
 
   <!-- GROWN-UPS -->
@@ -628,10 +743,10 @@ const PRAISE=['Great job!','You got it!','Super thinking!','Correct!','Nailed it
 const STORE='star-academy-v1',OLD_STORE=['bel','la-academy-v1'].join('');
 let S=load();
 function load(){let s=null;try{s=JSON.parse(localStorage.getItem(STORE)||localStorage.getItem(OLD_STORE))}catch(e){}s=s||{};
-  return {name:s.name||'',stars:s.stars||0,wordGoal:s.wordGoal||50,days:s.days||{},journal:s.journal||[],draft:s.draft||null,readLog:s.readLog||{},sound:s.sound!==false,monsters:s.monsters||[],lightningBest:s.lightningBest||0}}
+  return {name:s.name||'',stars:s.stars||0,wordGoal:s.wordGoal||50,days:s.days||{},journal:s.journal||[],draft:s.draft||null,readLog:s.readLog||{},sound:s.sound!==false,monsters:s.monsters||[],ssLog:s.ssLog||{},prepLog:s.prepLog||[],lightningBest:s.lightningBest||0}}
 function save(){try{localStorage.setItem(STORE,JSON.stringify(S))}catch(e){}}
 function today(){const k=todayKey();return S.days[k]||(S.days[k]={})}
-function anyDone(d){return !!(d&&((d.math&&d.math.sets)||(d.reading&&d.reading.done)||(d.writing&&d.writing.done)))}
+function anyDone(d){return !!(d&&((d.math&&d.math.sets)||(d.reading&&d.reading.done)||(d.writing&&d.writing.done)||(d.social&&d.social.done)))}
 function streak(){let n=0;const d=new Date();if(!anyDone(S.days[keyOf(d)]))d.setDate(d.getDate()-1);
   while(anyDone(S.days[keyOf(d)])){n++;d.setDate(d.getDate()-1)}return n}
 
@@ -644,7 +759,7 @@ function stopSpeak(){try{if(canSpeak)speechSynthesis.cancel()}catch(e){}}
 let toastT;
 function toast(html){const t=$('#toast');t.innerHTML=html;t.hidden=false;t.classList.remove('show');void t.offsetWidth;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>{t.hidden=true},2400)}
 function addStars(n,msg){S.stars+=n;save();renderHeader();toast(`<span>+${n}</span>${STAR}<span>${msg||(n===1?'star':'stars')}</span>`)}
-const SUBJ={math:'Math',reading:'Reading',writing:'Writing'};
+const SUBJ={math:'Math',reading:'Reading',writing:'Writing',social:'Social Studies'};
 function missionComplete(sub){S.stars+=3;save();renderHeader();toast(`${STAR}<span>${SUBJ[sub]} mission complete! +3 bonus</span>`);confetti()}
 function confetti(){
   if(reduceMotion)return;const c=$('#confetti'),ctx=c.getContext('2d');if(!ctx)return;
@@ -914,16 +1029,17 @@ const GRAMMAR=[
 const SPELL=['because','friend','different','again','through','laugh','beautiful','enough','favorite','answer','early','caught','thought','believe','special','until','finally','probably','surprise','library','minute','quiet','piece','whole','heard','written','choose','neighbor','important','together','family','careful','people','question','finished','island','tomorrow','sometimes','straight','children'];
 
 /* ---------- Router ---------- */
-const VIEWS=['home','math','reading','writing','grownups'];
+const VIEWS=['home','math','reading','writing','social','prep','grownups'];
 let current='home';
 function go(v){
   if(!VIEWS.includes(v))v='home';
   if(current==='reading'&&v!=='reading'){stopSpeak();setReadLabel(false)}
   if(current==='math'&&v!=='math')stopArcade();
+  if(current==='prep'&&v!=='prep'){stopPrep();PR.run=null}
   current=v;
   VIEWS.forEach(x=>{$('#view-'+x).hidden=x!==v});
   $$('.nav button').forEach(b=>b.setAttribute('aria-current',b.dataset.go===v?'page':'false'));
-  ({home:renderHome,math:renderMath,reading:renderReading,writing:renderWriting,grownups:renderGrownups})[v]();
+  ({home:renderHome,math:renderMath,reading:renderReading,writing:renderWriting,social:renderSocial,prep:renderPrep,grownups:renderGrownups})[v]();
   try{history.replaceState(null,'','#'+v)}catch(e){}
   window.scrollTo(0,0);
 }
@@ -946,10 +1062,12 @@ function renderHome(){
   $('#hello').textContent=`${h<12?'Good morning':h<17?'Good afternoon':'Good evening'}, ${S.name||'superstar'}!`;
   $('#todayDate').textContent=new Date().toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'});
   const t=today(),p=PASSAGES[dayNum()%PASSAGES.length],pr=PROMPTS[storyPromptIdx()];
-  const done={math:!!(t.math&&t.math.sets),reading:!!(t.reading&&t.reading.done),writing:!!(t.writing&&t.writing.done)};
+  const done={math:!!(t.math&&t.math.sets),reading:!!(t.reading&&t.reading.done),writing:!!(t.writing&&t.writing.done),social:!!(t.social&&t.social.done)};
   const n=Object.values(done).filter(Boolean).length;
-  $('#missionSummary').textContent=n===3?'All three missions done. Amazing work today!':n===0?'Three missions today. Pick any one to start.':`${n} of 3 missions done. Keep going!`;
-  $('#mcMath').classList.toggle('done',done.math);$('#mcRead').classList.toggle('done',done.reading);$('#mcWrite').classList.toggle('done',done.writing);
+  $('#missionSummary').textContent=n===4?'All four missions done. Amazing work today!':n===0?'Four missions today. Pick any one to start.':`${n} of 4 missions done. Keep going!`;
+  $('#mcMath').classList.toggle('done',done.math);$('#mcRead').classList.toggle('done',done.reading);$('#mcWrite').classList.toggle('done',done.writing);$('#mcSocial').classList.toggle('done',done.social);
+  $('#msSocial').textContent=done.social?`Done! ${t.social.what}`:`Today’s lesson: ${UNITS[dayNum()%UNITS.length].title}`;
+  $('#mcSocial .btn').textContent=done.social?'Explore more':'Start exploring';
   $('#msMath').textContent=done.math?`Done! ${t.math.correct} of ${t.math.total} correct today.`:'10 questions. Pick a skill or mix them up.';
   $('#msRead').textContent=done.reading?`Done! ${t.reading.correct} of ${t.reading.total} on “${t.reading.title}”.`:`Today’s story: “${p.title}”`;
   $('#msWrite').textContent=done.writing?`Done! You wrote ${t.writing.words} words.`:`Today’s idea: ${pr[1]}`;
@@ -961,7 +1079,7 @@ function renderHome(){
 function renderWeek(){
   const now=new Date(),dow=(now.getDay()+6)%7,start=new Date(now);start.setDate(now.getDate()-dow);let html='';
   for(let i=0;i<7;i++){const d=new Date(start);d.setDate(start.getDate()+i);const k=keyOf(d),r=S.days[k]||{},isT=k===todayKey(),fut=d>now&&!isT;
-    html+=`<div class="day${isT?' today':''}${fut?' future':''}"><span class="dname">${d.toLocaleDateString(undefined,{weekday:'short'})}</span><span class="dnum">${d.getDate()}</span><span class="dots"><i class="m${r.math&&r.math.sets?' on':''}"></i><i class="r${r.reading&&r.reading.done?' on':''}"></i><i class="w${r.writing&&r.writing.done?' on':''}"></i></span></div>`}
+    html+=`<div class="day${isT?' today':''}${fut?' future':''}"><span class="dname">${d.toLocaleDateString(undefined,{weekday:'short'})}</span><span class="dnum">${d.getDate()}</span><span class="dots"><i class="m${r.math&&r.math.sets?' on':''}"></i><i class="r${r.reading&&r.reading.done?' on':''}"></i><i class="w${r.writing&&r.writing.done?' on':''}"></i><i class="s${r.social&&r.social.done?' on':''}"></i></span></div>`}
   $('#week').innerHTML=html;
 }
 
@@ -1375,7 +1493,7 @@ setInterval(()=>{if(T.running)save()},15000);
 const W={tab:'story'};
 function storyPromptIdx(){return S.draft&&S.draft.date===todayKey()?S.draft.p:dayNum()%PROMPTS.length}
 function getDraft(){if(!S.draft||S.draft.date!==todayKey())S.draft={date:todayKey(),p:dayNum()%PROMPTS.length,text:'',plan:['','',''],checks:[]};return S.draft}
-const countWords=s=>s.trim().split(/\s+/).filter(Boolean).length;
+const countWords=s=>(s.match(/[\u3040-\u30ff\u3400-\u9fff\uf900-\ufaff\uac00-\ud7af]|[^\s\u3040-\u30ff\u3400-\u9fff\uf900-\ufaff\uac00-\ud7af]+/g)||[]).length;
 
 function renderWriting(){
   $$('[data-wtab]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.wtab===W.tab));
@@ -1395,19 +1513,23 @@ function renderStory(){
 function updateMeter(){
   const n=countWords($('#story').value),g=S.wordGoal,t=today(),done=t.writing&&t.writing.done;
   $('#wc').textContent=n;$('#wbar').style.width=Math.min(100,n/g*100)+'%';
-  $('#wmsg').textContent=n>=g?'You reached your goal! Check your writing, then save it.':`${g-n} more ${g-n===1?'word':'words'} to reach your goal.`;
-  $('#finishStory').disabled=n<g;$('#finishStory').textContent=done?'Save another entry':'Save to my journal';
+  $('#wmsg').textContent=n>=g?'You reached your goal! Check your writing, then save it.':`${g-n} more ${g-n===1?'word':'words'} to finish today’s mission. You can save anytime.`;
+  $('#finishStory').disabled=n<1;$('#finishStory').textContent=done?'Save another entry':'Save to my journal';
 }
 $('#story').addEventListener('input',e=>{getDraft().text=e.target.value;save();updateMeter()});
 $('#plan').addEventListener('input',e=>{const i=e.target.dataset.plan;if(i!=null){getDraft().plan[+i]=e.target.value;save()}});
 $('#checks').addEventListener('change',e=>{const i=+e.target.dataset.chk,d=getDraft();d.checks=d.checks.filter(x=>x!==i);if(e.target.checked)d.checks.push(i);save()});
 $('#newPrompt').onclick=()=>{const d=getDraft();d.p=(d.p+1+ri(0,PROMPTS.length-2))%PROMPTS.length;d.plan=['','',''];save();renderStory()};
 $('#finishStory').onclick=()=>{
-  const d=getDraft(),text=$('#story').value.trim(),n=countWords(text);if(n<S.wordGoal)return;
-  const [type,prompt]=PROMPTS[d.p];S.journal.unshift({date:todayKey(),type,prompt,text,words:n});
-  const t=today(),first=!(t.writing&&t.writing.done);t.writing={done:true,words:(first?0:(t.writing.words||0))+n};
-  S.draft={date:todayKey(),p:(d.p+1)%PROMPTS.length,text:'',plan:['','',''],checks:[]};save();
-  addStars(5,'Saved to your journal!');if(first)missionComplete('writing');renderStory();
+  const d=getDraft(),text=$('#story').value.trim(),n=countWords(text),msg=$('#saveMsg');
+  if(!n){msg.className='feedback try';msg.textContent='Write something first, then save it.';return}
+  const [type,prompt]=PROMPTS[d.p],goal=n>=S.wordGoal;S.journal.unshift({date:todayKey(),type,prompt,text,words:n});
+  const t=today(),first=goal&&!(t.writing&&t.writing.done);
+  if(goal)t.writing={done:true,words:(first?0:(t.writing.words||0))+n};
+  S.draft={date:todayKey(),p:goal?(d.p+1)%PROMPTS.length:d.p,text:'',plan:['','',''],checks:[]};save();
+  addStars(goal?5:1,'Saved to your journal!');if(first)missionComplete('writing');renderStory();
+  const m=$('#saveMsg');m.className='feedback good';m.textContent=goal?'Saved! Your writing is in My journal below.':`Saved to My journal! Write ${S.wordGoal}+ words next time to finish today’s mission.`;
+  const first_=$('#journal details');if(first_){first_.open=true;first_.classList.add('fresh');first_.scrollIntoView({behavior:reduceMotion?'auto':'smooth',block:'center'})}
 };
 function renderJournal(){
   $('#journal').innerHTML=S.journal.length?S.journal.slice(0,30).map(j=>`<details><summary>${esc(j.prompt)} <small>${new Date(j.date+'T12:00').toLocaleDateString(undefined,{month:'short',day:'numeric'})} · ${j.words} words</small></summary><div class="jtext">${esc(j.text)}</div></details>`).join('')
@@ -1457,6 +1579,644 @@ function renderSpell(){
   if(SP.step==='check')$('#spNext').onclick=()=>{SP.i++;SP.step='look';renderSpell()};
 }
 
+/* ---------- Social Studies ---------- */
+const SVGW=p=>`<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p}</svg>`;
+const SPEAKER='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/></svg>';
+const UI={
+  houses:SVGW('<path d="M6 40V24l10-9 10 9v16zM26 40V20l8-7 8 7v20"/><path d="M13 40v-8h6v8"/>'),
+  compass:SVGW('<circle cx="24" cy="24" r="18"/><path d="M24 10l5 14-5 14-5-14z" fill="currentColor"/>'),
+  capitol:SVGW('<path d="M6 40h36M10 40V22M18 40V22M30 40V22M38 40V22M5 22h38L24 9z"/>'),
+  heart:SVGW('<path d="M24 40S7 29 7 18a8.5 8.5 0 0 1 17-2 8.5 8.5 0 0 1 17 2c0 11-17 22-17 22z"/>'),
+  coin:SVGW('<circle cx="24" cy="24" r="17"/><path d="M29 17.5c-1.5-1.5-3.3-2-5-2-3 0-5.5 1.6-5.5 4.2 0 6 11 3 11 8.7 0 2.7-2.6 4.1-5.5 4.1-2 0-4-.7-5.5-2.2M24 12v24"/>'),
+  clock:SVGW('<circle cx="24" cy="24" r="17"/><path d="M24 13v11l7 5"/>'),
+  globe:SVGW('<circle cx="24" cy="24" r="17"/><path d="M7 24h34M24 7c6 5 6 29 0 34M24 7c-6 5-6 29 0 34"/>'),
+  star:SVGW('<path d="M24 6l5.4 11.2 12.3 1.5-9 8.6 2.3 12.2L24 33.6l-11 5.9 2.3-12.2-9-8.6 12.3-1.5z"/>'),
+  land:SVGW('<path d="M4 40l13-20 9 13 6-8 12 15z"/><circle cx="36" cy="12" r="5"/>'),
+  sort:SVGW('<path d="M6 18h14v20H6zM28 18h14v20H28zM13 6v8M35 6v8M9 10l4 4 4-4M31 10l4 4 4-4"/>'),
+  timeline:SVGW('<path d="M4 24h40"/><circle cx="10" cy="24" r="4" fill="currentColor"/><circle cx="24" cy="24" r="4" fill="currentColor"/><circle cx="38" cy="24" r="4" fill="currentColor"/><path d="M10 14v4M24 30v4M38 14v4"/>'),
+  book:SVGW('<path d="M24 12c-4.5-3.2-10.5-4-17-3v27c6.5-1 12.5-.2 17 3 4.5-3.2 10.5-4 17-3V9c-6.5-1-12.5-.2-17 3z"/><path d="M24 12v27"/>')
+};
+const UNITS=[
+ {title:'What Is a Community?',sub:'Urban, suburban and rural',c:'--sky',icon:UI.houses,cards:[
+  ['A place to live, work and play','A community is a place where people live, work, and play together. Your neighborhood, your town, and your school are all communities.'],
+  ['Urban communities','Urban means city. Urban communities have tall buildings, busy streets, and lots of people living close together. Many people ride buses or subways.'],
+  ['Suburban communities','Suburbs are near a city. They have quieter streets and houses with yards. Many people who live in the suburbs drive into the city to work.'],
+  ['Rural communities','Rural means countryside. Rural communities have farms, fields, and lots of open space. Homes can be far apart, and towns are small.']],
+  words:[['community','A place where people live, work, and play together.'],['urban','In or near a big city.'],['rural','In the countryside, away from cities.']],
+  qs:[{q:'Which community has farms and lots of open space?',o:['Rural','Urban','Suburban'],a:0,why:'Rural means countryside.'},
+   {q:'Where would you most likely ride a subway?',o:['In an urban community','On a farm','In a small rural town'],a:0,why:'Subways run under big cities.'},
+   {q:'What is a suburb?',o:['A community near a city, with houses and yards','A farm far from any town','The tallest building in a city'],a:0,why:'Look at card 3.'},
+   {q:'Which of these is a community?',o:['Your school','A pencil','A cloud'],a:0,why:'A community is a place where people live, work, or learn together.'}]},
+ {title:'Maps and Globes',sub:'Map keys, directions, continents',c:'--leaf',icon:UI.compass,cards:[
+  ['Map key','A map key, also called a legend, explains the symbols on a map. A tiny tree might mean a park. A blue line might mean a river.'],
+  ['Compass rose','A compass rose shows directions. The four cardinal directions are north, south, east, and west. On most maps, north points up.'],
+  ['Map grid','Some maps have a grid of letters and numbers. To find square C4, go across to column C, then down to row 4.'],
+  ['Continents and oceans','Earth has 7 continents: North America, South America, Europe, Asia, Africa, Australia, and Antarctica. It has 5 oceans: Pacific, Atlantic, Indian, Arctic, and Southern.']],
+  words:[['map key','The part of a map that tells what the symbols mean.'],['cardinal directions','North, south, east, and west.'],['continent','One of the 7 large areas of land on Earth.']],
+  qs:[{q:'What part of a map tells what the symbols mean?',o:['The map key','The compass rose','The title'],a:0,why:'Look at card 1.'},
+   {q:'On most maps, which direction points up?',o:['North','South','East','West'],a:0,why:'Look at card 2.'},
+   {q:'How many continents are on Earth?',o:['7','5','10','3'],a:0,why:'Count the continents on card 4.'},
+   {q:'Which of these is an ocean?',o:['Pacific','Asia','Africa','Europe'],a:0,why:'The other three are continents.'}]},
+ {title:'Who Makes the Laws?',sub:'Mayors, governors, voting',c:'--grape',icon:UI.capitol,cards:[
+  ['Rules and laws','Rules help us at home and at school. Laws are rules for a whole community, state, or country. Laws help keep people safe and make things fair.'],
+  ['Local government','A town or city is often led by a mayor. A city council meets to make local laws, like where to build a new park or how fast cars can drive.'],
+  ['State and nation','Each state is led by a governor. The whole United States is led by the president. Congress makes laws for the whole country.'],
+  ['Voting','In the United States, citizens who are 18 or older can vote to choose their leaders. Usually, the choice with the most votes wins.']],
+  words:[['law','A rule that everyone in a community, state, or country must follow.'],['mayor','The leader of a city or town.'],['citizen','A member of a community or country.']],
+  qs:[{q:'Who leads a city or town?',o:['A mayor','A governor','A principal'],a:0,why:'Look at card 2.'},
+   {q:'Who leads a state?',o:['A governor','A mayor','A teacher'],a:0,why:'Look at card 3.'},
+   {q:'What is a law?',o:['A rule for a whole community or country','A kind of game','A type of map'],a:0,why:'Look at card 1.'},
+   {q:'How old do you have to be to vote in the United States?',o:['18','8','12'],a:0,why:'Look at card 4.'}]},
+ {title:'Being a Good Citizen',sub:'Rights and responsibilities',c:'--write',icon:UI.heart,cards:[
+  ['What is a good citizen?','A good citizen helps make the community a better place. Good citizens are honest, fair, and respectful.'],
+  ['Rights','Rights are freedoms that belong to everyone. In the United States, people have the right to speak freely and the right to be treated fairly.'],
+  ['Responsibilities','Responsibilities are things we should do. Following rules, telling the truth, and taking care of shared places are all responsibilities.'],
+  ['Kids can help too','You can be a good citizen right now! Pick up litter, help a neighbor, recycle, or be kind to a new student.']],
+  words:[['right','A freedom that belongs to everyone.'],['responsibility','Something you should do.'],['volunteer','To help others without being paid.']],
+  qs:[{q:'Which is a responsibility?',o:['Picking up your trash at the park','Eating ice cream','Watching TV'],a:0,why:'A responsibility is something you should do.'},
+   {q:'What is a right?',o:['A freedom that belongs to everyone','A chore you get paid for','A law for animals'],a:0,why:'Look at card 2.'},
+   {q:'Which shows a good citizen?',o:['Helping a neighbor carry groceries','Littering in the park','Cutting in line'],a:0,why:'Good citizens make the community better.'},
+   {q:'What does a volunteer do?',o:['Helps others without being paid','Sells things at a store','Makes the laws'],a:0,why:'Check the Big words.'}]},
+ {title:'Money Matters',sub:'Needs, wants, goods, services',c:'--math',icon:UI.coin,cards:[
+  ['Needs and wants','Needs are things we must have to live, like food, water, clothing, and a home. Wants are things that are nice to have, like toys and games.'],
+  ['Goods and services','Goods are things you can touch and buy, like shoes or apples. Services are jobs people do for others, like cutting hair or fixing a car.'],
+  ['Producers and consumers','A producer makes goods or provides services. A consumer buys and uses them. A baker is a producer. When you buy a muffin, you are a consumer!'],
+  ['Saving and spending','Money can be spent now or saved for later. Saving a little at a time can help you buy something bigger later.']],
+  words:[['goods','Things you can touch and buy.'],['services','Jobs people do for others.'],['consumer','A person who buys and uses goods and services.']],
+  qs:[{q:'Which is a need?',o:['Water','A video game','Candy'],a:0,why:'You need it to live.'},
+   {q:'Which is a service?',o:['A haircut','A pair of shoes','An apple'],a:0,why:'A service is a job someone does for you.'},
+   {q:'When you buy a muffin, you are a…',o:['Consumer','Producer','Mayor'],a:0,why:'Look at card 3.'},
+   {q:'Why might someone save money?',o:['To buy something bigger later','To make money disappear','Because saving is a law'],a:0,why:'Look at card 4.'}]},
+ {title:'Then and Now',sub:'How communities change',c:'--read',icon:UI.clock,cards:[
+  ['Communities change','Communities change over time. Dirt roads become paved streets. Farms can become neighborhoods. New schools and stores are built.'],
+  ['Getting around','Long ago, people walked, rode horses, or rode in wagons. Later came trains, cars, and airplanes. Today, some cars run on electricity.'],
+  ['Staying in touch','Long ago, people wrote letters that could take weeks to arrive. Then came the telephone, radio, and TV. Today we can video chat in seconds.'],
+  ['Clues from the past','Old photos, letters, and diaries are primary sources. They were made by people who were there, so they help us learn what life was like.']],
+  words:[['timeline','A line that shows events in the order they happened.'],['primary source','Something made by a person who was there, like a diary or photo.'],['transportation','Ways to move people and things from place to place.']],
+  qs:[{q:'Which came first?',o:['Horse and wagon','Airplane','Electric car'],a:0,why:'Look at card 2.'},
+   {q:'What is a primary source?',o:['Something made by a person who was there, like an old diary','A brand-new video game','A guess about the future'],a:0,why:'Look at card 4.'},
+   {q:'What does a timeline show?',o:['Events in the order they happened','How tall buildings are','Where rivers are'],a:0,why:'Check the Big words.'},
+   {q:'How did people stay in touch long ago?',o:['They wrote letters','They sent text messages','They used video chat'],a:0,why:'Look at card 3.'}]},
+ {title:'Cultures and Traditions',sub:'Food, language, celebrations',c:'--sky',icon:UI.globe,cards:[
+  ['What is culture?','Culture is a group’s way of life. It includes food, language, clothing, music, art, and celebrations.'],
+  ['Traditions','A tradition is something a family or group does again and again. Traditions are often passed down from grandparents and parents, like a special meal or a holiday song.'],
+  ['Many cultures, one community','People move to new places from all over the world and bring their cultures with them. That is one reason communities have so many kinds of food, music, and languages.'],
+  ['Learning from each other','Learning about other cultures helps us understand and respect each other. Every culture adds something special to a community.']],
+  words:[['culture','A group’s way of life.'],['tradition','Something a family or group does again and again.'],['immigrant','A person who moves to a new country to live.']],
+  qs:[{q:'Which is part of a culture?',o:['Food, music, and language','Only the weather','Only the size of houses'],a:0,why:'Look at card 1.'},
+   {q:'What is a tradition?',o:['Something a family or group does again and again','A new rule at school','A kind of map'],a:0,why:'Look at card 2.'},
+   {q:'What is an immigrant?',o:['A person who moves to a new country to live','A person who makes laws','A person who grows food'],a:0,why:'Check the Big words.'},
+   {q:'Why is it good to learn about other cultures?',o:['It helps us understand and respect each other','It makes everyone the same','It is a law'],a:0,why:'Look at card 4.'}]},
+ {title:'American Symbols',sub:'Flag, eagle, Statue of Liberty',c:'--star',icon:UI.star,cards:[
+  ['The American flag','The flag has 13 stripes for the first 13 colonies and 50 stars for the 50 states. Its colors are red, white, and blue.'],
+  ['The bald eagle','The bald eagle is the national bird of the United States. It stands for strength and freedom.'],
+  ['The Statue of Liberty','The Statue of Liberty was a gift from France. It has stood in New York Harbor since 1886 and welcomed many immigrants arriving by ship.'],
+  ['Independence Day','On July 4, 1776, American leaders approved the Declaration of Independence. Every Fourth of July, Americans celebrate with parades and fireworks.']],
+  words:[['symbol','A picture or object that stands for an idea.'],['landmark','A famous building or place that is easy to recognize.'],['independence','Being free to make your own choices.']],
+  qs:[{q:'How many stars are on the American flag?',o:['50','13','100'],a:0,why:'One star for each state.'},
+   {q:'What do the 13 stripes stand for?',o:['The first 13 colonies','13 presidents','13 oceans'],a:0,why:'Look at card 1.'},
+   {q:'Which country gave the Statue of Liberty to the United States?',o:['France','Canada','England'],a:0,why:'Look at card 3.'},
+   {q:'What do Americans celebrate on July 4?',o:['Independence Day','Thanksgiving','New Year’s Day'],a:0,why:'Look at card 4.'}]},
+ {title:'The First Americans',sub:'Native American nations',c:'--leaf',icon:UI.land,cards:[
+  ['The first people','Native Americans were the first people to live in North America, thousands of years before explorers from Europe arrived. There were hundreds of nations, each with its own language and customs.'],
+  ['Homes from the land','Native nations built homes from what was around them. In the forests of the Northeast, the Haudenosaunee built longhouses from wood and bark. In the Southwest desert, Pueblo people built homes from adobe, a kind of mud brick.'],
+  ['On the Great Plains','On the Great Plains, nations like the Lakota followed herds of bison. They lived in tipis, which could be packed up and moved quickly.'],
+  ['Still here today','Native American nations are still part of the United States today. Many keep their languages, art, and traditions alive and share them with others.']],
+  words:[['nation','A group of people with their own land, language, or government.'],['adobe','A brick made of mud and straw, dried in the sun.'],['bison','A large, shaggy animal that lives on the Great Plains.']],
+  qs:[{q:'Who were the first people to live in North America?',o:['Native Americans','Explorers from Europe','Astronauts'],a:0,why:'Look at card 1.'},
+   {q:'What is adobe?',o:['A kind of mud brick','A type of boat','A large animal'],a:0,why:'Look at card 2.'},
+   {q:'Why were tipis useful on the Great Plains?',o:['They could be packed up and moved quickly','They were made of stone','They floated on water'],a:0,why:'Look at card 3.'},
+   {q:'Are Native American nations still part of the United States today?',o:['Yes, many nations are still here today','No, they all moved away','Only in old books'],a:0,why:'Look at card 4.'}]}
+];
+const SORTS=[
+ {name:'Needs or Wants?',bins:['Need','Want'],tip:'A need is something you must have to live. A want is nice to have.',items:[['Water',0],['Healthy food',0],['A safe home',0],['A warm coat in winter',0],['Medicine when you are sick',0],['A video game',1],['Candy',1],['A toy robot',1],['A trip to an amusement park',1],['Light-up sneakers',1]]},
+ {name:'Goods or Services?',bins:['Good','Service'],tip:'Goods are things you can touch. Services are jobs people do for you.',items:[['Apples',0],['A bicycle',0],['A book',0],['A pair of shoes',0],['A teddy bear',0],['A haircut',1],['A teacher teaching',1],['Fixing a car',1],['Delivering mail',1],['A doctor’s checkup',1],['Walking a dog',1]]},
+ {name:'City, Suburb or Countryside?',bins:['Urban','Suburban','Rural'],tip:'Urban means city. Suburban means near a city, with yards. Rural means countryside.',items:[['Tall apartment buildings',0],['A subway train',0],['Crowded sidewalks',0],['Houses with front yards',1],['Quiet streets near a big city',1],['Driving into the city to work',1],['Farms and fields',2],['A tractor on a dirt road',2],['Houses far apart',2]]},
+ {name:'Right or Responsibility?',bins:['Right','Responsibility'],tip:'A right is a freedom you have. A responsibility is something you should do.',items:[['Speaking freely',0],['Practicing your own religion',0],['Being treated fairly',0],['Voting when you turn 18',0],['Following the law',1],['Telling the truth',1],['Picking up your litter',1],['Respecting others',1],['Taking care of library books',1]]},
+ {name:'Producer or Consumer?',bins:['Producer','Consumer'],tip:'Producers make goods or give services. Consumers buy and use them.',items:[['A farmer growing corn',0],['A baker making bread',0],['A factory building bikes',0],['An artist painting pictures to sell',0],['A family buying groceries',1],['A kid buying a toy',1],['People eating at a restaurant',1],['Someone paying for a haircut',1]]},
+ {name:'Long Ago or Today?',bins:['Long ago','Today'],tip:'Did people use this 150 years ago, or is it new?',items:[['Horse and buggy',0],['Oil lamps for light',0],['A one-room schoolhouse',0],['Churning butter by hand',0],['Writing with a quill pen',0],['Video calls',1],['Electric cars',1],['Tablets and laptops',1],['Smart speakers',1]]}
+];
+const TIMELINES=[
+ {name:'Growing Up',note:'Put these in order from first to last.',items:[['Born as a baby'],['Learns to walk'],['Starts kindergarten'],['Starts 3rd grade']]},
+ {name:'From Farm to Table',note:'How does bread get to the store? Put the steps in order.',items:[['A farmer plants wheat seeds'],['The wheat grows and is harvested'],['A mill grinds the wheat into flour'],['A baker bakes bread for the store']]},
+ {name:'Getting Around',note:'Put these in order from oldest to newest. Look at the years!',items:[['The first steam train carries passengers in America','1830'],['The first gas-powered car','1886'],['The Wright brothers fly an airplane','1903'],['Astronauts land on the Moon','1969']]},
+ {name:'Staying in Touch',note:'Put these in order from oldest to newest. Look at the years!',items:[['The telephone is invented','1876'],['The first radio station goes on the air','1920'],['Many families get a TV','1950s'],['Smartphones become popular','2007']]},
+ {name:'American History',note:'Put these in order from oldest to newest. Look at the years!',items:[['Leaders approve the Declaration of Independence','1776'],['The Statue of Liberty opens in New York','1886'],['Ruby Bridges starts first grade','1960'],['Astronauts land on the Moon','1969']]}
+];
+
+/* Map Explorer town map: row 1 is the top (north) */
+const MAP=[['house','school','park','park','farm'],['house','library','','store','farm'],['river','river','bridge','river','river'],['hospital','','fire','house','house'],['post','','','house','museum']];
+const COLS='ABCDE';
+const PLACE={house:'house',school:'school',library:'library',park:'park',farm:'farm',store:'grocery store',hospital:'hospital',fire:'fire station',post:'post office',museum:'museum',river:'river',bridge:'bridge'};
+const UNIQUE=['school','library','store','bridge','hospital','fire','post','museum'];
+const MAPICON={
+  house:'<path d="M6 21L20 9l14 12z" fill="#E5484D"/><rect x="10" y="20" width="20" height="13" fill="#FBE7B5"/><rect x="17" y="25" width="6" height="8" fill="#8A5A2B"/>',
+  school:'<rect x="7" y="16" width="26" height="17" fill="#E5484D"/><path d="M5 17L20 8l15 9z" fill="#B83232"/><path d="M20 8V2" stroke="#2A1B4D" stroke-width="1.5"/><path d="M20 2h7v4h-7z" fill="#3A9BF0"/><rect x="11" y="21" width="5" height="5" fill="#fff"/><rect x="24" y="21" width="5" height="5" fill="#fff"/><rect x="17.5" y="26" width="5" height="7" fill="#fff"/>',
+  library:'<path d="M20 12c-4-3-9-3-13-2v20c4-1 9-1 13 2 4-3 9-3 13-2V10c-4-1-9-1-13 2z" fill="#3A9BF0"/><path d="M20 12v20" stroke="#fff" stroke-width="1.5"/>',
+  park:'<circle cx="20" cy="16" r="10" fill="#2E9E4F"/><rect x="18" y="24" width="4" height="10" fill="#8A5A2B"/>',
+  farm:'<path d="M6 18L20 8l14 10v15H6z" fill="#C2410C"/><path d="M14 33V23h12v10M14 23l12 10M26 23L14 33" stroke="#fff" stroke-width="1.8" fill="none"/>',
+  store:'<rect x="7" y="17" width="26" height="16" fill="#FBE7B5"/><path d="M5 10h30l-2 8H7z" fill="#7B61FF"/><path d="M12 10l-1 8M20 10v8M28 10l1 8" stroke="#fff" stroke-width="2"/><rect x="16" y="23" width="8" height="10" fill="#8A5A2B"/>',
+  hospital:'<rect x="7" y="7" width="26" height="26" rx="4" fill="#fff" stroke="#E5484D" stroke-width="2"/><path d="M17 12h6v5h5v6h-5v5h-6v-5h-5v-6h5z" fill="#E5484D"/>',
+  fire:'<path d="M20 5c2 6 9 9 9 18a9 9 0 0 1-18 0c0-4 2-7 4-9 0 3 1.5 5 3.5 5.5C17 14 17 9 20 5z" fill="#FF8A3D"/><path d="M20 20c1 3 4 4 4 8a4 4 0 0 1-8 0c0-2 1-3 2-4 .3 1.4 1 2 2 2 0-2-.5-4 0-6z" fill="#FFC93C"/>',
+  post:'<rect x="6" y="11" width="28" height="19" rx="2" fill="#fff" stroke="#3A9BF0" stroke-width="2"/><path d="M6 12l14 10 14-10" fill="none" stroke="#3A9BF0" stroke-width="2"/>',
+  museum:'<path d="M5 15L20 7l15 8z" fill="#6B7390"/><rect x="6" y="30" width="28" height="4" fill="#6B7390"/><path d="M10 17v12M16 17v12M24 17v12M30 17v12" stroke="#6B7390" stroke-width="3"/>',
+  river:'<path d="M4 16q4-4 8 0t8 0 8 0 8 0M4 26q4-4 8 0t8 0 8 0 8 0" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>',
+  bridge:'<rect x="2" y="12" width="36" height="16" fill="#A0652E"/><path d="M8 12v16M14 12v16M20 12v16M26 12v16M32 12v16" stroke="#7A4A1F" stroke-width="1.5"/>'
+};
+const mapIcon=t=>`<svg viewBox="0 0 40 40" aria-hidden="true">${MAPICON[t]}</svg>`;
+const COMPASS='<svg viewBox="0 0 90 90" class="compass-svg" role="img" aria-label="Compass rose. North is up, south is down, east is right, west is left."><circle cx="45" cy="45" r="27" fill="none" stroke="var(--line-strong)" stroke-width="2"/><path d="M45 18l6 27h-12z" fill="var(--bad)"/><path d="M45 72l6-27h-12z" fill="var(--ink)"/><path d="M18 45l27-6v12z" fill="var(--muted)"/><path d="M72 45l-27-6v12z" fill="var(--muted)"/><g font-family="Baloo 2, sans-serif" font-weight="800" font-size="14" fill="var(--ink)" text-anchor="middle"><text x="45" y="13">N</text><text x="45" y="88">S</text><text x="8" y="50">W</text><text x="82" y="50">E</text></g></svg>';
+const cellsOf=ty=>{const r=[];MAP.forEach((row,ri)=>row.forEach((t,ci)=>{if(t===ty)r.push(COLS[ci]+(ri+1))}));return r};
+const typeAt=(r,c)=>(MAP[r]||[])[c];
+const DIRS={north:[-1,0],south:[1,0],east:[0,1],west:[0,-1]};
+const coordRC=co=>[+co.slice(1)-1,COLS.indexOf(co[0])];
+const cap=s=>s[0].toUpperCase()+s.slice(1);
+function mapQ(){
+  const kind=pick(['find','coord','whatIn','whereIs','dir','rel','key','find','rel','dir']);
+  if(kind==='find'){const ty=pick([...UNIQUE,'park','farm']);return {kind:'tap',text:`Find the ${PLACE[ty]} and tap it.`,ans:cellsOf(ty),tip:`Look at the map key to see the ${PLACE[ty]} symbol.`}}
+  if(kind==='coord'){const c=COLS[ri(0,4)],r=ri(1,5);return {kind:'tap',text:`Tap square ${c}${r}.`,ans:[c+r],tip:`Go across the top to column ${c}, then down to row ${r}.`}}
+  if(kind==='whatIn'){const ty=pick(UNIQUE),co=cellsOf(ty)[0],opts=new Set([PLACE[ty]]);shuffle(Object.keys(PLACE)).forEach(k=>{if(opts.size<4)opts.add(PLACE[k])});
+    return {kind:'mc',text:`What is in square ${co}?`,ans:PLACE[ty],opts:shuffle([...opts]),tip:`Find column ${co[0]} at the top and row ${co.slice(1)} on the side.`}}
+  if(kind==='whereIs'){const ty=pick(UNIQUE),co=cellsOf(ty)[0],opts=new Set([co]);while(opts.size<4)opts.add(COLS[ri(0,4)]+ri(1,5));
+    return {kind:'mc',text:`In which square is the ${PLACE[ty]}?`,ans:co,opts:shuffle([...opts]),tip:'Find the place, then read the letter above it and the number beside it.'}}
+  if(kind==='dir'){let [a,b]=pick([['library','school'],['fire','bridge'],['post','hospital'],['fire','hospital'],['museum','post'],['store','library']]);if(Math.random()<.5)[a,b]=[b,a];
+    const [ra,ca]=coordRC(cellsOf(a)[0]),[rb,cb]=coordRC(cellsOf(b)[0]),d=ra>rb?'south':ra<rb?'north':ca>cb?'east':'west';
+    return {kind:'mc',text:`The ${PLACE[a]} is ___ of the ${PLACE[b]}.`,ans:cap(d),opts:['North','South','East','West'],tip:'Use the compass rose: north is up, south is down, east is right, west is left.'}}
+  if(kind==='rel'){for(let k=0;k<50;k++){const ty=pick(UNIQUE),d=pick(Object.keys(DIRS)),[r,c]=coordRC(cellsOf(ty)[0]),nr=r+DIRS[d][0],nc=c+DIRS[d][1],t=typeAt(nr,nc);
+      if(t)return {kind:'tap',text:`Tap the place just ${d} of the ${PLACE[ty]}.`,ans:[COLS[nc]+(nr+1)],tip:'North is up, south is down, east is right, west is left.'}}}
+  const ty=pick(Object.keys(PLACE)),opts=new Set([PLACE[ty]]);shuffle(Object.keys(PLACE)).forEach(k=>{if(opts.size<4)opts.add(PLACE[k])});
+  return {kind:'mc',sym:ty,text:'What does this symbol stand for? Check the map key!',ans:PLACE[ty],opts:shuffle([...opts]),tip:'Find the same picture in the map key.'};
+}
+function mapHTML(){
+  let h='<div class="mapwrap"><div class="tmap"><span></span>'+[...COLS].map(c=>`<span class="mh">${c}</span>`).join('');
+  MAP.forEach((row,ri)=>{h+=`<span class="mh">${ri+1}</span>`;row.forEach((t,ci)=>{const co=COLS[ci]+(ri+1);
+    h+=`<button type="button" class="tile t-${t||'grass'}" data-tile="${co}" aria-label="Square ${co}${t?', '+PLACE[t]:''}">${t?mapIcon(t):''}</button>`})});
+  return h+`</div><div class="mapside">${COMPASS}<div class="mkey"><p class="eyebrow">Map key</p>${Object.keys(PLACE).map(t=>`<span class="k-${t}">${mapIcon(t)}${cap(PLACE[t])}</span>`).join('')}</div></div></div>`;
+}
+
+/* Screens */
+const SO={view:'menu',unit:null,st:null};
+const BACK='<button class="link backlink" type="button" data-back>← All social studies</button>';
+function renderSocial(){if(SO.view==='menu')socialMenu()}
+function socialMenu(){
+  SO.view='menu';const ti=dayNum()%UNITS.length,u=UNITS[ti],t=today();
+  $('#socialStage').innerHTML=`
+  <div class="panel menu-top"><div class="pip small idle">${pipSVG('idle')}</div><div><h2>Explorer Pip is ready!</h2><p class="lede">Today’s lesson is <b>${u.title}</b>. Finish any one lesson or game to complete today’s mission.</p>${t.social&&t.social.done?`<p class="note">Done today: ${esc(t.social.what)}</p>`:''}</div></div>
+  <h2 class="section-label">Today</h2>
+  <div class="arcade">
+    <button type="button" class="gcard wide" data-ssgame="lesson" style="--gc:var(${u.c});--gs:var(${u.c}-soft)"><span class="gicon">${UI.book}</span><span><span class="gname">Today’s lesson</span><span class="gsub">${u.title}: read 4 short cards, then take a quick quiz.</span></span></button>
+    <button type="button" class="gcard wide" data-ssgame="map" style="--gc:var(--leaf);--gs:var(--leaf-soft)"><span class="gicon">${UI.compass}</span><span><span class="gname">Map Explorer</span><span class="gsub">Use a map key, compass rose and grid to explore a town.</span></span></button>
+    <button type="button" class="gcard wide" data-ssgame="sort" style="--gc:var(--grape);--gs:var(--grape-soft)"><span class="gicon">${UI.sort}</span><span><span class="gname">Sort It!</span><span class="gsub">Needs or wants? Goods or services? Sort the cards into the right bins.</span></span></button>
+    <button type="button" class="gcard wide" data-ssgame="time" style="--gc:var(--math);--gs:var(--math-soft)"><span class="gicon">${UI.timeline}</span><span><span class="gname">Timeline Builder</span><span class="gsub">Put events from history in order, oldest to newest.</span></span></button>
+  </div>
+  <h2 class="section-label">All lessons</h2>
+  <div class="games">${UNITS.map((x,i)=>`<button type="button" class="gcard" data-unit="${i}" style="--gc:var(${x.c});--gs:var(${x.c}-soft)"><span class="gicon">${x.icon}</span><span class="gname">${x.title}</span><span class="gsub">${x.sub}</span>${S.ssLog[i]?'<span class="gbest">Finished</span>':''}</button>`).join('')}</div>`;
+}
+function socialDone(what){const t=today(),first=!(t.social&&t.social.done);t.social={done:true,what};save();SFX.win();if(first)missionComplete('social');else confetti()}
+function ssResults(tag,score,msg,game){
+  $('#socialStage').innerHTML=`${BACK}<div class="panel results"><div class="pip happy">${pipSVG('happy')}</div><p class="eyebrow">${tag}</p><div class="score">${score}</div><h2>${msg}</h2>
+    <div class="row"><button class="btn" type="button" data-ssgame="${game}">Play again</button><button class="btn ghost" type="button" data-back>More social studies</button></div></div>`}
+
+/* Lessons */
+function startLesson(i){SO.view='lesson';SO.unit=i;const u=UNITS[i];SO.st={qs:u.qs.map(q=>({tries:0,done:false,wrong:[],order:shuffle(q.o.map((_,j)=>j))})),correct:0,finished:false};renderLesson();window.scrollTo(0,0)}
+function renderLesson(){const u=UNITS[SO.unit];
+  $('#socialStage').innerHTML=`${BACK}
+  <div class="panel lhead"><span class="gicon" style="--gc:var(${u.c})">${u.icon}</span><div style="flex:1;min-width:180px"><p class="eyebrow">Lesson</p><h2>${u.title}</h2></div>${canSpeak?`<button class="speak" type="button" id="lessonSpeak">${SPEAKER}Read it to me</button>`:''}</div>
+  <div class="lcards">${u.cards.map((c,i)=>`<article class="lcard"><span class="lnum">${i+1}</span><h3>${c[0]}</h3><p>${c[1]}</p></article>`).join('')}</div>
+  <section class="panel"><h2>Big words</h2><dl class="bigwords">${u.words.map(w=>`<div><dt>${w[0]}</dt><dd>${w[1]}</dd></div>`).join('')}</dl></section>
+  <section class="panel"><h2>Check what you learned</h2><div id="lq" style="margin-top:14px">${lessonQsHTML()}</div></section>`}
+function lessonQsHTML(){const u=UNITS[SO.unit],st=SO.st;
+  return u.qs.map((q,qi)=>{const s=st.qs[qi];
+    const fb=s.done?`<p class="rfb good">${s.tries?'You got it!':'Correct on the first try!'}</p>`:s.wrong.length?`<p class="rfb try">Hint: ${q.why}</p>`:'<p class="rfb"></p>';
+    return `<fieldset class="rq" data-q="${qi}"><legend><span class="qn">${qi+1}.</span> ${q.q}</legend><div class="opts">${s.order.map(j=>`<button type="button" class="opt${s.done&&j===q.a?' right':''}${s.wrong.includes(j)?' wrong':''}" data-o="${j}"${s.done||s.wrong.includes(j)?' disabled':''}>${q.o[j]}</button>`).join('')}</div>${fb}</fieldset>`}).join('')
+   +(st.finished?`<div class="donebox"><div class="pip small happy">${pipSVG('happy')}</div><div><h3>Lesson complete!</h3><p>${st.correct} of ${u.qs.length} right on the first try.</p><p class="note">Try a game, or pick another lesson.</p></div></div>`:'')}
+function lessonAnswer(o){const u=UNITS[SO.unit],st=SO.st,qi=+o.closest('.rq').dataset.q,j=+o.dataset.o,q=u.qs[qi],s=st.qs[qi];if(s.done)return;
+  if(j===q.a){s.done=true;SFX.right();if(!s.tries){st.correct++;addStars(1);burst(o)}}else{s.tries++;s.wrong.push(j);SFX.wrong()}
+  const fin=!st.finished&&st.qs.every(x=>x.done);if(fin){st.finished=true;S.ssLog[SO.unit]=true}
+  $('#lq').innerHTML=lessonQsHTML();if(fin)socialDone(`Lesson: ${u.title} (${st.correct}/${u.qs.length})`)}
+
+/* Map Explorer */
+function mapStart(){SO.view='map';SO.st={i:0,score:0,qs:Array.from({length:10},mapQ),tries:0,locked:false};renderMapQ();window.scrollTo(0,0)}
+function renderMapQ(){const st=SO.st,q=st.qs[st.i];st.tries=0;st.locked=false;
+  $('#socialStage').innerHTML=`${BACK}<div class="panel${q.kind==='tap'?' tapmode':''}">
+    <div class="qtop"><span class="tag">Map Explorer</span><span>Question ${st.i+1} of ${st.qs.length} · ${st.score} stars</span></div>
+    <div class="bar" aria-hidden="true"><i style="width:${st.i/st.qs.length*100}%"></i></div>
+    <p class="dq" style="margin-top:16px;text-align:center">${q.text}</p>
+    ${q.sym?`<div class="keysym t-${q.sym}">${mapIcon(q.sym)}</div>`:''}
+    ${q.kind==='mc'?`<div class="choices" style="margin-top:12px">${q.opts.map(o=>`<button type="button" class="choice small" data-v="${esc(o)}">${esc(cap(o))}</button>`).join('')}</div>`:''}
+    <p class="feedback" id="mapFb" aria-live="polite" style="margin-top:12px"></p>
+    <div class="row"><button class="btn" type="button" id="mapNext" hidden>Next</button></div>
+    ${mapHTML()}</div>`}
+function mapRight(el){const st=SO.st;if(!st.tries){st.score++;addStars(1);burst(el)}SFX.right();const fb=$('#mapFb');fb.className='feedback good';fb.textContent=pick(PRAISE);mapLock()}
+function mapWrong(el){const st=SO.st,q=st.qs[st.i],fb=$('#mapFb');st.tries++;SFX.wrong();
+  if(st.tries>=2){fb.className='feedback bad';fb.textContent=q.kind==='tap'?'Here it is! Take a look.':`The answer is “${cap(q.ans)}.”`;
+    if(q.kind==='tap')q.ans.forEach(a=>{const t=$(`[data-tile="${a}"]`);if(t)t.classList.add('hit')});else $$('#socialStage .choice').forEach(b=>{if(b.dataset.v===q.ans)b.classList.add('right')});mapLock()}
+  else{fb.className='feedback try';fb.textContent='Not quite. '+q.tip}}
+function mapLock(){SO.st.locked=true;$$('#socialStage .choice').forEach(b=>b.disabled=true);const p=$('#socialStage .tapmode');if(p)p.classList.remove('tapmode');
+  const n=$('#mapNext');n.hidden=false;n.textContent=SO.st.i===SO.st.qs.length-1?'See my score':'Next';n.focus()}
+function mapTap(tile){const st=SO.st,q=st.qs[st.i];if(q.kind!=='tap'||st.locked)return;
+  if(q.ans.includes(tile.dataset.tile)){tile.classList.add('hit');mapRight(tile)}else{tile.classList.remove('nope');void tile.offsetWidth;tile.classList.add('nope');mapWrong(tile)}}
+function mapChoice(c){const st=SO.st,q=st.qs[st.i];if(st.locked)return;if(c.dataset.v===q.ans){c.classList.add('right');mapRight(c)}else{c.classList.add('wrong');c.disabled=true;mapWrong(c)}}
+function mapNext(){const st=SO.st;st.i++;if(st.i<st.qs.length){renderMapQ();return}
+  const s=st.score;ssResults('Map Explorer',`${s}/10`,s>=9?'Master map reader!':s>=6?'Great exploring!':'Nice work, explorer! Try again to find even more.','map');socialDone(`Map Explorer (${s}/10)`)}
+
+/* Sort It! */
+function sortStart(){const set=pick(SORTS);SO.view='sort';SO.st={set,items:shuffle(set.items).slice(0,8),i:0,score:0,tries:0,counts:set.bins.map(()=>0),busy:false};renderSort();window.scrollTo(0,0)}
+function renderSort(){const st=SO.st,s=st.set;
+  $('#socialStage').innerHTML=`${BACK}<div class="panel"><div class="qtop"><span class="tag">Sort It!</span><span>Card ${st.i+1} of ${st.items.length} · ${st.score} stars</span></div>
+    <div class="bar" aria-hidden="true"><i style="width:${st.i/st.items.length*100}%"></i></div>
+    <h2 style="text-align:center;margin-top:18px">${s.name}</h2><p class="note" style="text-align:center;margin-top:6px">${s.tip}</p>
+    <div class="sortcard" id="sortCard">${esc(st.items[st.i][0])}</div>
+    <div class="bins">${s.bins.map((b,k)=>`<button type="button" class="bin" data-bin="${k}"><span class="bname">${b}</span><span class="bcount">${st.counts[k]} sorted</span></button>`).join('')}</div>
+    <p class="feedback" id="sortFb" aria-live="polite" style="margin-top:14px"></p></div>`}
+function sortAdvance(){const st=SO.st;st.i++;st.tries=0;st.busy=false;if(SO.view!=='sort')return;if(st.i<st.items.length){renderSort();return}
+  const s=st.score,n=st.items.length;ssResults('Sort It!',`${s}/${n}`,s===n?'Perfect sorting!':s>=n-2?'Super sorter!':'Good sorting! Play again for a new set.','sort');socialDone(`Sort It! ${st.set.name} (${s}/${n})`)}
+function sortPick(b){const st=SO.st;if(st.busy)return;const k=+b.dataset.bin,ans=st.items[st.i][1],card=$('#sortCard'),fb=$('#sortFb');
+  if(k===ans){st.busy=true;if(!st.tries){st.score++;addStars(1);burst(b)}SFX.right();st.counts[k]++;b.classList.add('hit');fb.className='feedback good';fb.textContent=pick(PRAISE);
+    if(!reduceMotion)card.classList.add('fly');setTimeout(sortAdvance,reduceMotion?500:700)}
+  else{st.tries++;SFX.wrong();shake(card);
+    if(st.tries>=2){st.busy=true;fb.className='feedback bad';fb.textContent=`This one goes in “${st.set.bins[ans]}.”`;$(`#socialStage [data-bin="${ans}"]`).classList.add('hit');st.counts[ans]++;setTimeout(sortAdvance,1600)}
+    else{fb.className='feedback try';fb.textContent='Hmm, think again! '+st.set.tip}}}
+
+/* Timeline Builder */
+function timeStart(){SO.view='time';SO.st={sets:shuffle(TIMELINES).slice(0,3),si:0,score:0};loadTimeSet();renderTime();window.scrollTo(0,0)}
+function loadTimeSet(){const st=SO.st;let order;do{order=shuffle([0,1,2,3])}while(order.join()==='0,1,2,3');Object.assign(st,{order,placed:[],mistakes:0,done:false})}
+function renderTime(){const st=SO.st,s=st.sets[st.si],left=st.order.filter(i=>!st.placed.includes(i)),dated=!!s.items[0][1];
+  $('#socialStage').innerHTML=`${BACK}<div class="panel"><div class="qtop"><span class="tag">Timeline Builder</span><span>Timeline ${st.si+1} of ${st.sets.length} · ${st.score} stars</span></div>
+    <div class="bar" aria-hidden="true"><i style="width:${(st.si+(st.done?1:0))/st.sets.length*100}%"></i></div>
+    <h2 style="margin-top:18px">${s.name}</h2><p class="note" style="margin:6px 0 14px">${s.note}</p>
+    <ol class="slots">${s.items.map((_,i)=>{const p=st.placed[i];return `<li class="slot${p!=null?' filled':''}"><span class="snum">${dated?['1st','2nd','3rd','4th'][i]:['First','Next','Then','Last'][i]}</span>${p!=null?`<span>${esc(s.items[p][0])}</span>${s.items[p][1]?`<span class="tlyear">${s.items[p][1]}</span>`:''}`:''}</li>`}).join('')}</ol>
+    <div class="evcards" style="margin-top:12px">${left.map(i=>`<button type="button" class="evcard" data-e="${i}">${s.items[i][1]?`<span class="yr">${s.items[i][1]}</span>`:''}${esc(s.items[i][0])}</button>`).join('')}</div>
+    <p class="feedback" id="timeFb" aria-live="polite" style="margin-top:12px">${st.done?(st.mistakes?'Timeline complete!':'Perfect timeline!'):''}</p>
+    ${st.done?`<div class="row"><button class="btn" type="button" id="timeNext">${st.si<st.sets.length-1?'Next timeline':'See my score'}</button></div>`:''}</div>`;
+  if(st.done)$('#timeNext').focus()}
+function timePick(c){const st=SO.st,s=st.sets[st.si],i=+c.dataset.e;if(st.done)return;
+  if(i===st.placed.length){st.placed.push(i);SFX.pop();if(st.placed.length===4){st.done=true;const n=st.mistakes?1:2;st.score+=n;addStars(n,st.mistakes?'star':'Perfect timeline!')}renderTime()}
+  else{st.mistakes++;SFX.wrong();shake(c);const fb=$('#timeFb');fb.className='feedback try';fb.textContent=s.items[0][1]?'Look at the years. Which one is the oldest that’s left?':'Hmm. What would happen first?'}}
+function timeNext(){const st=SO.st;st.si++;if(st.si<st.sets.length){loadTimeSet();renderTime();window.scrollTo(0,0);return}
+  ssResults('Timeline Builder',`${st.score}/6`,st.score===6?'History hero! Every timeline was perfect.':'Great job building timelines!','time');socialDone(`Timeline Builder (${st.score}/6 stars)`)}
+
+$('#socialStage').addEventListener('click',e=>{const t=e.target;
+  if(t.closest('[data-back]')){stopSpeak();SO.view='menu';socialMenu();window.scrollTo(0,0);return}
+  const un=t.closest('[data-unit]');if(un){startLesson(+un.dataset.unit);return}
+  const g=t.closest('[data-ssgame]');if(g){({lesson:()=>startLesson(dayNum()%UNITS.length),map:mapStart,sort:sortStart,time:timeStart})[g.dataset.ssgame]();return}
+  if(SO.view==='lesson'){const o=t.closest('.opt');if(o&&!o.disabled)lessonAnswer(o);
+    if(t.closest('#lessonSpeak')){const u=UNITS[SO.unit];speak(u.title+'. '+u.cards.map(c=>c[0]+'. '+c[1]).join(' '))}return}
+  if(SO.view==='map'){const tile=t.closest('[data-tile]');if(tile){mapTap(tile);return}const c=t.closest('.choice');if(c&&!c.disabled){mapChoice(c);return}if(t.closest('#mapNext'))mapNext();return}
+  if(SO.view==='sort'){const b=t.closest('[data-bin]');if(b)sortPick(b);return}
+  if(SO.view==='time'){const c=t.closest('.evcard');if(c){timePick(c);return}if(t.closest('#timeNext'))timeNext()}
+});
+
+/* ---------- Test Prep: IUSD GATE / APAAS ---------- */
+/* NNAT-style puzzle drawing (original puzzles, not real test items) */
+const NC={blue:'#2F6FD6',yellow:'#F5C431',white:'#FFFFFF'},NS='#1B2A4A';
+const CNAME={blue:'blue',yellow:'yellow',white:'white'};
+function shapeSVG(sh,cx,cy,r,fill,rot){
+  const a=`fill="${NC[fill]}" stroke="${NS}" stroke-width="3" stroke-linejoin="round"`,tr=rot?` transform="rotate(${rot} ${cx} ${cy})"`:'';
+  const P=pts=>`<polygon points="${pts.map(([x,y])=>(cx+x*r).toFixed(1)+','+(cy+y*r).toFixed(1)).join(' ')}" ${a}${tr}/>`;
+  switch(sh){
+    case 'circle':return `<circle cx="${cx}" cy="${cy}" r="${r}" ${a}/>`;
+    case 'square':return P([[-.82,-.82],[.82,-.82],[.82,.82],[-.82,.82]]);
+    case 'triangle':return P([[0,-1],[.95,.75],[-.95,.75]]);
+    case 'diamond':return P([[0,-1],[.8,0],[0,1],[-.8,0]]);
+    case 'hexagon':return P([0,1,2,3,4,5].map(i=>[Math.cos(i*Math.PI/3),Math.sin(i*Math.PI/3)]));
+    case 'star':return P([...Array(10)].map((_,i)=>{const g=-Math.PI/2+i*Math.PI/5,q=i%2?.45:1;return [q*Math.cos(g),q*Math.sin(g)]}));
+    case 'arrow':return P([[0,-1],[.78,-.08],[.3,-.08],[.3,1],[-.3,1],[-.3,-.08],[-.78,-.08]]);
+    case 'ell':return P([[-.75,-.95],[-.15,-.95],[-.15,.35],[.8,.35],[.8,.95],[-.75,.95]]);
+    case 'pac':{const s=Math.sin(.6),c=Math.cos(.6);return `<path d="M${cx} ${cy}L${(cx+r*c).toFixed(1)} ${(cy-r*s).toFixed(1)}A${r} ${r} 0 1 0 ${(cx+r*c).toFixed(1)} ${(cy+r*s).toFixed(1)}Z" ${a}${tr}/>`}
+  }
+}
+const POS={1:[[50,50]],2:[[29,50],[71,50]],3:[[50,29],[29,70],[71,70]],4:[[30,30],[70,30],[30,70],[70,70]]};
+const RAD={1:27,2:17,3:16,4:15},SIZE={small:.6,medium:1,large:1.32};
+const LINES={h:'<line x1="12" y1="50" x2="88" y2="50"/>',v:'<line x1="50" y1="12" x2="50" y2="88"/>',d1:'<line x1="20" y1="20" x2="80" y2="80"/>',d2:'<line x1="80" y1="20" x2="20" y2="80"/>',
+  o:'<circle cx="50" cy="50" r="22" stroke="#2F6FD6"/>',t:'<line x1="22" y1="14" x2="78" y2="14"/>',b:'<line x1="22" y1="86" x2="78" y2="86"/>',l:'<line x1="14" y1="22" x2="14" y2="78"/>',r:'<line x1="86" y1="22" x2="86" y2="78"/>',dot:'<circle cx="50" cy="50" r="7" fill="#F5C431"/>'};
+const LKEYS=Object.keys(LINES);
+function patContent(p){
+  const {kind,c1,c2,shift,flip}=p;let s='';
+  if(kind==='stripes'){s+=`<g transform="rotate(${flip?-35:35} 150 100)">`;for(let i=-24;i<24;i++)s+=`<rect x="${i*24+shift}" y="-300" width="12" height="800" fill="${i%2?c1:c2}"/>`;s+='</g>'}
+  else if(kind==='dots'){for(let row=0;row<12;row++)for(let i=-1;i<17;i++)s+=`<circle cx="${i*22+(row%2?11:0)+shift}" cy="${row*20+(flip?10:0)}" r="6.5" fill="${row%2?c1:c2}" stroke="${NS}" stroke-width="1.5"/>`}
+  else if(kind==='checker'){for(let j=-1;j<10;j++)for(let i=-1;i<15;i++){const x=i*24+shift,y=j*24+(flip?12:0);if((i+j)%2===0)s+=`<rect x="${x}" y="${y}" width="24" height="24" fill="${c1}"/><circle cx="${x+12}" cy="${y+12}" r="5" fill="${c2}"/>`}}
+  else if(kind==='waves'){for(let j=-1;j<12;j++){let pts='';for(let i=-2;i<34;i++)pts+=`${i*12+shift},${j*20+(i%2===0?0:10)+(flip?7:0)} `;s+=`<polyline points="${pts}" fill="none" stroke="${j%2?c1:c2}" stroke-width="6" stroke-linejoin="round"/>`}}
+  else{for(let k=18;k>0;k--)s+=`<circle cx="${110+shift}" cy="${flip?80:110}" r="${k*13}" fill="none" stroke="${k%2?c1:c2}" stroke-width="7"/>`}
+  return `<rect x="-50" y="-50" width="400" height="300" fill="#fff"/>${s}`;
+}
+function cellSVG(c){
+  if(c.lines)return `<svg viewBox="0 0 100 100" class="ncell" aria-hidden="true"><g stroke="${NS}" stroke-width="5" stroke-linecap="round" fill="none">${c.lines.slice().sort().map(k=>LINES[k]).join('')}</g></svg>`;
+  if(c.pat)return `<svg viewBox="${c.x} ${c.y} 70 70" class="ncell" aria-hidden="true">${patContent(c.pat)}</svg>`;
+  const n=c.count||1,r=RAD[n]*SIZE[c.size||'medium'];
+  return `<svg viewBox="0 0 100 100" class="ncell" aria-hidden="true">${POS[n].map(([x,y])=>shapeSVG(c.shape,x,y,r,c.fill,c.rot||0)).join('')}</svg>`;
+}
+const nkey=c=>JSON.stringify(c.lines?{l:c.lines.slice().sort()}:c);
+const SH=['circle','square','triangle','diamond','hexagon','star'],ASYM=['arrow','pac','ell'],FILLS=['blue','yellow','white'];
+const SIZEW={small:'small',medium:'medium',large:'large'};
+const describe=(attr,v)=>attr==='fill'?CNAME[v]:attr==='count'?`${v}`:attr==='size'?SIZEW[v]:v+'s';
+const ATTRN={shape:'shape',fill:'color',count:'number of shapes',size:'size'};
+function base(){return {shape:pick(SH),fill:pick(FILLS),count:1,size:'medium',rot:0}}
+
+const NGEN={
+  serial(){
+    const variant=pick(['shape-fill','shape-count','fill-count','shape-size','count-fill']),[ra,ca]=variant.split('-');
+    const val={shape:shuffle(SH).slice(0,3),fill:shuffle(FILLS),count:shuffle([1,2,3]),size:shuffle(['small','medium','large'])};
+    const b=base();b.shape=val.shape[0];const cell=(r,c)=>({...b,[ra]:val[ra][r],[ca]:val[ca][c]});
+    const grid=[0,1,2].map(r=>[0,1,2].map(c=>cell(r,c))),ans=cell(2,2);
+    return {type:'Pattern rows',grid,miss:[2,2],answer:ans,
+      distractors:[cell(2,0),cell(2,1),cell(0,2),cell(1,2),cell(1,1),cell(0,0)],
+      more:()=>({...ans,[ra]:pick(val[ra]),[ca]:pick(val[ca]),shape:ra!=='shape'&&ca!=='shape'?pick(SH):ans.shape}),
+      explain:`Look across the rows: each row has the same ${ATTRN[ra]}. Look down the columns: each column has the same ${ATTRN[ca]}. The missing box needs the ${ATTRN[ra]} from its row and the ${ATTRN[ca]} from its column.`}},
+  latin(hard){
+    const S=shuffle(SH).slice(0,3),F=shuffle(FILLS),fixed=pick(FILLS);
+    const cell=(r,c)=>({shape:S[(r+c)%3],fill:hard?F[(r+2*c)%3]:fixed,count:1,size:'medium',rot:0});
+    const grid=[0,1,2].map(r=>[0,1,2].map(c=>cell(r,c))),m=hard?[ri(0,2),ri(0,2)]:[2,2],ans=cell(...m);
+    const d=[];S.forEach(s=>F.forEach(f=>d.push({...ans,shape:s,fill:hard?f:fixed})));
+    return {type:'Missing piece',grid,miss:m,answer:ans,distractors:d,more:()=>({...ans,shape:pick(SH),fill:pick(FILLS)}),
+      explain:hard?'Every row and every column has one of each shape and one of each color. Find the shape and the color that are still missing from that row and column.':'Every row and every column has one of each shape. Which shape is missing from the last row?'}},
+  rotate(){
+    const shape=pick(ASYM),step=pick([45,90]),starts=[0,1,2].map(()=>ri(0,7)*45),fills=shuffle(FILLS);
+    const cell=(r,c)=>({shape,fill:fills[r],count:1,size:'medium',rot:(starts[r]+c*step)%360});
+    const grid=[0,1,2].map(r=>[0,1,2].map(c=>cell(r,c))),ans=cell(2,2);
+    return {type:'Turning shapes',grid,miss:[2,2],answer:ans,
+      distractors:[{...ans,rot:(ans.rot+step)%360},{...ans,rot:(ans.rot+360-step)%360},{...ans,rot:(ans.rot+180)%360},{...ans,fill:fills[0]},{...ans,rot:(ans.rot+90)%360}],
+      more:()=>({...ans,rot:ri(0,7)*45}),
+      explain:`In every row, the shape turns ${step===90?'a quarter turn':'an eighth of a turn'} clockwise (like a clock’s hands) each step. Turn the middle shape of the last row one more step.`}},
+  analogy(){
+    const T=pick(['recolor','grow','double','turn','shrink']);
+    const asym=T==='turn';const pool=asym?ASYM:SH,[sA,sB]=shuffle(pool).slice(0,2);
+    let A={shape:sA,fill:pick(['blue','yellow']),count:1,size:'medium',rot:0},B={...A,shape:sB,fill:pick(['blue','yellow'])};
+    if(T==='grow'){A.size=B.size='small'}if(T==='shrink'){A.size=B.size='large'}
+    const swap=f=>f==='blue'?'yellow':'blue';
+    const tf={recolor:c=>({...c,fill:swap(c.fill)}),grow:c=>({...c,size:'large'}),shrink:c=>({...c,size:'small'}),double:c=>({...c,count:2}),turn:c=>({...c,rot:(c.rot+90)%360})};
+    const ans=tf[T](B),other=Object.keys(tf).filter(k=>k!==T);
+    const words={recolor:'The shape stays the same, but its color switches.',grow:'The shape stays the same, but it gets bigger.',shrink:'The shape stays the same, but it gets smaller.',double:'The shape stays the same, but now there are two of them.',turn:'The shape turns a quarter turn clockwise.'};
+    return {type:'Matching changes',grid:[[A,tf[T](A)],[B,ans]],miss:[1,1],answer:ans,
+      distractors:[B,tf[T](A),...other.map(k=>tf[k](B)),{...ans,fill:'white'}],more:()=>({...ans,shape:pick(pool)}),
+      explain:`Look at how the top-left picture changes into the top-right picture. ${words[T]} Make the same change to the bottom picture.`}},
+  overlay(hard){
+    const xor=hard&&Math.random()<.5,rows=[];
+    for(let r=0;r<3;r++){const ks=shuffle(LKEYS);let a,b;
+      if(xor){const shared=ks[0];a=[shared,ks[1]];b=[shared,ks[2]]}else{a=[ks[0],ks[1]];b=[ks[2],ks[3]]}
+      const c=xor?[...a,...b].filter(k=>!(a.includes(k)&&b.includes(k))):[...new Set([...a,...b])];rows.push([{lines:a},{lines:b},{lines:c}])}
+    const ans=rows[2][2],[a,b]=[rows[2][0].lines,rows[2][1].lines],U=[...new Set([...a,...b])],extra=LKEYS.find(k=>!U.includes(k));
+    return {type:'Stacking pictures',grid:rows,miss:[2,2],answer:ans,
+      distractors:[{lines:U},{lines:ans.lines.slice(1)},{lines:[...ans.lines,extra]},{lines:a},{lines:b},{lines:ans.lines.slice(0,-1)}].filter(d=>d.lines.length),
+      more:()=>({lines:shuffle(LKEYS).slice(0,ri(2,4))}),
+      explain:xor?'In each row, stack the first two pictures on top of each other. Any line that is in BOTH pictures disappears.':'In each row, stack the first two pictures on top of each other to make the third picture.'}},
+  pattern(){
+    const kind=pick(['stripes','dots','checker','waves','rings']),[c1,c2]=shuffle(['#2F6FD6','#F5C431','#1B2A4A']).slice(0,2);
+    const p={kind,c1,c2,shift:0,flip:false},x=ri(5,19)*10,y=ri(3,11)*10;
+    const mk=q=>({pat:{...p,...q},x,y});
+    return {type:'Finish the pattern',big:p,x,y,answer:mk({}),
+      distractors:[mk({c1:c2,c2:c1}),mk({shift:kind==='rings'?26:12}),mk({flip:true}),mk({c1:c2,c2:c1,shift:kind==='rings'?26:12}),mk({flip:true,c1:c2,c2:c1})],
+      more:()=>mk({shift:ri(1,5)*7}),
+      explain:'The missing piece must continue the big pattern exactly: the same colors in the same order, going the same direction, lining up with the edges around the hole.'}}
+};
+function finalizeN(p){
+  const seen=new Set([nkey(p.answer)]),opts=[p.answer];
+  for(const d of shuffle(p.distractors)){const k=nkey(d);if(!seen.has(k)&&opts.length<5){seen.add(k);opts.push(d)}}
+  for(let g=0;opts.length<5&&g<80;g++){const d=p.more(),k=nkey(d);if(!seen.has(k)){seen.add(k);opts.push(d)}}
+  p.opts=shuffle(opts);p.ans=p.opts.findIndex(o=>nkey(o)===nkey(p.answer));return p;
+}
+function nnatPuzzle(grade){
+  const g=grade===4?['serial','analogy','pattern','rotate','rotate','latinH','latinH','overlay','overlayH','overlayH','pattern','serial']
+                   :['serial','serial','serial','analogy','analogy','pattern','pattern','rotate','latin','latin','overlay','analogy'];
+  const t=pick(g);
+  return finalizeN(t==='latinH'?NGEN.latin(true):t==='overlayH'?NGEN.overlay(true):NGEN[t]());
+}
+function puzzleHTML(p){
+  if(p.big)return `<div class="nbig"><svg viewBox="0 0 300 200" role="img" aria-label="A pattern with a missing piece"><defs><clipPath id="pclip"><rect width="300" height="200" rx="10"/></clipPath></defs><g clip-path="url(#pclip)">${patContent(p.big)}<rect x="${p.x}" y="${p.y}" width="70" height="70" fill="#fff" stroke="${NS}" stroke-width="2.5" stroke-dasharray="6 4"/><text x="${p.x+35}" y="${p.y+47}" text-anchor="middle" font-family="Baloo 2, sans-serif" font-weight="800" font-size="34" fill="${NS}">?</text></g><rect width="300" height="200" rx="10" fill="none" stroke="${NS}" stroke-width="3"/></svg></div>`;
+  const n=p.grid[0].length;
+  return `<div class="nmatrix" style="--n:${n}" role="img" aria-label="A ${n} by ${n} grid of pictures with one missing">${p.grid.map((row,r)=>row.map((c,ci)=>r===p.miss[0]&&ci===p.miss[1]?'<div class="ncellbox nq">?</div>':`<div class="ncellbox">${cellSVG(c)}</div>`).join('')).join('')}</div>`;
+}
+
+/* Challenge math (above grade level, multiple choice like STAR) */
+function nearNums(ans,spread){const s=new Set([ans]);let g=0;while(s.size<4&&g++<60){const d=ans+pick([-1,1])*ri(1,spread);if(d>=0)s.add(d)}return shuffle([...s])}
+const CMATH=[
+  ()=>{const a=ri(12,49),b=ri(3,9),t=Math.floor(a/10)*10,o=a%10;return {label:'Multiply',q:`${a} × ${b} = ?`,ans:a*b,opts:nearNums(a*b,12),why:`Break ${a} into ${t} + ${o}. Then ${t} × ${b} = ${t*b} and ${o} × ${b} = ${o*b}. Add them: ${a*b}.`}},
+  ()=>{const b=ri(3,9),c=ri(3,9);return {label:'Missing number',q:`? × ${b} = ${b*c}`,ans:c,opts:nearNums(c,3),why:`Think: ${b} times what makes ${b*c}? ${b} × ${c} = ${b*c}.`}},
+  ()=>{const b=ri(4,9),c=ri(4,12);return {label:'Missing number',q:`${b*c} ÷ ? = ${c}`,ans:b,opts:nearNums(b,3),why:`Division undoes multiplication: ${c} × ${b} = ${b*c}.`}},
+  ()=>{if(Math.random()<.6){const s=ri(2,20),d=ri(3,9),seq=[0,1,2,3].map(i=>s+i*d);return {label:'Number pattern',q:`What comes next? ${seq.join(', ')}, ?`,ans:s+4*d,opts:nearNums(s+4*d,d),why:`Each number is ${d} more than the one before.`}}
+    const s=ri(1,5),seq=[0,1,2,3].map(i=>s*2**i);return {label:'Number pattern',q:`What comes next? ${seq.join(', ')}, ?`,ans:s*16,opts:nearNums(s*16,s*4),why:'Each number is double the one before it.'}},
+  ()=>{const l=ri(4,12),w=ri(2,9);return {label:'Area',q:`A rectangle is ${l} cm long and ${w} cm wide. What is its area in square centimeters?`,ans:l*w,opts:shuffle([...new Set([l*w,2*(l+w),l+w,l*w+l])]),why:`Area = length × width = ${l} × ${w} = ${l*w} square cm.`}},
+  ()=>{const l=ri(4,15),w=ri(2,9);return {label:'Perimeter',q:`A rectangle is ${l} m long and ${w} m wide. What is its perimeter in meters?`,ans:2*(l+w),opts:shuffle([...new Set([2*(l+w),l*w,l+w,2*l+w])]),why:`Perimeter means adding all four sides: ${l} + ${w} + ${l} + ${w} = ${2*(l+w)} m.`}},
+  ()=>{const d=pick([2,3,4,5]),n=ri(1,d-1),k=ri(2,4);return {label:'Fractions',q:`${fracHTML(n+'/'+d)} = ${fracHTML('?/'+d*k)}`,ans:n*k,opts:nearNums(n*k,3),why:`The bottom number was multiplied by ${k} (${d} × ${k} = ${d*k}), so multiply the top by ${k} too: ${n} × ${k} = ${n*k}.`}},
+  ()=>{let n,ds,pos;do{n=ri(1000,9999);ds=String(n).split('');pos=ri(0,3)}while(ds[pos]==='0'||ds.filter(x=>x===ds[pos]).length>1);
+    const v=+ds[pos]*10**(3-pos),opts=shuffle([...new Set([v,+ds[pos],+ds[pos]*10,+ds[pos]*100,+ds[pos]*1000])]).slice(0,4);if(!opts.includes(v))opts[0]=v;
+    return {label:'Place value',q:`What is the value of the digit ${ds[pos]} in ${n.toLocaleString('en-US')}?`,ans:v,opts:shuffle(opts),why:`The ${ds[pos]} is in the ${['thousands','hundreds','tens','ones'][pos]} place, so it is worth ${v.toLocaleString('en-US')}.`}},
+  ()=>{const h=ri(1,9),m=pick([0,15,30,45]),[dh,dm]=pick([[0,45],[1,15],[1,30],[2,20],[1,45],[0,50]]),tot=h*60+m+dh*60+dm,f=x=>`${Math.floor(x/60)}:${pad(x%60)}`;
+    const opts=shuffle([...new Set([tot,tot+15,tot-15,tot+60,tot-30].map(f))]).slice(0,4);if(!opts.includes(f(tot)))opts[0]=f(tot);
+    return {label:'Elapsed time',q:`A movie starts at ${f(h*60+m)} PM and lasts ${dh?dh+' hour'+(dh>1?'s':'')+' ':''}${dm} minutes. When does it end?`,ans:f(tot),opts:shuffle(opts),why:`Add the hours first, then the minutes. ${f(h*60+m)} + ${dh} h ${dm} min = ${f(tot)} PM.`}},
+  ()=>{const a=ri(6,12),b=ri(6,12),c=ri(10,a*b-10);return {label:'Two-step',q:`A school orders ${a} boxes of markers with ${b} markers in each box. The art room uses ${c} markers. How many markers are left?`,ans:a*b-c,opts:nearNums(a*b-c,10),why:`Step 1: ${a} × ${b} = ${a*b} markers. Step 2: ${a*b} − ${c} = ${a*b-c}.`}},
+  ()=>{const t=ri(2,8),o=pick([1,3,5,7,9]),n=t*10+o,opts=new Set([n]);[n-2,n+2,n-4,n+4,n+10,n-10].forEach(x=>{if(opts.size<4&&x>9&&x%2)opts.add(x)});return {label:'Logic',q:`I am a number between ${t*10} and ${t*10+10}. I am odd. My digits add up to ${t+o}. What number am I?`,ans:n,opts:shuffle([...opts]),why:`The tens digit must be ${t}. ${t} + ? = ${t+o}, so the ones digit is ${o}. The number is ${n}.`}},
+  ()=>{const P=pick([['3/4','2/3'],['5/8','1/2'],['2/5','1/2'],['5/6','3/4'],['1/3','1/4'],['7/10','3/5']]),val=f=>{const [a,b]=f.split('/');return a/b},big=val(P[0])>val(P[1])?P[0]:P[1];
+    return {label:'Compare fractions',q:'Which fraction is greater?',ans:big,opts:shuffle(P),frac:true,why:'Compare each fraction to 1/2, or picture them as pizzas cut into equal slices. Bigger fraction = more pizza.'}}
+];
+const WORDS=[
+  ['The hikers were <b>weary</b> after climbing the mountain all day.',['tired','excited','lost','hungry'],'They climbed all day, so they would feel worn out.'],
+  ['Maya was <b>reluctant</b> to jump into the cold lake, so she stayed on the dock.',['not wanting to','eager','proud','fast'],'She stayed on the dock, so she did not want to jump.'],
+  ['The tiny kitten looked <b>feeble</b> after being stuck in the rain.',['weak','angry','fluffy','playful'],'Being stuck in the rain would make a kitten weak.'],
+  ['Our teacher asked us to <b>revise</b> our stories to make them better.',['change and improve','read aloud','throw away','copy'],'“To make them better” is the clue.'],
+  ['The desert is so <b>arid</b> that it may not rain for months.',['very dry','very cold','very crowded','very loud'],'No rain for months means very dry.'],
+  ['Leo gave such a <b>vivid</b> description of the fireworks that I could almost see them.',['clear and full of detail','boring','short','quiet'],'“I could almost see them” is the clue.'],
+  ['The museum had an <b>immense</b> dinosaur skeleton that filled the whole room.',['huge','tiny','broken','scary'],'It filled the whole room, so it was very big.'],
+  ['After the storm, the river was so <b>murky</b> that we couldn’t see the bottom.',['cloudy and dark','clear','frozen','fast'],'You can’t see through murky water.'],
+  ['The puppy was so <b>timid</b> that it hid behind the couch when guests came.',['shy','brave','hungry','sleepy'],'Hiding from guests shows it was shy.'],
+  ['Grandpa is very <b>frugal</b>. He never wastes money.',['careful with money','generous','rich','forgetful'],'“Never wastes money” explains it.'],
+  ['The magic trick was so <b>baffling</b> that nobody could explain it.',['confusing','boring','easy','funny'],'Nobody could explain it, so it was confusing.'],
+  ['The plants began to <b>flourish</b> once they got more sunlight.',['grow well','die','shrink','fall over'],'Plants need sunlight to grow well.'],
+  ['The class <b>collaborated</b> on a mural, and everyone painted a part.',['worked together','argued','rested','competed'],'Everyone painted a part, so they worked together.'],
+  ['Please be <b>concise</b>. We only have one minute for your answer.',['short and clear','loud','slow','silly'],'Only one minute means keep it short.'],
+  ['The rabbit’s white fur is great <b>camouflage</b> in the snowy forest.',['a way to blend in','a warm blanket','a kind of food','a loud noise'],'White fur on white snow helps it hide.'],
+  ['Ella felt <b>elated</b> when she won first place.',['very happy','very sad','worried','bored'],'Winning first place feels wonderful.'],
+  ['The old bridge was <b>hazardous</b>, so the town put up a sign telling people to keep off.',['dangerous','beautiful','new','tiny'],'A keep-off sign warns about danger.'],
+  ['Sam tried to <b>persuade</b> his parents to get a puppy by listing all the reasons it was a good idea.',['convince','forget','ignore','surprise'],'He listed reasons to change their minds.']
+];
+const CREATIVE=[
+  'You find a door in your backyard that was not there yesterday. What happens when you open it?',
+  'Your shadow decides to go on an adventure without you.',
+  'One morning, every animal in town can talk, except one.',
+  'You invent a machine that can do one amazing thing. What is it, and what goes wrong?',
+  'Tell the story of a raindrop’s journey from a cloud to the ocean.',
+  'The day gravity took a vacation.',
+  'You shrink to the size of an ant during recess.',
+  'An ordinary object in your house has a secret life at night.',
+  'The last dragon on Earth applies for a job.',
+  'You open a book, and you fall inside the story.',
+  'A mysterious package arrives with your name on it and a note that says “Do not open until…”',
+  'The moon goes missing one night, and you are the only one who notices.'
+];
+const STORM=['a paper clip','a cardboard box','a spoon','an old sock','a bucket','an umbrella','a rubber band','a shoelace','a plastic cup','a pillow'];
+const RUBRIC=[
+  ['Use of language',['I used strong, interesting words (not just “good” or “nice”).','I described what things look, sound, smell or feel like.','I used dialogue or a simile (like “as quiet as a snowflake”).']],
+  ['Divergent thought',['My idea is one that most people would not think of.','I added a surprise or a twist.']],
+  ['Idea development',['My story has a clear beginning, middle and end.','There is a problem, and my character solves it.','My ending wraps up the story.']]
+];
+
+/* Screens */
+const PR={tab:'overview',grade:3,run:null,int:null,cm:null,wp:null,cw:null,st:null};
+function stopPrep(){clearInterval(PR.int);PR.int=null}
+function renderPrep(){
+  $$('[data-ptab]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.ptab===PR.tab));
+  if(PR.tab==='overview')prepOverview();
+  else if(PR.tab==='nnat'){if(!PR.run)nnatMenu()}
+  else if(PR.tab==='cmath'){if(!PR.cm)cmathStart()}
+  else if(PR.tab==='words'){if(!PR.wp)wordsStart()}
+  else if(PR.tab==='write'){if(!PR.cw)writeMenu()}
+}
+$$('[data-ptab]').forEach(b=>b.onclick=()=>{stopPrep();PR.run=null;PR.cm=null;PR.wp=null;PR.cw=null;PR.tab=b.dataset.ptab;renderPrep()});
+const pstage=()=>$('#prepStage');
+function prepOverview(){
+  const log=S.prepLog.slice(-6).reverse();
+  pstage().innerHTML=`<section class="panel prose">
+    <h2>What IUSD looks at in 3rd grade</h2>
+    <p>Both programs use the same kinds of measures. This section has practice for each one.</p>
+    <div class="ptable"><table>
+      <thead><tr><th>Measure</th><th>GATE (3rd grade screening)</th><th>APAAS (apply in 3rd grade)</th><th>Practice here</th></tr></thead>
+      <tbody>
+      <tr><td><b>Ability</b>: Naglieri NNAT</td><td>One of 4 categories</td><td>1 of 3 equal parts</td><td>NNAT Puzzles</td></tr>
+      <tr><td><b>Reading</b>: STAR Reading or CAASPP ELA</td><td>One of 4 categories</td><td>Adaptive reading test, 1 of 3 parts</td><td>Word Power, plus the Reading section</td></tr>
+      <tr><td><b>Math</b>: STAR Math or CAASPP Math</td><td>One of 4 categories</td><td>Adaptive math test (same part as reading)</td><td>Challenge Math</td></tr>
+      <tr><td><b>Creativity</b>: creative writing sample</td><td>One of 4 categories</td><td>1 of 3 equal parts</td><td>Creative Writing</td></tr>
+      </tbody></table></div>
+    <ul class="facts">
+      <li><b>GATE:</b> every IUSD 3rd grader is screened automatically during the school year. A student qualifies by meeting the criteria in 3 of the 4 categories, scoring in the top 20% of the grade level. Families hear by early July.</li>
+      <li><b>APAAS</b> (Alternative Program for Academically Advanced Students) is a 4th–6th grade program at six schools. Families apply during 3rd grade, and spots go to the highest combined scores.</li>
+      <li><b>NNAT</b> is a nonverbal, multiple-choice test of shape and pattern reasoning, given once in 3rd grade. IUSD describes Naglieri Ability Index scores of 111–120 as high average, 121–130 as superior and 131+ as very superior. The NNAT3 level for grades 3–4 is usually about 48 puzzles in 30 minutes.</li>
+      <li><b>Writing sample:</b> students write a creative story from a prompt. It is scored on use of language, divergent thought, and idea development (1–8 points).</li>
+    </ul>
+    <p class="note">Sources: <a href="https://iusd.org/sites/default/files/documents/Overview%20of%20IUSD%20GATE%20Screening%202025-26.pdf" target="_blank" rel="noopener">IUSD GATE Screening Overview 2025–26</a> · <a href="https://iusd.org/sites/default/files/documents/overview_of_iusd_apaas_application_process_january_2022.pdf" target="_blank" rel="noopener">IUSD APAAS Application Overview (rev. 1/2022)</a> · <a href="https://iusd.org/about/departments/education-services/student-support-services/advanced-learning-and-differentiation" target="_blank" rel="noopener">IUSD Advanced Learning</a>. Check iusd.org for this year’s dates and any changes.</p>
+    <p class="note">Star Academy is not connected with IUSD or the publisher of the NNAT. The puzzles here are original practice in a similar style, and scores here are not NNAT scores. Short, relaxed sessions (10–15 minutes) work best.</p>
+  </section>
+  <section class="panel"><h2>Recent practice</h2>${log.length?`<div class="tablewrap" style="margin-top:10px"><table><thead><tr><th>Date</th><th>Activity</th><th>Score</th></tr></thead><tbody>${log.map(l=>`<tr><td>${new Date(l.date+'T12:00').toLocaleDateString(undefined,{month:'short',day:'numeric'})}</td><td>${esc(l.what)}</td><td>${l.score}/${l.total}</td></tr>`).join('')}</tbody></table></div>`:'<p class="note" style="margin-top:8px">No practice yet. Try the NNAT Puzzles first!</p>'}</section>`;
+}
+function logPrep(what,score,total){S.prepLog.push({date:todayKey(),what,score,total});if(S.prepLog.length>40)S.prepLog=S.prepLog.slice(-40);save()}
+
+/* NNAT runner */
+function nnatMenu(){
+  pstage().innerHTML=`<section class="panel menu-top"><div class="pip small idle">${pipSVG('think')}</div><div><h2>Shape puzzles</h2><p class="lede">Look at the pictures, find the rule, and pick the missing piece. No reading needed!</p>
+    <div class="chips" style="margin-top:8px" role="group" aria-label="Grade level"><button type="button" class="chip" data-grade="3" aria-pressed="${PR.grade===3}">3rd grade</button><button type="button" class="chip" data-grade="4" aria-pressed="${PR.grade===4}">4th grade</button></div></div></section>
+  <div class="arcade">
+    <button type="button" class="gcard wide" data-nnat="practice" style="--gc:var(--grape);--gs:var(--grape-soft)"><span class="gicon">${UI.star}</span><span><span class="gname">Practice</span><span class="gsub">12 puzzles. Pip explains the rule after each one. No timer.</span></span></button>
+    <button type="button" class="gcard wide" data-nnat="timed" style="--gc:var(--math);--gs:var(--math-soft)"><span class="gicon">${UI.clock}</span><span><span class="gname">Timed test</span><span class="gsub">24 puzzles in 15 minutes, the same pace as the real test. Answers are reviewed at the end.</span></span></button>
+  </div>
+  <section class="panel"><h2>The six kinds of puzzles</h2><div class="ptypes">${[['serial','Pattern rows'],['latin','Missing piece'],['analogy','Matching changes'],['rotate','Turning shapes'],['overlay','Stacking pictures'],['pattern','Finish the pattern']].map(([k,l])=>{const p=k==='latin'?NGEN.latin(false):NGEN[k]();return `<div class="ptype"><div class="pmini">${puzzleHTML(p)}</div><b>${l}</b></div>`}).join('')}</div></section>`;
+  $$('[data-grade]').forEach(b=>b.onclick=()=>{PR.grade=+b.dataset.grade;nnatMenu()});
+  $$('[data-nnat]').forEach(b=>b.onclick=()=>nnatStart(b.dataset.nnat));
+}
+function nnatStart(mode){
+  const n=mode==='timed'?24:12;PR.run={mode,grade:PR.grade,qs:Array.from({length:n},()=>nnatPuzzle(PR.grade)),i:0,picks:[],score:0,tries:0,locked:false,end:mode==='timed'?Date.now()+15*60000:0};
+  if(mode==='timed'){stopPrep();PR.int=setInterval(nnatTick,500)}nnatRender();window.scrollTo(0,0);
+}
+function nnatTick(){const r=PR.run;if(!r)return stopPrep();const rem=Math.max(0,r.end-Date.now()),el=$('#ntime');if(el)el.textContent=Math.floor(rem/60000)+':'+pad(Math.floor(rem/1000)%60);if(rem<=0){stopPrep();nnatEnd(true)}}
+function nnatRender(){
+  const r=PR.run,p=r.qs[r.i];r.tries=0;r.locked=false;
+  pstage().innerHTML=`<section class="panel"><div class="qtop"><span class="tag">${r.mode==='timed'?'Timed test':'Practice'} · Grade ${r.grade}</span><span>${r.mode==='timed'?`<b id="ntime" class="ntime"></b> · `:''}Puzzle ${r.i+1} of ${r.qs.length}</span><button class="link" type="button" id="nQuit">Stop</button></div>
+    <div class="bar" aria-hidden="true"><i style="width:${r.i/r.qs.length*100}%"></i></div>
+    <div class="npuzzle">${puzzleHTML(p)}</div>
+    <p class="note" style="text-align:center">Which picture goes where the question mark is?</p>
+    <div class="nopts">${p.opts.map((o,k)=>`<button type="button" class="nopt" data-k="${k}" aria-label="Answer ${'ABCDE'[k]}"><span class="nlet">${'ABCDE'[k]}</span>${cellSVG(o)}</button>`).join('')}</div>
+    <p class="feedback" id="nFb" aria-live="polite" style="margin-top:12px"></p>
+    <div class="hintbox" id="nWhy" hidden><p>${p.explain}</p></div>
+    <div class="qactions"><span class="note">${r.mode==='timed'?'Not sure? Make your best guess. There’s no penalty.':''}</span><span class="row">${r.mode==='practice'?'<button class="link" type="button" id="nHint">Show the rule</button>':''}<button class="btn" type="button" id="nNext" hidden>Next</button></span></div></section>`;
+  if(r.mode==='timed')nnatTick();
+  $('#nQuit').onclick=()=>{stopPrep();PR.run=null;nnatMenu()};
+  const h=$('#nHint');if(h)h.onclick=()=>{$('#nWhy').hidden=false;h.hidden=true;r.tries=Math.max(r.tries,1)};
+  $$('.nopt').forEach(b=>b.onclick=()=>nnatPick(b));
+  $('#nNext').onclick=nnatNext;
+}
+function nnatPick(b){
+  const r=PR.run,p=r.qs[r.i],k=+b.dataset.k;if(r.locked)return;
+  if(r.mode==='timed'){r.picks[r.i]=k;if(k===p.ans)r.score++;SFX.pop();nnatNext();return}
+  const fb=$('#nFb');
+  if(k===p.ans){b.classList.add('right');if(!r.tries){r.score++;addStars(1);burst(b)}SFX.right();fb.className='feedback good';fb.textContent=pick(PRAISE);$('#nWhy').hidden=false;nnatLock()}
+  else{r.tries++;SFX.wrong();b.classList.add('wrong');b.disabled=true;
+    if(r.tries>=2){fb.className='feedback bad';fb.textContent=`The answer is ${'ABCDE'[p.ans]}. Read the rule below.`;$$('.nopt')[p.ans].classList.add('right');$('#nWhy').hidden=false;nnatLock()}
+    else{fb.className='feedback try';fb.textContent='Not quite. Look again: check every row and every column.'}}
+}
+function nnatLock(){const r=PR.run;r.locked=true;$$('.nopt').forEach(b=>b.disabled=true);const h=$('#nHint');if(h)h.hidden=true;const n=$('#nNext');n.hidden=false;n.textContent=r.i===r.qs.length-1?'See my score':'Next';n.focus()}
+function nnatNext(){const r=PR.run;r.i++;if(r.i<r.qs.length){nnatRender();return}stopPrep();nnatEnd(false)}
+function nnatEnd(timeUp){
+  const r=PR.run;if(!r)return;const n=r.qs.length,answered=r.mode==='timed'?r.picks.filter(x=>x!=null).length:n;
+  const types={};r.qs.forEach((p,i)=>{const t=types[p.type]||(types[p.type]={n:0,c:0});t.n++;if(r.picks[i]===p.ans)t.c++});
+  if(r.mode==='timed'){const st=Math.floor(r.score/3);if(st)addStars(st,'Puzzle stars!')}
+  logPrep(`NNAT puzzles, grade ${r.grade} (${r.mode})`,r.score,n);SFX.win();if(r.score/n>=.8)confetti();
+  const review=r.mode==='timed'?r.qs.map((p,i)=>({p,i})).filter(({p,i})=>r.picks[i]!==p.ans):[];
+  pstage().innerHTML=`<section class="panel results"><div class="pip happy">${pipSVG('happy')}</div><p class="eyebrow">${r.mode==='timed'?'Timed test':'Practice'} · Grade ${r.grade}</p><div class="score">${r.score}/${n}</div>
+    <h2>${timeUp?'Time’s up! ':''}${r.score/n>=.85?'Puzzle master!':r.score/n>=.6?'Great thinking!':'Good practice! Every puzzle trains your brain.'}</h2>
+    ${r.mode==='timed'?`<p class="lede">You answered ${answered} of ${n} puzzles before the timer ran out.</p><div class="tablewrap" style="width:100%"><table><thead><tr><th>Puzzle type</th><th>Correct</th></tr></thead><tbody>${Object.entries(types).map(([t,v])=>`<tr><td>${t}</td><td>${v.c} of ${v.n}</td></tr>`).join('')}</tbody></table></div>`:''}
+    <div class="row"><button class="btn" type="button" id="nAgain">Try again</button><button class="btn ghost" type="button" id="nMenu">Puzzle menu</button></div></section>
+    ${review.length?`<section class="panel"><h2>Let’s look at the tricky ones</h2><div class="nreview">${review.slice(0,8).map(({p,i})=>`<div class="nrev"><div class="pmini">${puzzleHTML(p)}</div><div><p><b>Puzzle ${i+1}:</b> the answer was <span class="nans">${cellSVG(p.answer)}</span></p><p class="note">${p.explain}</p></div></div>`).join('')}</div></section>`:''}`;
+  $('#nAgain').onclick=()=>nnatStart(r.mode);$('#nMenu').onclick=()=>{PR.run=null;nnatMenu()};
+}
+
+/* Challenge Math + Word Power share a simple multiple-choice runner */
+function mcRun(kind){
+  const cm=kind==='cmath';const qs=cm?Array.from({length:10},()=>pick(CMATH)()):shuffle(WORDS).slice(0,10).map(([s,o,why])=>({label:'Word in context',q:s,ans:o[0],opts:shuffle(o),why}));
+  const st={kind,qs,i:0,score:0};if(cm)PR.cm=st;else PR.wp=st;mcRender(st);
+}
+const cmathStart=()=>mcRun('cmath'),wordsStart=()=>mcRun('words');
+function mcRender(st){
+  const q=st.qs[st.i],cm=st.kind==='cmath';
+  pstage().innerHTML=`<section class="panel"><div class="qtop"><span class="tag">${cm?'Challenge Math':'Word Power'} · ${q.label}</span><span>Question ${st.i+1} of ${st.qs.length} · ${st.score} correct</span></div>
+    <div class="bar" aria-hidden="true"><i style="width:${st.i/st.qs.length*100}%"></i></div>
+    <p class="${cm?'cmq':'wpq'}">${q.q}</p>${cm?'':'<p class="note" style="text-align:center">What does the bold word mean?</p>'}
+    <div class="${cm?'choices':'opts'}" style="${cm?'':'max-width:520px;margin:0 auto'}">${q.opts.map(o=>`<button type="button" class="${cm?'choice small':'opt'}" data-v="${esc(String(o))}">${q.frac?fracHTML(o):esc(String(o))}</button>`).join('')}</div>
+    <p class="feedback" id="mcFb" aria-live="polite" style="margin-top:14px"></p><div class="hintbox" id="mcWhy" hidden><p>${q.why}</p></div>
+    <div class="qactions"><span class="note">${cm?'These are a little harder than 3rd grade, like the STAR Math test.':'Use the other words in the sentence as clues.'}</span><button class="btn" type="button" id="mcNext" hidden>Next</button></div></section>`;
+  $$(`#prepStage ${cm?'.choice':'.opt'}`).forEach(b=>b.onclick=()=>{
+    if(st.locked)return;st.locked=true;const ok=b.dataset.v===String(q.ans),fb=$('#mcFb');
+    $$(`#prepStage ${cm?'.choice':'.opt'}`).forEach(x=>{x.disabled=true;if(x.dataset.v===String(q.ans))x.classList.add('right')});
+    if(ok){st.score++;addStars(1);burst(b);SFX.right();fb.className='feedback good';fb.textContent=pick(PRAISE)}else{b.classList.add('wrong');SFX.wrong();fb.className='feedback try';fb.textContent='Here’s how to think about it:'}
+    $('#mcWhy').hidden=false;const n=$('#mcNext');n.hidden=false;n.textContent=st.i===st.qs.length-1?'See my score':'Next';n.focus()});
+  $('#mcNext').onclick=()=>{st.locked=false;st.i++;if(st.i<st.qs.length){mcRender(st);return}
+    const name=cm?'Challenge Math':'Word Power';logPrep(name,st.score,st.qs.length);SFX.win();if(st.score>=8)confetti();
+    pstage().innerHTML=`<section class="panel results"><div class="pip happy">${pipSVG('happy')}</div><p class="eyebrow">${name}</p><div class="score">${st.score}/${st.qs.length}</div><h2>${st.score>=9?'Outstanding!':st.score>=7?'Excellent work!':'Nice effort! These are challenge questions.'}</h2><div class="row"><button class="btn" type="button" id="mcAgain">New set</button></div></section>`;
+    $('#mcAgain').onclick=()=>mcRun(st.kind)};
+}
+
+/* Creative writing */
+function writeMenu(){
+  PR.cw={mode:'menu'};
+  pstage().innerHTML=`<section class="panel"><h2>The writing sample</h2><p class="lede" style="margin-top:6px">IUSD scores the creative story on three things: <b>use of language</b>, <b>divergent thought</b> (original, unexpected ideas), and <b>idea development</b>. Warm up your imagination, then write a story.</p></section>
+  <div class="arcade">
+    <button type="button" class="gcard wide" id="goStorm" style="--gc:var(--star);--gs:var(--star-soft)"><span class="gicon">${UI.star}</span><span><span class="gname">Idea Storm</span><span class="gsub">How many different ways could you use an everyday object? 2 minutes. Go!</span></span></button>
+    <button type="button" class="gcard wide" id="goStory" style="--gc:var(--write);--gs:var(--write-soft)"><span class="gicon">${UI.book}</span><span><span class="gname">Creative story</span><span class="gsub">Get a story prompt, plan, write, then check your story against the three scoring areas.</span></span></button>
+  </div>`;
+  $('#goStorm').onclick=stormStart;$('#goStory').onclick=()=>storyStart(ri(0,CREATIVE.length-1));
+}
+function stormStart(){
+  const obj=pick(STORM);PR.cw={mode:'storm',obj,end:0,done:false};
+  pstage().innerHTML=`<section class="panel"><div class="qtop"><span class="tag">Idea Storm</span><button class="link" type="button" id="cwBack">Back</button></div>
+    <h2 style="margin-top:14px">What could you do with <span style="color:var(--c)">${obj}</span>?</h2>
+    <p class="note" style="margin-top:4px">Write one idea per line. Silly ideas count! Try thinking: a tool, a toy, for an animal, giant-sized, tiny-sized, in space…</p>
+    <div class="timer-face" style="margin:14px 0"><span class="ttime" id="stTime">2:00</span><button class="btn" type="button" id="stGo">Start</button><span class="note"><b id="stCount">0</b> ideas</span></div>
+    <div class="sheet"><textarea id="stIdeas" aria-label="Your ideas, one per line" placeholder="1. A tiny ladder for a toy mouse…"></textarea></div>
+    <p class="feedback" id="stFb" aria-live="polite" style="margin-top:12px"></p></section>`;
+  const ta=$('#stIdeas'),count=()=>ta.value.split('\n').filter(l=>l.trim().length>1).length;
+  ta.addEventListener('input',()=>{$('#stCount').textContent=count()});
+  $('#cwBack').onclick=()=>{stopPrep();writeMenu()};
+  $('#stGo').onclick=()=>{if(PR.cw.end)return;PR.cw.end=Date.now()+120000;$('#stGo').disabled=true;ta.focus();stopPrep();
+    PR.int=setInterval(()=>{const rem=Math.max(0,PR.cw.end-Date.now()),t=$('#stTime');if(t)t.textContent=Math.floor(rem/60000)+':'+pad(Math.floor(rem/1000)%60);
+      if(rem<=0){stopPrep();const n=count(),s=Math.floor(n/3);ta.readOnly=true;$('#stFb').className='feedback good';
+        $('#stFb').textContent=`Time! You thought of ${n} ${n===1?'idea':'ideas'}. ${n>=10?'What an imagination!':'Next time, try to beat it!'}`;
+        if(s)addStars(s,'Idea stars!');SFX.win();logPrep(`Idea Storm: ${obj}`,n,n);$('#stGo').textContent='Done';}},250)};
+}
+function storyStart(pi){
+  PR.cw={mode:'story',pi};
+  pstage().innerHTML=`<section class="panel prompt-card"><div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap"><span class="tag">Creative story prompt</span><span class="row"><button class="link" type="button" id="cwNew">Different prompt</button><button class="link" type="button" id="cwBack">Back</button></span></div>
+      <p class="prompt-text">${CREATIVE[pi]}</p>
+      <div class="plan"><label for="cp0">Who and where?<textarea id="cp0" placeholder="My character and setting…"></textarea></label><label for="cp1">The problem<textarea id="cp1" placeholder="What goes wrong?"></textarea></label><label for="cp2">The surprise ending<textarea id="cp2" placeholder="How does it end?"></textarea></label></div></section>
+    <div class="write-grid"><div class="sheet"><textarea id="cwText" aria-label="Write your story here" placeholder="Once upon a time…"></textarea></div>
+      <div class="side"><section class="panel meter"><div class="meter-top"><span><b id="cwWc">0</b> words</span><span class="note">Practice timer: <b id="cwTime">20:00</b></span></div><div class="row" style="justify-content:flex-start"><button class="btn ghost" type="button" id="cwTimer">Start 20-minute timer</button></div></section>
+        <section class="panel"><h3>Check my story</h3><div class="checks" style="margin-top:10px">${RUBRIC.map(([h,items],i)=>`<p class="eyebrow" style="margin-top:${i?10:0}px">${h}</p>${items.map((t,j)=>`<label for="rb${i}${j}"><input type="checkbox" id="rb${i}${j}" class="rbx">${t}</label>`).join('')}`).join('')}</div></section>
+        <button class="btn big" type="button" id="cwSave">Save to my journal</button></div></div>`;
+  const ta=$('#cwText');ta.addEventListener('input',()=>{const n=countWords(ta.value);$('#cwWc').textContent=n;$('#cwSave').disabled=n<1});
+  $('#cwNew').onclick=()=>storyStart((pi+1)%CREATIVE.length);$('#cwBack').onclick=()=>{stopPrep();writeMenu()};
+  $('#cwTimer').onclick=()=>{const end=Date.now()+20*60000;$('#cwTimer').disabled=true;stopPrep();PR.int=setInterval(()=>{const rem=Math.max(0,end-Date.now()),t=$('#cwTime');if(t)t.textContent=Math.floor(rem/60000)+':'+pad(Math.floor(rem/1000)%60);if(rem<=0){stopPrep();SFX.win();toast('Time is up! Finish your last sentence.')}},500)};
+  $('#cwSave').onclick=()=>{const text=ta.value.trim(),n=countWords(text);if(n<1)return;const checks=$$('.rbx:checked').length;
+    S.journal.unshift({date:todayKey(),type:'Creative story',prompt:CREATIVE[pi],text,words:n});logPrep('Creative story',checks,$$('.rbx').length);
+    addStars(3+Math.floor(checks/2),'Story saved!');confetti();stopPrep();
+    pstage().innerHTML=`<section class="panel results"><div class="pip happy">${pipSVG('happy')}</div><h2>Story saved to your journal!</h2><p class="lede">${n} words. You checked ${checks} of ${$$('.rbx').length||8} story goals.</p><p class="note">Grown-ups: read it together and talk about one favorite word and one surprising idea.</p><div class="row"><button class="btn" type="button" id="cwAgain">Write another</button><button class="btn ghost" type="button" data-go="writing">See my journal</button></div></section>`;
+    $('#cwAgain').onclick=()=>storyStart((pi+1)%CREATIVE.length)};
+}
+
 /* ---------- Grown-ups ---------- */
 function renderGrownups(){
   let rows='';const d=new Date();
@@ -1465,16 +2225,17 @@ function renderGrownups(){
       <td class="${r.math&&r.math.sets?'':'dim'}">${r.math&&r.math.sets?`${r.math.correct}/${r.math.total} (${Math.round(r.math.correct/r.math.total*100)}%)`:'—'}</td>
       <td class="${r.reading&&r.reading.done?'':'dim'}">${r.reading&&r.reading.done?`${r.reading.correct}/${r.reading.total} · ${esc(r.reading.title)}`:'—'}</td>
       <td class="${r.writing&&r.writing.done?'':'dim'}">${r.writing&&r.writing.done?r.writing.words+' words':'—'}</td>
+      <td class="${r.social&&r.social.done?'':'dim'}">${r.social&&r.social.done?esc(r.social.what):'—'}</td>
       <td class="${r.readSec?'':'dim'}">${r.readSec?Math.round(r.readSec/60)+' min'+(r.book?' · '+esc(r.book):''):'—'}</td></tr>`;
     d.setDate(d.getDate()-1)}
-  $('#report').innerHTML=`<thead><tr><th>Day</th><th>Math</th><th>Reading quiz</th><th>Writing</th><th>Own book</th></tr></thead><tbody>${rows}</tbody>`;
+  $('#report').innerHTML=`<thead><tr><th>Day</th><th>Math</th><th>Reading quiz</th><th>Writing</th><th>Social studies</th><th>Own book</th></tr></thead><tbody>${rows}</tbody>`;
   $('#setName').value=S.name;$('#setGoal').value=String(S.wordGoal);$('#setMsg').textContent='';
   $('#resetConfirm').hidden=true;$('#resetBtn').hidden=false;
 }
 $('#settingsForm').addEventListener('submit',e=>{e.preventDefault();S.name=$('#setName').value.trim();S.wordGoal=+$('#setGoal').value||50;save();renderHeader();$('#setMsg').textContent='Settings saved.'});
 $('#resetBtn').onclick=()=>{$('#resetConfirm').hidden=false;$('#resetBtn').hidden=true};
 $('#resetNo').onclick=()=>{$('#resetConfirm').hidden=true;$('#resetBtn').hidden=false};
-$('#resetYes').onclick=()=>{const name=S.name,goal=S.wordGoal;S={name,stars:0,wordGoal:goal,days:{},journal:[],draft:null,readLog:{},sound:S.sound,monsters:[],lightningBest:0};save();renderHeader();renderGrownups();$('#setMsg').textContent='Progress has been reset.'};
+$('#resetYes').onclick=()=>{const name=S.name,goal=S.wordGoal;S={name,stars:0,wordGoal:goal,days:{},journal:[],draft:null,readLog:{},sound:S.sound,monsters:[],lightningBest:0,ssLog:{},prepLog:[]};save();renderHeader();renderGrownups();$('#setMsg').textContent='Progress has been reset.'};
 
 /* ---------- Boot ---------- */
 renderHeader();
