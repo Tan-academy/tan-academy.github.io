@@ -1162,7 +1162,7 @@ function shake(el){if(!el)return;el.classList.remove('shake');void el.offsetWidt
 function burst(el,n=1){if(reduceMotion||!el)return;const r=el.getBoundingClientRect(),f=document.createElement('span');f.className='floaty';f.innerHTML=`+${n}${STAR}`;
   f.style.left=(r.left+r.width/2-20)+'px';f.style.top=(r.top-10)+'px';document.body.appendChild(f);setTimeout(()=>f.remove(),950)}
 
-/* Pip the mascot */
+/* BunBun the mascot */
 function pipSVG(mood){
   const ink='#4A3440',lx=mood==='think'?2:0,ly=mood==='think'?-3:0;
   const eyes=mood==='happy'
@@ -1268,12 +1268,12 @@ const GEN={
     ()=>{const a=ri(2,4),b=ri(3,6);return [`A monster has ${a} heads. Each head wears ${b} silly hats. How many hats is the monster wearing?`,a*b,`${a} heads with ${b} hats each. Multiply!`]}];
     const [t,ans,h]=pick(T)();return {label:'Silly story',prompt:`<p class="wp">${t}</p>`,answer:ans,type:'num',hint:`<p>${h}</p>`}}
 };
-/* name, subtitle, color, soft color, icon, Pip's opening line */
+/* name, subtitle, color, soft color, icon, BunBun's opening line */
 const GAMES={
   mult:['Times Table Treasure','Multiply 0 to 10','--math','--math-soft','×','Treasure is waiting at the flag. Every right answer is one hop!'],
   div:['Cookie Share','Divide into equal groups','--write','--write-soft','÷','Let’s share cookies fairly with everyone!'],
   frac:['Pizza Fractions','Slices, parts and wholes','--star','--star-soft','pizza','Pizza party! Let’s count the slices.'],
-  time:['Clock Detective','Tell time to 5 minutes','--read','--read-soft','clock','Detective Pip needs help reading the clocks!'],
+  time:['Clock Detective','Tell time to 5 minutes','--read','--read-soft','clock','Detective BunBun needs help reading the clocks!'],
   word:['Silly Story Problems','Dragons, aliens and more','--grape','--grape-soft','bubble','Get ready for some very silly stories!'],
   addsub:['Big Number Bridge','Add & subtract to 1,000','--leaf','--leaf-soft','+','Big numbers! Line up the ones, tens and hundreds.'],
   round:['Roll Down the Hill','Round to 10 or 100','--sky','--sky-soft','≈','Numbers roll to the closest ten or hundred. Wheee!'],
@@ -1294,7 +1294,7 @@ function renderMath(){renderSoundBtn();if(!M.active&&!L.active&&!BP.active)mathM
 function mathMenu(){
   const t=today(),n=S.monsters.length;
   $('#mathStage').innerHTML=`
-  <div class="panel menu-top"><div class="pip small idle" id="pip">${pipSVG('idle')}</div><div><h2>Hi ${esc(S.name||'there')}! I’m <em>Pip the unicorn</em>.</h2><p class="lede">Pick a game! Answer 10 questions to hop all the way to the flag, and a brand-new monster hatches for your zoo.</p>${t.math&&t.math.sets?`<p class="note">Adventures finished today: ${t.math.sets}</p>`:''}</div></div>
+  <div class="panel menu-top"><div class="pip small photo">${bunnyImg()}</div><div><h2>Hi ${esc(S.name||'there')}! I’m <em>BunBun</em>.</h2><p class="lede">Pick a game! Answer 10 questions to hop all the way to the flag, and a brand-new monster hatches for your zoo.</p>${t.math&&t.math.sets?`<p class="note">Adventures finished today: ${t.math.sets}</p>`:''}</div></div>
   <h2 class="section-label">Quick games</h2>
   <div class="arcade">
     <button type="button" class="gcard wide" id="goLightning" style="--gc:var(--math);--gs:var(--math-soft)"><span class="gicon">${BOLT}</span><span><span class="gname">Lightning Round</span><span class="gsub">How many times and divide facts can you answer in 60 seconds?</span><span class="gbest">${S.lightningBest?'Your record: '+S.lightningBest:'No record yet. Set one!'}</span></span></button>
@@ -1324,7 +1324,7 @@ function renderQ(){
       <div class="qtop"><span class="tag" style="--c:var(${GAMES[M.skill][2]});--c-soft:var(${GAMES[M.skill][3]})">${q.label}</span><span>${M.combo>=2?`<b class="combo">${M.combo} in a row!</b> · `:''}Stone ${M.i+1} of ${M.qs.length}</span></div>
       <div class="qbody">${q.prompt}</div><div class="ans">${ans}</div>
       <div class="hintbox" id="mHint" hidden style="margin-top:16px">${q.hint}</div>
-      <div class="qactions"><button class="link" type="button" id="mQuit">Back to games</button><span class="row"><button class="link" type="button" id="mHintBtn">Ask Pip for a hint</button><button class="btn" type="button" id="mNext" hidden>Next</button></span></div>
+      <div class="qactions"><button class="link" type="button" id="mQuit">Back to games</button><span class="row"><button class="link" type="button" id="mHintBtn">Ask BunBun for a hint</button><button class="btn" type="button" id="mNext" hidden>Next</button></span></div>
     </div>
   </div>`;
   say(M.i===0?GAMES[M.skill][5]:pick(['You can do it!','Here comes the next one!','Hop to the next stone!','Take your time. No rush!','Ready? Let’s go!','I believe in you!']),'idle');
@@ -1831,7 +1831,7 @@ function renderSocial(){if(SO.view==='menu')socialMenu()}
 function socialMenu(){
   SO.view='menu';const ti=dayNum()%UNITS.length,u=UNITS[ti],t=today();
   $('#socialStage').innerHTML=`
-  <div class="panel menu-top"><div class="pip small photo">${bunnyImg()}</div><div><h2>Explorer Pip is ready!</h2><p class="lede">Today’s lesson is <b>${u.title}</b>. Finish any one lesson or game to complete today’s mission.</p>${t.social&&t.social.done?`<p class="note">Done today: ${esc(t.social.what)}</p>`:''}</div></div>
+  <div class="panel menu-top"><div class="pip small photo">${bunnyImg()}</div><div><h2>Explorer BunBun is ready!</h2><p class="lede">Today’s lesson is <b>${u.title}</b>. Finish any one lesson or game to complete today’s mission.</p>${t.social&&t.social.done?`<p class="note">Done today: ${esc(t.social.what)}</p>`:''}</div></div>
   <h2 class="section-label">Today</h2>
   <div class="arcade">
     <button type="button" class="gcard wide" data-ssgame="lesson" style="--gc:var(${u.c});--gs:var(${u.c}-soft)"><span class="gicon">${UI.book}</span><span><span class="gname">Today’s lesson</span><span class="gsub">${u.title}: read 4 short cards, then take a quick quiz.</span></span></button>
@@ -2164,7 +2164,7 @@ function nnatMenu(){
   pstage().innerHTML=`<section class="panel menu-top"><div class="pip small idle">${pipSVG('think')}</div><div><h2>Shape puzzles</h2><p class="lede">Look at the pictures, find the rule, and pick the missing piece. No reading needed!</p>
     <div class="chips" style="margin-top:8px" role="group" aria-label="Grade level"><button type="button" class="chip" data-grade="3" aria-pressed="${PR.grade===3}">3rd grade</button><button type="button" class="chip" data-grade="4" aria-pressed="${PR.grade===4}">4th grade</button></div></div></section>
   <div class="arcade">
-    <button type="button" class="gcard wide" data-nnat="practice" style="--gc:var(--grape);--gs:var(--grape-soft)"><span class="gicon">${UI.star}</span><span><span class="gname">Practice</span><span class="gsub">12 puzzles. Pip explains the rule after each one. No timer.</span></span></button>
+    <button type="button" class="gcard wide" data-nnat="practice" style="--gc:var(--grape);--gs:var(--grape-soft)"><span class="gicon">${UI.star}</span><span><span class="gname">Practice</span><span class="gsub">12 puzzles. BunBun explains the rule after each one. No timer.</span></span></button>
     <button type="button" class="gcard wide" data-nnat="timed" style="--gc:var(--math);--gs:var(--math-soft)"><span class="gicon">${UI.clock}</span><span><span class="gname">Timed test</span><span class="gsub">24 puzzles in 15 minutes, the same pace as the real test. Answers are reviewed at the end.</span></span></button>
   </div>
   <section class="panel"><h2>The six kinds of puzzles</h2><div class="ptypes">${[['serial','Pattern rows'],['latin','Missing piece'],['analogy','Matching changes'],['rotate','Turning shapes'],['overlay','Stacking pictures'],['pattern','Finish the pattern']].map(([k,l])=>{const p=k==='latin'?NGEN.latin(false):NGEN[k]();return `<div class="ptype"><div class="pmini">${puzzleHTML(p)}</div><b>${l}</b></div>`}).join('')}</div></section>`;
