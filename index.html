@@ -1,48 +1,49 @@
 <title>Star Academy</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&family=Baloo+2:wght@500;700;800&family=Lexend:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --paper:#F3F6FC; --card:#FFFFFF; --ink:#1C2541; --muted:#58627F; --line:#DDE4F1; --line-strong:#C2CCE2;
-  --math:#D9640F; --math-deep:#A44A04; --math-soft:#FFEBD9;
-  --read:#0E8679; --read-deep:#0A6157; --read-soft:#D6F3EF;
-  --write:#B5377A; --write-deep:#86225A; --write-soft:#F9DDEB;
-  --star:#F2B200; --star-soft:#FFF2C2;
-  --good:#1F8445; --good-soft:#DDF4E4; --bad:#C23838; --bad-soft:#FBE3E3; --try:#9A6400; --try-soft:#FFF1D1;
-  --grape:#6E56F0; --grape-deep:#4B34C4; --grape-soft:#ECE8FF; --sky:#1C86D6; --sky-deep:#10609E; --sky-soft:#DDEFFF; --leaf:#2A9A4A; --leaf-soft:#DEF4E3;
-  --on-c:#FFFFFF; --sheet:#FFFFFF; --paper-line:#C6D6EF; --margin-line:#F0A3A3;
-  --shadow:0 1px 2px rgba(28,37,65,.05),0 8px 24px rgba(28,37,65,.06);
-  --display:"Baloo 2","Trebuchet MS",system-ui,sans-serif;
-  --ui:"Lexend",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --paper:#FBF6F1; --card:#FFFDFB; --ink:#33263A; --muted:#7D6C77; --line:#F0E5DD; --line-strong:#E0CFC3;
+  --math:#C95F7D; --math-deep:#9E4560; --math-soft:#FCE8EE;
+  --read:#5E9170; --read-deep:#447254; --read-soft:#E5F1E8;
+  --write:#8668BF; --write-deep:#664C9E; --write-soft:#EFE9F9;
+  --star:#D9A93F; --star-soft:#FBF1DA;
+  --good:#4E9A68; --good-soft:#E2F3E7; --bad:#CF5F72; --bad-soft:#FBE6EA; --try:#A87A2A; --try-soft:#FBF0DA;
+  --grape:#A35E91; --grape-deep:#7E4370; --grape-soft:#F6E6F1; --sky:#5F8CBF; --sky-deep:#456F9E; --sky-soft:#E5EEF8; --leaf:#6FA383; --leaf-soft:#E3F2E7;
+  --on-c:#FFFFFF; --sheet:#FFFEFC; --paper-line:#EEDCE2; --margin-line:#F3B9C7; --gold:#A8853E;
+  --shadow:0 1px 2px rgba(80,50,60,.05),0 10px 28px rgba(120,80,90,.08);
+  --display:"Cormorant Garamond",Georgia,"Times New Roman",serif;
+  --ui:"Jost",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --num:"Jost",system-ui,-apple-system,"Segoe UI",sans-serif;
   --read-font:"Andika","Comic Sans MS",system-ui,sans-serif;
   --c:var(--math); --c-deep:var(--math-deep); --c-soft:var(--math-soft);
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     color-scheme:dark;
-    --paper:#0F1629; --card:#172038; --ink:#EDF1FA; --muted:#A3AECB; --line:#27324F; --line-strong:#3A4870;
-    --math:#FF8C3F; --math-deep:#B85A12; --math-soft:#3A2414;
-    --read:#36C3AF; --read-deep:#178575; --read-soft:#0E302C;
-    --write:#EF6CAC; --write-deep:#A83A72; --write-soft:#3A1830;
-    --star:#FFCE3A; --star-soft:#3A3110;
-    --good:#52CC7F; --good-soft:#123222; --bad:#F47272; --bad-soft:#3B1818; --try:#FFC24D; --try-soft:#3A2D10;
-    --grape:#A595FF; --grape-deep:#6E56F0; --grape-soft:#28214A; --sky:#5DB3F5; --sky-deep:#2F7FC0; --sky-soft:#12293F; --leaf:#5ACB78; --leaf-soft:#13301D;
-    --on-c:#0F1629; --sheet:#131B30; --paper-line:#2B3959; --margin-line:#6E3442;
-    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+    --paper:#1D1720; --card:#281F2D; --ink:#F7EEF1; --muted:#BCA9B5; --line:#3A2E3F; --line-strong:#4F4055;
+    --math:#F09AB2; --math-deep:#B8607A; --math-soft:#3E2430;
+    --read:#94C8A2; --read-deep:#5E9170; --read-soft:#1F3226;
+    --write:#BBA5EC; --write-deep:#8668BF; --write-soft:#2E2643;
+    --star:#F0C766; --star-soft:#3A3020;
+    --good:#7FD39A; --good-soft:#1C3424; --bad:#F2909F; --bad-soft:#3E1F27; --try:#F0C766; --try-soft:#3A3020;
+    --grape:#E0A6D0; --grape-deep:#A35E91; --grape-soft:#3A2336; --sky:#A3C6EC; --sky-deep:#5F8CBF; --sky-soft:#1E2A3A; --leaf:#9ED0AE; --leaf-soft:#1E3226;
+    --on-c:#22171F; --sheet:#241C29; --paper-line:#3E3044; --margin-line:#6A3A4A; --gold:#E2C27A;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px rgba(0,0,0,.28);
   }
 }
 :root[data-theme="dark"]{
-  color-scheme:dark;
-  --paper:#0F1629; --card:#172038; --ink:#EDF1FA; --muted:#A3AECB; --line:#27324F; --line-strong:#3A4870;
-  --math:#FF8C3F; --math-deep:#B85A12; --math-soft:#3A2414;
-  --read:#36C3AF; --read-deep:#178575; --read-soft:#0E302C;
-  --write:#EF6CAC; --write-deep:#A83A72; --write-soft:#3A1830;
-  --star:#FFCE3A; --star-soft:#3A3110;
-  --good:#52CC7F; --good-soft:#123222; --bad:#F47272; --bad-soft:#3B1818; --try:#FFC24D; --try-soft:#3A2D10;
-  --grape:#A595FF; --grape-deep:#6E56F0; --grape-soft:#28214A; --sky:#5DB3F5; --sky-deep:#2F7FC0; --sky-soft:#12293F; --leaf:#5ACB78; --leaf-soft:#13301D;
-    --on-c:#0F1629; --sheet:#131B30; --paper-line:#2B3959; --margin-line:#6E3442;
-  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+    color-scheme:dark;
+    --paper:#1D1720; --card:#281F2D; --ink:#F7EEF1; --muted:#BCA9B5; --line:#3A2E3F; --line-strong:#4F4055;
+    --math:#F09AB2; --math-deep:#B8607A; --math-soft:#3E2430;
+    --read:#94C8A2; --read-deep:#5E9170; --read-soft:#1F3226;
+    --write:#BBA5EC; --write-deep:#8668BF; --write-soft:#2E2643;
+    --star:#F0C766; --star-soft:#3A3020;
+    --good:#7FD39A; --good-soft:#1C3424; --bad:#F2909F; --bad-soft:#3E1F27; --try:#F0C766; --try-soft:#3A3020;
+    --grape:#E0A6D0; --grape-deep:#A35E91; --grape-soft:#3A2336; --sky:#A3C6EC; --sky-deep:#5F8CBF; --sky-soft:#1E2A3A; --leaf:#9ED0AE; --leaf-soft:#1E3226;
+    --on-c:#22171F; --sheet:#241C29; --paper-line:#3E3044; --margin-line:#6A3A4A; --gold:#E2C27A;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px rgba(0,0,0,.28);
 }
 *{box-sizing:border-box}
 body{background:var(--paper);color:var(--ink);font:400 16px/1.55 var(--ui);-webkit-font-smoothing:antialiased}
@@ -503,13 +504,70 @@ div.numin{min-height:62px;display:grid;place-items:center}
   .sheet textarea{padding-left:52px;background-image:linear-gradient(90deg,transparent 34px,var(--margin-line) 34px,var(--margin-line) 36px,transparent 36px),repeating-linear-gradient(to bottom,transparent 0,transparent calc(2.3rem - 1px),var(--paper-line) calc(2.3rem - 1px),var(--paper-line) 2.3rem)}
 }
 @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+
+/* Princess heirloom theme */
+body{font-family:var(--ui);letter-spacing:.005em}
+h1{font-weight:600;font-size:clamp(2.4rem,5.6vw,3.5rem);letter-spacing:-.01em}
+h2{font-weight:600;font-size:1.8rem}
+h3{font-weight:600;font-size:1.4rem}
+h1 em,h2 em{font-style:italic;font-weight:500;color:var(--gold)}
+.eyebrow,.view-head .eyebrow{font:500 .74rem/1.3 var(--ui);letter-spacing:.22em;color:var(--gold)}
+.hello{padding-block:6px 4px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='150'%3E%3Cg fill='%23D9A93F'%3E%3Cpath opacity='.55' d='M240 20l4 12 12 4-12 4-4 12-4-12-12-4 12-4z'/%3E%3Cpath opacity='.4' d='M180 70l2.5 7.5 7.5 2.5-7.5 2.5-2.5 7.5-2.5-7.5-7.5-2.5 7.5-2.5z'/%3E%3Cpath opacity='.45' d='M280 96l2 6 6 2-6 2-2 6-2-6-6-2 6-2z'/%3E%3Ccircle opacity='.5' cx='210' cy='30' r='2.2'/%3E%3Ccircle opacity='.4' cx='262' cy='70' r='1.8'/%3E%3Ccircle opacity='.35' cx='150' cy='26' r='1.6'/%3E%3Ccircle opacity='.35' cx='228' cy='120' r='1.6'/%3E%3C/g%3E%3C/svg%3E") no-repeat right top/300px 150px}
+.top{background:color-mix(in srgb,var(--paper) 90%,transparent)}
+.brand{font:600 1.3rem/1 var(--display);letter-spacing:.16em;text-transform:uppercase;gap:8px}
+.brand .gold{color:var(--gold)}
+.mark{width:42px;height:42px;background:none;transform:none;border-radius:0}
+.mark svg{width:100%;height:100%}
+.stat{border-color:var(--line-strong);background:var(--card)}
+.stat b{font:600 1.05rem/1 var(--num)}
+.stat.streak svg{fill:var(--math)}
+.nav button{font:500 .93rem/1 var(--ui);letter-spacing:.03em;border-radius:999px;padding:9px 15px}
+.nav button[aria-current="page"]{background:var(--ink);color:var(--paper)}
+.btn{font:600 1rem/1 var(--ui);letter-spacing:.05em;border-radius:999px;padding:13px 26px;box-shadow:0 3px 0 var(--sh),0 12px 22px -12px var(--sh)}
+.btn.big{font-size:1.08rem;padding:16px 30px}
+.btn:active{box-shadow:0 1px 0 var(--sh)}
+.btn.ghost{border-width:1.5px}
+.panel{border-radius:28px;box-shadow:var(--shadow)}
+.mission{border-width:1.5px;border-color:var(--line);border-radius:30px;box-shadow:var(--shadow)}
+.mission.done{border-color:color-mix(in srgb,var(--c) 45%,var(--line))}
+.mtop{background-color:var(--c-soft);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96'%3E%3Cg fill='%23D9A93F' opacity='.38'%3E%3Cpath d='M22 8l2.2 6.8L31 17l-6.8 2.2L22 26l-2.2-6.8L13 17l6.8-2.2z'/%3E%3Cpath d='M72 54l1.5 4.5 4.5 1.5-4.5 1.5L72 66l-1.5-4.5L66 60l4.5-1.5z'/%3E%3Ccircle cx='76' cy='18' r='1.8'/%3E%3Ccircle cx='30' cy='74' r='1.5'/%3E%3Ccircle cx='52' cy='38' r='1.1'/%3E%3C/g%3E%3C/svg%3E");background-size:96px 96px;min-height:124px;align-items:center}
+.mtop svg.icon{width:80px;height:80px;filter:drop-shadow(0 4px 6px rgba(120,70,90,.15))}
+.mbody h2{font-size:2rem}
+.mstatus{font-size:.95rem}
+.badge{border-width:2px}
+.chip{border-width:1.5px;font-family:var(--ui);letter-spacing:.02em}
+.tag{font-family:var(--ui);font-weight:500;letter-spacing:.14em}
+.day{border-radius:18px}
+.day.today{outline:1.5px solid var(--gold)}
+.dnum{font:600 1.15rem/1 var(--num)}
+.wordcard .w{font:italic 600 2.8rem/1 var(--display)}
+.gcard{border-radius:30px;box-shadow:0 4px 0 color-mix(in srgb,var(--gc) 28%,transparent)}
+.gicon{border-radius:50%;transform:none;font-family:var(--num);font-weight:600;box-shadow:inset 0 -4px 0 rgba(0,0,0,.08)}
+.gname{font:600 1.5rem/1.1 var(--display)}
+.section-label{font:italic 600 1.7rem/1 var(--display)}
+.feedback{font:italic 600 1.4rem/1.3 var(--display)}
+.bubble{font:500 1rem/1.45 var(--ui);border-width:1.5px;border-radius:22px}
+.bubble::before{border-width:1.5px}
+.score{font:600 5rem/1 var(--display);color:var(--gold)}
+.prompt-text{font:600 1.85rem/1.25 var(--display)}
+.dq{font:600 1.55rem/1.3 var(--display)}
+.rq legend,.opt{font-family:var(--ui)}
+.passage h2{font-size:2.3rem}
+.qn,.eq,.stack,.numin,.key,.choice,.blank,.frac,.ttime,.combo,.stone,.lnum,.nlet,.snum,.tlyear,.yr,.mh,.spell-word,.spellin,.ntime,.lstats b,.bin .bname,.sky-q,.balloon .b,.intro-ex,.meter-top b,.rnum,.cmq,.sortcard{font-family:var(--num)}
+.eq,.stack{font-weight:600}
+.key{font-weight:500}
+.choice{font-weight:600}
+.cmq,.sortcard{font-weight:500}
+.toast{font:500 1rem/1 var(--ui);letter-spacing:.02em}
+.sheet{border-radius:24px}
+.intro-ex{border-radius:50%;aspect-ratio:1;min-width:150px;min-height:150px}
 </style>
 
 <header class="top">
   <div class="wrap topin">
-    <a class="brand" href="#home" data-go="home"><span class="mark" id="brandMark">S</span><span id="brandName">Star Academy</span></a>
+    <a class="brand" href="#home" data-go="home"><span class="mark"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M8 46l4-27 12 12 8-19 8 19 12-12 4 27z" fill="#F6D98B" stroke="#C9A24D" stroke-width="2.5" stroke-linejoin="round"/><rect x="7" y="45" width="50" height="9" rx="4" fill="#E9C46A" stroke="#C9A24D" stroke-width="2.5"/><circle cx="32" cy="36" r="4.5" fill="#F2A7B8"/><circle cx="12" cy="17" r="3.4" fill="#F2A7B8"/><circle cx="52" cy="17" r="3.4" fill="#F2A7B8"/><circle cx="32" cy="10" r="3.4" fill="#C9B6EC"/><circle cx="20" cy="49.5" r="2" fill="#fff"/><circle cx="32" cy="49.5" r="2" fill="#fff"/><circle cx="44" cy="49.5" r="2" fill="#fff"/></svg></span><span id="brandName">Star <span class="gold">Academy</span></span></a>
     <div class="stats">
-      <span class="stat streak" title="Days in a row with a finished mission"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.5 2c.6 3.6 4.9 5.8 4.9 11a5.4 5.4 0 0 1-10.8 0c0-2.4 1.1-4 2.3-5.1.1 2 1 3.2 2.2 3.4-.3-3.2-.4-6.2 1.4-9.3z"/></svg><b id="streakCount">0</b><span class="lbl">day streak</span></span>
+      <span class="stat streak" title="Days in a row with a finished mission"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-8.5-5.3-8.5-11.2A4.7 4.7 0 0 1 12 7a4.7 4.7 0 0 1 8.5 2.8C20.5 15.7 12 21 12 21z"/></svg><b id="streakCount">0</b><span class="lbl">day streak</span></span>
       <span class="stat stars" title="Stars earned"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.8-4.9 4.6 1.3 6.5L12 17.2l-5.9 3.2 1.3-6.5L2.5 9.3l6.6-.8z"/></svg><b id="starCount">0</b><span class="lbl">stars</span></span>
     </div>
   </div>
@@ -536,28 +594,28 @@ div.numin{min-height:62px;display:grid;place-items:center}
     <div class="missions">
       <article class="mission subject-math" id="mcMath">
         <div class="mtop">
-          <svg class="icon" viewBox="0 0 48 48" aria-hidden="true"><g stroke="currentColor" stroke-width="3.6" stroke-linecap="round" fill="none"><path d="M14 7v13M7.5 13.5h13"/><path d="M30 9l9 9M39 9l-9 9"/><path d="M7.5 34.5h13"/><path d="M30 31h9M30 38h9"/></g></svg>
+          <svg class="icon" viewBox="0 0 64 64" aria-hidden="true"><path d="M15 53L35 31" stroke="#C9A24D" stroke-width="5" stroke-linecap="round"/><path d="M40 7l5.6 11.4 12.6 1.8-9.1 8.9 2.1 12.5L40 35.7l-11.2 5.9 2.1-12.5-9.1-8.9 12.6-1.8z" fill="#F9CDD8" stroke="#D46F8B" stroke-width="2.6" stroke-linejoin="round"/><circle cx="36.6" cy="23" r="1.9" fill="#4A3440"/><circle cx="43.4" cy="23" r="1.9" fill="#4A3440"/><path d="M37 27.5q3 2.8 6 0" stroke="#4A3440" stroke-width="1.9" fill="none" stroke-linecap="round"/><circle cx="33.5" cy="26.5" r="2" fill="#F2A7B8"/><circle cx="46.5" cy="26.5" r="2" fill="#F2A7B8"/><path d="M13 11l1.6 4.4 4.4 1.6-4.4 1.6L13 23l-1.6-4.4-4.4-1.6 4.4-1.6z" fill="#E9C46A"/><path d="M55 43.2l1.2800000000000002 3.5200000000000005 3.5200000000000005 1.2800000000000002-3.5200000000000005 1.2800000000000002L55 52.8l-1.2800000000000002-3.5200000000000005-3.5200000000000005-1.2800000000000002 3.5200000000000005-1.2800000000000002z" fill="#C9B6EC"/><text x="11" y="40" font-family="Jost,sans-serif" font-weight="600" font-size="11" fill="#D46F8B">+</text><text x="50" y="62" font-family="Jost,sans-serif" font-weight="600" font-size="10" fill="#9B85C9">×</text></svg>
           <span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
         </div>
         <div class="mbody"><h2>Math</h2><p class="mstatus" id="msMath"></p><button class="btn" type="button" data-go="math">Start math</button></div>
       </article>
       <article class="mission subject-read" id="mcRead">
         <div class="mtop">
-          <svg class="icon" viewBox="0 0 48 48" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="3.4" stroke-linejoin="round" stroke-linecap="round"><path d="M24 12c-4.5-3.2-10.5-4-17-3v27c6.5-1 12.5-.2 17 3 4.5-3.2 10.5-4 17-3V9c-6.5-1-12.5-.2-17 3z"/><path d="M24 12v27"/></g></svg>
+          <svg class="icon" viewBox="0 0 64 64" aria-hidden="true"><path d="M32 19c-6-4-14-5-23-4v33c9-1 17 0 23 4 6-4 14-5 23-4V15c-9-1-17 0-23 4z" fill="#FFFDF8" stroke="#6E9F7E" stroke-width="2.8" stroke-linejoin="round"/><path d="M32 19v33" stroke="#6E9F7E" stroke-width="2.8"/><path d="M15 26h11M15 32h11M15 38h8" stroke="#BFD6C4" stroke-width="2.6" stroke-linecap="round"/><path d="M44 41s-7.5-4.7-7.5-9.6a3.8 3.8 0 0 1 7.5-1.3 3.8 3.8 0 0 1 7.5 1.3c0 4.9-7.5 9.6-7.5 9.6z" fill="#F2A7B8"/><path d="M28 56c3 2 5 2 8 0" stroke="#6E9F7E" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M52 3l1.6 4.4 4.4 1.6-4.4 1.6L52 15l-1.6-4.4-4.4-1.6 4.4-1.6z" fill="#E9C46A"/><path d="M10 3.8000000000000007l1.1199999999999999 3.08 3.08 1.1199999999999999-3.08 1.1199999999999999L10 12.2l-1.1199999999999999-3.08-3.08-1.1199999999999999 3.08-1.1199999999999999z" fill="#C9B6EC"/></svg>
           <span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
         </div>
         <div class="mbody"><h2>Reading</h2><p class="mstatus" id="msRead"></p><button class="btn" type="button" data-go="reading">Start reading</button></div>
       </article>
       <article class="mission subject-write" id="mcWrite">
         <div class="mtop">
-          <svg class="icon" viewBox="0 0 48 48" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="3.4" stroke-linejoin="round" stroke-linecap="round"><path d="M9 39l2.4-9.6L32 8.8l7.2 7.2L18.6 36.6z"/><path d="M27.6 13.2l7.2 7.2M11.4 29.4l7.2 7.2"/></g></svg>
+          <svg class="icon" viewBox="0 0 64 64" aria-hidden="true"><path d="M13 44h20v11a4 4 0 0 1-4 4H17a4 4 0 0 1-4-4z" fill="#B9A6E3" stroke="#8668BF" stroke-width="2.4" stroke-linejoin="round"/><rect x="16" y="39" width="14" height="6" rx="2.5" fill="#8668BF"/><circle cx="23" cy="51" r="2.4" fill="#fff" opacity=".8"/><path d="M25 41C29 25 41 11 57 5c-2 15-12 28-28 36z" fill="#F4ECFB" stroke="#8668BF" stroke-width="2.4" stroke-linejoin="round"/><path d="M25 41L47 17M36 30l-5-3M41 24l-4-3M46 18l-3-3" stroke="#8668BF" stroke-width="2" stroke-linecap="round"/><path d="M50 34.6l1.4400000000000002 3.9600000000000004 3.9600000000000004 1.4400000000000002-3.9600000000000004 1.4400000000000002L50 45.4l-1.4400000000000002-3.9600000000000004-3.9600000000000004-1.4400000000000002 3.9600000000000004-1.4400000000000002z" fill="#F2A7B8"/><path d="M10 16l1.6 4.4 4.4 1.6-4.4 1.6L10 28l-1.6-4.4-4.4-1.6 4.4-1.6z" fill="#E9C46A"/></svg>
           <span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
         </div>
         <div class="mbody"><h2>Writing</h2><p class="mstatus" id="msWrite"></p><button class="btn" type="button" data-go="writing">Start writing</button></div>
       </article>
       <article class="mission subject-social" id="mcSocial">
         <div class="mtop">
-          <svg class="icon" viewBox="0 0 48 48" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="17"/><path d="M7 24h34M24 7c6 5 6 29 0 34M24 7c-6 5-6 29 0 34"/></g></svg>
+          <svg class="icon" viewBox="0 0 64 64" aria-hidden="true"><path d="M9 30l6-15 6 15zM43 30l6-15 6 15z" fill="#F2A7B8" stroke="#D46F8B" stroke-width="2" stroke-linejoin="round"/><rect x="10" y="30" width="10" height="26" fill="#FFFDF8" stroke="#6E9BCB" stroke-width="2.4"/><rect x="44" y="30" width="10" height="26" fill="#FFFDF8" stroke="#6E9BCB" stroke-width="2.4"/><path d="M20 56V36h24v20z" fill="#E4EEF8" stroke="#6E9BCB" stroke-width="2.4" stroke-linejoin="round"/><path d="M24 22l8-15 8 15z" fill="#F6D98B" stroke="#C9A24D" stroke-width="2" stroke-linejoin="round"/><rect x="25" y="22" width="14" height="34" fill="#FFFDF8" stroke="#6E9BCB" stroke-width="2.4"/><path d="M32 7V1.5M32 2h7l-2.5 2.5L39 7h-7" stroke="#D46F8B" stroke-width="1.8" fill="#F2A7B8" stroke-linejoin="round"/><path d="M28.5 56v-7a3.5 3.5 0 0 1 7 0v7z" fill="#6E9BCB"/><path d="M32 33s-3-1.9-3-3.9a1.5 1.5 0 0 1 3-.5 1.5 1.5 0 0 1 3 .5c0 2-3 3.9-3 3.9z" fill="#F2A7B8"/><path d="M57 4.800000000000001l1.1199999999999999 3.08 3.08 1.1199999999999999-3.08 1.1199999999999999L57 13.2l-1.1199999999999999-3.08-3.08-1.1199999999999999 3.08-1.1199999999999999z" fill="#E9C46A"/></svg>
           <span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
         </div>
         <div class="mbody"><h2>Social Studies</h2><p class="mstatus" id="msSocial"></p><button class="btn" type="button" data-go="social">Start exploring</button></div>
@@ -1059,7 +1117,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-say]');if(
 
 function renderHome(){
   const h=new Date().getHours();
-  $('#hello').textContent=`${h<12?'Good morning':h<17?'Good afternoon':'Good evening'}, ${S.name||'superstar'}!`;
+  $('#hello').innerHTML=`${h<12?'Good morning':h<17?'Good afternoon':'Good evening'}, <em>${esc(S.name||'little star')}</em>`;
   $('#todayDate').textContent=new Date().toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'});
   const t=today(),p=PASSAGES[dayNum()%PASSAGES.length],pr=PROMPTS[storyPromptIdx()];
   const done={math:!!(t.math&&t.math.sets),reading:!!(t.reading&&t.reading.done),writing:!!(t.writing&&t.writing.done),social:!!(t.social&&t.social.done)};
@@ -1101,24 +1159,30 @@ function burst(el,n=1){if(reduceMotion||!el)return;const r=el.getBoundingClientR
 
 /* Pip the mascot */
 function pipSVG(mood){
-  const ink='#2A1B4D',px=mood==='think'?3:0,py=mood==='think'?-4:0;
+  const ink='#4A3440',lx=mood==='think'?2:0,ly=mood==='think'?-3:0;
   const eyes=mood==='happy'
-    ?`<path d="M37 60q9-11 18 0M65 60q9-11 18 0" fill="none" stroke="${ink}" stroke-width="4.5" stroke-linecap="round"/>`
-    :`<circle cx="46" cy="58" r="12" fill="#fff"/><circle cx="74" cy="58" r="12" fill="#fff"/><circle cx="${47+px}" cy="${60+py}" r="6" fill="${ink}"/><circle cx="${75+px}" cy="${60+py}" r="6" fill="${ink}"/><circle cx="${49+px}" cy="${57+py}" r="2" fill="#fff"/><circle cx="${77+px}" cy="${57+py}" r="2" fill="#fff"/>`;
-  const mouth={idle:`<path d="M50 82q10 8 20 0" fill="none" stroke="${ink}" stroke-width="4" stroke-linecap="round"/>`,
-    happy:`<path d="M44 78q16 22 32 0z" fill="${ink}"/><path d="M52 87q8 5 16 0" fill="#FF7BA9"/>`,
-    oops:`<ellipse cx="60" cy="85" rx="6" ry="7" fill="${ink}"/>`,
-    think:`<path d="M50 85q10-5 20 1" fill="none" stroke="${ink}" stroke-width="4" stroke-linecap="round"/>`}[mood]||'';
-  return `<svg viewBox="0 0 120 120" aria-hidden="true"><path d="M42 34L33 14M78 34l9-20" stroke="#6E56F0" stroke-width="4" stroke-linecap="round"/><circle cx="32" cy="12" r="6.5" fill="#FFC93C"/><circle cx="88" cy="12" r="6.5" fill="#FFC93C"/>
-    <ellipse cx="43" cy="109" rx="12" ry="6" fill="#5640D0"/><ellipse cx="77" cy="109" rx="12" ry="6" fill="#5640D0"/>
-    <path d="M60 28c26 0 44 18 44 42s-18 38-44 38-44-14-44-38 18-42 44-42z" fill="#7B61FF"/><ellipse cx="60" cy="82" rx="27" ry="20" fill="#9C88FF"/>
-    ${eyes}<circle cx="33" cy="74" r="5.5" fill="#FF7BA9" opacity=".75"/><circle cx="87" cy="74" r="5.5" fill="#FF7BA9" opacity=".75"/>${mouth}</svg>`;
+    ?`<path d="M41 66q6-7 12 0M67 66q6-7 12 0" fill="none" stroke="${ink}" stroke-width="3.6" stroke-linecap="round"/>`
+    :`<ellipse cx="47" cy="65" rx="6.5" ry="7.5" fill="${ink}"/><ellipse cx="73" cy="65" rx="6.5" ry="7.5" fill="${ink}"/><circle cx="${49+lx}" cy="${62+ly}" r="2.4" fill="#fff"/><circle cx="${75+lx}" cy="${62+ly}" r="2.4" fill="#fff"/><path d="M40 59l-4-3M80 59l4-3" stroke="${ink}" stroke-width="2.2" stroke-linecap="round"/>`;
+  const mouth={idle:`<path d="M54 90q6 5 12 0" fill="none" stroke="${ink}" stroke-width="3" stroke-linecap="round"/>`,
+    happy:`<path d="M51 88q9 12 18 0z" fill="${ink}"/><path d="M55 93q5 3 10 0" fill="#F48FA8"/>`,
+    oops:`<ellipse cx="60" cy="91" rx="4.5" ry="5.5" fill="${ink}"/>`,
+    think:`<path d="M54 92q6-3 12 1" fill="none" stroke="${ink}" stroke-width="3" stroke-linecap="round"/>`}[mood]||'';
+  return `<svg viewBox="0 0 120 120" aria-hidden="true">
+    <path d="M50 38L60 2l10 36z" fill="#F6D98B" stroke="#C9A24D" stroke-width="2.4" stroke-linejoin="round"/><path d="M54 27l12-4M52 33l15-5M57 16l7-2.5" stroke="#C9A24D" stroke-width="2" stroke-linecap="round"/>
+    <path d="M30 44l2-20 14 14z" fill="#fff" stroke="#E8CFD8" stroke-width="2.4" stroke-linejoin="round"/><path d="M34 38l1-8 6 6z" fill="#F7C9D4"/>
+    <path d="M90 44l-2-20-14 14z" fill="#fff" stroke="#E8CFD8" stroke-width="2.4" stroke-linejoin="round"/><path d="M86 38l-1-8-6 6z" fill="#F7C9D4"/>
+    <circle cx="24" cy="60" r="11" fill="#C9B6EC"/><circle cx="20" cy="78" r="10" fill="#F7C9D4"/><circle cx="26" cy="94" r="9" fill="#BFD9F2"/>
+    <ellipse cx="60" cy="72" rx="36" ry="34" fill="#fff" stroke="#E8CFD8" stroke-width="2.6"/>
+    <circle cx="42" cy="40" r="10" fill="#F7C9D4"/><circle cx="54" cy="35" r="9" fill="#C9B6EC"/><circle cx="33" cy="48" r="8" fill="#BFD9F2"/>
+    <ellipse cx="60" cy="92" rx="21" ry="13" fill="#FCE6EC"/><ellipse cx="53" cy="90" rx="1.8" ry="1.3" fill="#E7A9B9"/><ellipse cx="67" cy="90" rx="1.8" ry="1.3" fill="#E7A9B9"/>
+    ${eyes}<ellipse cx="36" cy="78" rx="5.5" ry="3.8" fill="#F7B6C6" opacity=".8"/><ellipse cx="84" cy="78" rx="5.5" ry="3.8" fill="#F7B6C6" opacity=".8"/>${mouth}
+    <path d="M98 30l1.8 5 5 1.8-5 1.8-1.8 5-1.8-5-5-1.8 5-1.8z" fill="#E9C46A"/></svg>`;
 }
 function say(t,mood){const b=$('#bubble');if(b)b.innerHTML=t;const p=$('#pip');if(p&&mood){p.className='pip';void p.offsetWidth;p.className='pip '+mood;p.innerHTML=pipSVG(mood)}}
 
 /* Monsters for the zoo */
 function rng(seed){let s=(seed>>>0)||1;return()=>{s=(s*1664525+1013904223)>>>0;return s/4294967296}}
-const MCOL=[['#FF8A3D','#FFC29A'],['#2FBFA8','#9BE8DC'],['#EF6CAC','#F9B8D6'],['#7B61FF','#C2B6FF'],['#4CB050','#A6E0A8'],['#F5B700','#FFE08A'],['#3A9BF0','#A3D1F9'],['#E5484D','#F5A3A6']];
+const MCOL=[['#F2A7B8','#FCE4EA'],['#8FCDBE','#DDF2EC'],['#C2AEEA','#EEE7FA'],['#F3CF7A','#FBF0CF'],['#9EC2EC','#E2EEFB'],['#F5B99A','#FCE5D8'],['#ABD49A','#E6F4DF'],['#E3A0D2','#F8E1F2']];
 const SYL1=['Zib','Bo','Fizz','Mo','Gloo','Tik','Wum','Pax','Nub','Riz','Yo','Squee','Bloop','Kip','Doodle','Mim'],SYL2=['bert','ly','o','kins','zoo','ble','ster','wig','pop','muffin','boo','dot'];
 function monsterName(seed){const r=rng(seed+77);return SYL1[Math.floor(r()*SYL1.length)]+SYL2[Math.floor(r()*SYL2.length)]}
 function monsterSVG(seed,crown){
@@ -1223,7 +1287,7 @@ function renderMath(){renderSoundBtn();if(!M.active&&!L.active&&!BP.active)mathM
 function mathMenu(){
   const t=today(),n=S.monsters.length;
   $('#mathStage').innerHTML=`
-  <div class="panel menu-top"><div class="pip small idle" id="pip">${pipSVG('idle')}</div><div><h2>Hi ${esc(S.name||'there')}! I’m Pip.</h2><p class="lede">Pick a game! Answer 10 questions to hop all the way to the flag, and a brand-new monster hatches for your zoo.</p>${t.math&&t.math.sets?`<p class="note">Adventures finished today: ${t.math.sets}</p>`:''}</div></div>
+  <div class="panel menu-top"><div class="pip small idle" id="pip">${pipSVG('idle')}</div><div><h2>Hi ${esc(S.name||'there')}! I’m <em>Pip the unicorn</em>.</h2><p class="lede">Pick a game! Answer 10 questions to hop all the way to the flag, and a brand-new monster hatches for your zoo.</p>${t.math&&t.math.sets?`<p class="note">Adventures finished today: ${t.math.sets}</p>`:''}</div></div>
   <h2 class="section-label">Quick games</h2>
   <div class="arcade">
     <button type="button" class="gcard wide" id="goLightning" style="--gc:var(--math);--gs:var(--math-soft)"><span class="gicon">${BOLT}</span><span><span class="gname">Lightning Round</span><span class="gsub">How many times and divide facts can you answer in 60 seconds?</span><span class="gbest">${S.lightningBest?'Your record: '+S.lightningBest:'No record yet. Set one!'}</span></span></button>
