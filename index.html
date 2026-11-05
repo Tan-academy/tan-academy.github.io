@@ -586,8 +586,9 @@ h1 em,h2 em{font-style:italic;font-weight:500;color:var(--gold)}
 .dhead{display:flex;gap:14px;align-items:center;margin-bottom:16px}
 .dstep{width:42px;height:42px;border-radius:50%;background:var(--c);color:var(--on-c);display:grid;place-items:center;font:600 1.25rem/1 var(--num);flex:none}
 .dcheck{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-top:18px}
-.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
-.fact{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 12px;border:1.5px solid var(--line);border-radius:14px;background:var(--paper);font:500 1.15rem/1 var(--num);flex-wrap:wrap}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:10px}
+.fact{display:grid;grid-template-columns:1fr auto;align-items:center;gap:6px 10px;padding:8px 12px;border:1.5px solid var(--line);border-radius:14px;background:var(--paper);font:500 1.15rem/1 var(--num);white-space:nowrap}
+.fact .fans{grid-column:1/-1}
 .fin,.dq-in,.sp-in{width:72px;padding:8px;border:1.5px solid var(--line-strong);border-radius:10px;background:var(--sheet);text-align:center;font:600 1.1rem/1 var(--num);color:var(--ink)}
 .fin:focus,.dq-in:focus,.sp-in:focus{outline:none;border-color:var(--c)}
 .fact.right{border-color:var(--good);background:var(--good-soft)}
@@ -621,7 +622,7 @@ h1 em,h2 em{font-style:italic;font-weight:500;color:var(--gold)}
 .spgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin-top:12px}
 .sprow{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1.5px solid var(--line);border-radius:14px;background:var(--paper)}
 .sp-in{width:100%;font-family:var(--read-font);font-weight:700;letter-spacing:.03em;text-align:left}
-.sphint{font:500 .8rem/1 var(--num);color:var(--muted);letter-spacing:.18em;text-transform:lowercase}
+.sphint{font:600 .95rem/1 var(--num);color:var(--c-deep);letter-spacing:.22em;text-transform:lowercase}
 .sphint.fix{color:var(--bad);letter-spacing:.02em}
 .mini-say{border:1.5px solid var(--line-strong);background:var(--card);border-radius:50%;width:36px;height:36px;display:grid;place-items:center;flex:none;color:var(--ink)}
 .mini-say svg{width:17px;height:17px}
@@ -1640,13 +1641,13 @@ const dState=()=>{const t=today();return t.daily||(t.daily={})};
 function dLeft(){const d=dState();return d.timerEnd?Math.max(0,d.timerEnd-Date.now()):(d.timerLeft!=null?d.timerLeft:20*60000)}
 function dTimerPaint(){const el=$('#dTime');if(!el)return;const l=dLeft(),d=dState();el.textContent=Math.floor(l/60000)+':'+pad(Math.floor(l/1000)%60);
   const b=$('#dTimerBtn');if(b){b.textContent=l<=0?'20 minutes done!':d.timerEnd?'Pause':l<20*60000?'Keep going':'Start my 20 minutes';b.disabled=l<=0}
-  const ring=$('#dRing');if(ring)ring.setAttribute('stroke-dashoffset',(314.16*(l/(20*60000))).toFixed(1))}
+  const ring=$('#dRing');if(ring)ring.setAttribute('stroke-dashoffset',(314.16*(1-l/(20*60000))).toFixed(1))}
 DY.int=setInterval(()=>{const d=today().daily;if(!d||!d.timerEnd)return;if(Date.now()>=d.timerEnd){d.timerEnd=null;d.timerLeft=0;save();SFX.win();toast(`${STAR}<span>20 minutes of practice. Amazing!</span>`);confetti()}if(current==='daily')dTimerPaint()},500);
 function renderDaily(){
   dailySet();const d=dState(),[vw,vpos,vdef,vex]=wordOfDay();
   $('#dailyStage').innerHTML=`
   <section class="panel dtimer">
-    <svg class="ring" viewBox="0 0 120 120" aria-hidden="true"><circle class="bg" cx="60" cy="60" r="50"/><circle class="fg" id="dRing" cx="60" cy="60" r="50" stroke-dasharray="314.16" stroke-dashoffset="314.16"/></svg>
+    <svg class="ring" viewBox="0 0 120 120" aria-hidden="true"><circle class="bg" cx="60" cy="60" r="50"/><circle class="fg" id="dRing" cx="60" cy="60" r="50" stroke-dasharray="314.16" stroke-dashoffset="0"/></svg>
     <div style="display:grid;gap:10px"><span class="dtime" id="dTime">20:00</span><button class="btn" type="button" id="dTimerBtn">Start my 20 minutes</button></div>
     <ol class="dplan">
       <li class="${d.facts!=null?'done':''}"><span class="ck">${d.facts!=null?DCHECK:''}</span><span><b>Fast facts</b> · about 4 minutes${d.facts!=null?` · ${d.facts}/20`:''}</span></li>
