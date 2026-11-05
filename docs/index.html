@@ -579,6 +579,60 @@ h1 em,h2 em{font-style:italic;font-weight:500;color:var(--gold)}
 .mbun{width:96px;height:96px;display:block}
 .mtop{align-items:center}
 @media (max-width:520px){.head-bun{width:64px;height:64px}.mbun{width:84px;height:84px}}
+/* Daily 20 */
+.daily-banner{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.daily-banner .pip{width:84px;height:84px;flex:none}
+.daily-banner>div{flex:1;min-width:200px;display:grid;gap:4px}
+.daily-banner.done{border-color:color-mix(in srgb,var(--good) 40%,var(--line))}
+.dtimer{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+.dtime{font:600 3rem/1 var(--num);font-variant-numeric:tabular-nums}
+.dplan{list-style:none;margin:0;padding:0;display:grid;gap:8px;flex:1;min-width:230px}
+.dplan li{display:flex;gap:10px;align-items:center}
+.dplan .ck{width:26px;height:26px;border-radius:50%;border:2px solid var(--line-strong);display:grid;place-items:center;flex:none}
+.dplan .ck svg{width:15px;height:15px}
+.dplan li.done .ck{background:var(--good);border-color:var(--good)}
+.dhead{display:flex;gap:14px;align-items:center;margin-bottom:16px}
+.dstep{width:42px;height:42px;border-radius:50%;background:var(--c);color:var(--on-c);display:grid;place-items:center;font:600 1.25rem/1 var(--num);flex:none}
+.dcheck{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-top:18px}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.fact{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 12px;border:1.5px solid var(--line);border-radius:14px;background:var(--paper);font:500 1.15rem/1 var(--num);flex-wrap:wrap}
+.fin,.dq-in,.sp-in{width:72px;padding:8px;border:1.5px solid var(--line-strong);border-radius:10px;background:var(--sheet);text-align:center;font:600 1.1rem/1 var(--num);color:var(--ink)}
+.fin:focus,.dq-in:focus,.sp-in:focus{outline:none;border-color:var(--c)}
+.fact.right{border-color:var(--good);background:var(--good-soft)}
+.fact.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.fans{font-size:.85rem;color:var(--bad);font-weight:600;width:100%;text-align:right}
+.dq-item{display:grid;grid-template-columns:36px minmax(0,1fr);gap:12px;padding-block:18px;border-top:1px solid var(--line)}
+.dq-item:first-child{border-top:0;padding-top:4px}
+.dqn{width:32px;height:32px;border-radius:50%;background:var(--c-soft);color:var(--c-deep);display:grid;place-items:center;font:600 .95rem/1 var(--num)}
+.dq-body{display:grid;gap:10px;justify-items:start}
+.dq-prompt{display:grid;gap:8px;justify-items:start}
+.dq-prompt .eq,.dq-prompt .stack{font-size:2rem}
+.dq-prompt .wp{font-size:1.15rem;max-width:60ch}
+.dq-prompt .qtext{font-size:1.05rem}
+.dq-prompt .pizza{width:120px;height:120px}
+.dq-prompt .clock{width:140px;height:140px}
+.dq-ch{display:flex;gap:8px;flex-wrap:wrap}
+.dq-ch .chip{font-size:1.05rem;min-width:64px;justify-content:center}
+.dq-ch .chip.right{background:var(--good-soft)!important;border-color:var(--good)!important;color:var(--ink)!important}
+.dq-ch .chip.wrong{background:var(--bad-soft)!important;border-color:var(--bad)!important;color:var(--ink)!important;text-decoration:line-through}
+.dq-fb{font-size:.95rem;min-height:1em;max-width:62ch}
+.dq-fb.good{color:var(--good);font-weight:600}
+.dq-fb.bad{color:var(--ink)}
+.dq-fb.bad b{color:var(--bad)}
+.dq-in.right,.sp-in.right{border-color:var(--good);background:var(--good-soft)}
+.dq-in.wrong,.sp-in.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.wlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}
+.wcard{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:12px 14px;border-radius:16px;background:var(--c-soft);font:700 1.35rem/1 var(--read-font)}
+.wcard span{transition:filter .2s}
+.wlist.covered .wcard span{filter:blur(8px);user-select:none}
+.dword{margin-top:14px;padding:12px 16px;border-radius:14px;background:var(--star-soft);display:grid;gap:4px}
+.spgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin-top:12px}
+.sprow{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1.5px solid var(--line);border-radius:14px;background:var(--paper)}
+.sp-in{width:100%;font-family:var(--read-font);font-weight:700;letter-spacing:.03em;text-align:left}
+.sphint{font:500 .8rem/1 var(--num);color:var(--muted);letter-spacing:.18em;text-transform:lowercase}
+.sphint.fix{color:var(--bad);letter-spacing:.02em}
+.mini-say{border:1.5px solid var(--line-strong);background:var(--card);border-radius:50%;width:36px;height:36px;display:grid;place-items:center;flex:none;color:var(--ink)}
+.mini-say svg{width:17px;height:17px}
 </style>
 
 <header class="top">
@@ -591,6 +645,7 @@ h1 em,h2 em{font-style:italic;font-weight:500;color:var(--gold)}
   </div>
   <nav class="wrap nav" aria-label="Sections">
     <button type="button" data-go="home">Today</button>
+    <button type="button" data-go="daily">Daily 20</button>
     <button type="button" data-go="math">Math</button>
     <button type="button" data-go="reading">Reading</button>
     <button type="button" data-go="writing">Writing</button>
@@ -609,6 +664,11 @@ h1 em,h2 em{font-style:italic;font-weight:500;color:var(--gold)}
       <h1 id="hello">Hello!</h1>
       <p class="lede" id="missionSummary">Four missions today: math, reading, writing and social studies.</p>
     </div>
+    <article class="panel daily-banner" id="dailyBanner">
+      <span class="pip" data-bun="orig"></span>
+      <div><p class="eyebrow">Daily 20</p><h2>Twenty minutes of <em>practice</em></h2><p class="note" id="dbStatus">Fast facts, mixed math and today’s word list, all on one page.</p></div>
+      <button class="btn" type="button" data-go="daily" id="dbBtn">Start Daily 20</button>
+    </article>
     <div class="missions">
       <article class="mission subject-math" id="mcMath">
         <div class="mtop">
@@ -647,6 +707,15 @@ h1 em,h2 em{font-style:italic;font-weight:500;color:var(--gold)}
       </section>
       <section class="panel subject-read" id="homeWord"></section>
     </div>
+  </section>
+
+  <!-- DAILY 20 -->
+  <section id="view-daily" class="view subject-math" hidden>
+    <div class="view-head">
+      <div class="vh-title"><span class="pip head-bun" data-bun="orig"></span><div><p class="eyebrow">20 minutes a day</p><h1>Daily 20</h1></div></div>
+      <p class="lede">Start the timer, then work from top to bottom. New questions and words every day.</p>
+    </div>
+    <div id="dailyStage" class="view"></div>
   </section>
 
   <!-- MATH -->
@@ -822,7 +891,7 @@ function load(){let s=null;try{s=JSON.parse(localStorage.getItem(STORE)||localSt
   return {name:s.name||'',stars:s.stars||0,wordGoal:s.wordGoal||50,days:s.days||{},journal:s.journal||[],draft:s.draft||null,readLog:s.readLog||{},sound:s.sound!==false,monsters:s.monsters||[],ssLog:s.ssLog||{},prepLog:s.prepLog||[],lightningBest:s.lightningBest||0}}
 function save(){try{localStorage.setItem(STORE,JSON.stringify(S))}catch(e){}}
 function today(){const k=todayKey();return S.days[k]||(S.days[k]={})}
-function anyDone(d){return !!(d&&((d.math&&d.math.sets)||(d.reading&&d.reading.done)||(d.writing&&d.writing.done)||(d.social&&d.social.done)))}
+function anyDone(d){return !!(d&&((d.math&&d.math.sets)||(d.reading&&d.reading.done)||(d.writing&&d.writing.done)||(d.social&&d.social.done)||(d.daily&&d.daily.done)))}
 function streak(){let n=0;const d=new Date();if(!anyDone(S.days[keyOf(d)]))d.setDate(d.getDate()-1);
   while(anyDone(S.days[keyOf(d)])){n++;d.setDate(d.getDate()-1)}return n}
 
@@ -1102,10 +1171,10 @@ const GRAMMAR=[
  [['I can’t find my shoes.','I cant find my shoes.','I can’t find my shoe’s.'],'Can’t needs an apostrophe. Shoes is just a plural, no apostrophe.']
 ];
 
-const SPELL=['because','friend','different','again','through','laugh','beautiful','enough','favorite','answer','early','caught','thought','believe','special','until','finally','probably','surprise','library','minute','quiet','piece','whole','heard','written','choose','neighbor','important','together','family','careful','people','question','finished','island','tomorrow','sometimes','straight','children'];
+const SPELL=['because','friend','different','again','through','laugh','beautiful','enough','favorite','answer','early','caught','thought','believe','special','until','finally','probably','surprise','library','minute','quiet','piece','whole','heard','written','choose','neighbor','important','together','family','careful','people','question','finished','island','tomorrow','sometimes','straight','children','busy','city','either','field','great','guess','half','heart','hour','instead','knew','later','learn','money','morning','often','once','perhaps','pretty','ready','really','reason','second','several','should','since','sure','though','tired','toward','usually','weather','wrong','young','bridge','center','circle','clothes'];
 
 /* ---------- Router ---------- */
-const VIEWS=['home','math','reading','writing','social','prep','grownups'];
+const VIEWS=['home','daily','math','reading','writing','social','prep','grownups'];
 let current='home';
 function go(v){
   if(!VIEWS.includes(v))v='home';
@@ -1115,7 +1184,7 @@ function go(v){
   current=v;
   VIEWS.forEach(x=>{$('#view-'+x).hidden=x!==v});
   $$('.nav button').forEach(b=>b.setAttribute('aria-current',b.dataset.go===v?'page':'false'));
-  ({home:renderHome,math:renderMath,reading:renderReading,writing:renderWriting,social:renderSocial,prep:renderPrep,grownups:renderGrownups})[v]();
+  ({home:renderHome,math:renderMath,reading:renderReading,writing:renderWriting,social:renderSocial,daily:renderDaily,prep:renderPrep,grownups:renderGrownups})[v]();
   try{history.replaceState(null,'','#'+v)}catch(e){}
   window.scrollTo(0,0);
 }
@@ -1150,6 +1219,7 @@ function renderHome(){
   $('#mcMath .btn').textContent=done.math?'Practice more':'Start math';
   $('#mcRead .btn').textContent=done.reading?'Read another':'Start reading';
   $('#mcWrite .btn').textContent=done.writing?'Write more':'Start writing';
+  {const dd=t.daily;$('#dailyBanner').classList.toggle('done',!!(dd&&dd.done));$('#dbStatus').textContent=dd&&dd.done?`Done today! Facts ${dd.facts}/20 · Math ${dd.math}/12 · Words ${dd.words}/8`:dd&&(dd.facts!=null||dd.math!=null||dd.words!=null)?'Started. Keep going to finish all three parts!':'Fast facts, mixed math and today’s word list, all on one page.';$('#dbBtn').textContent=dd&&dd.done?'Practice again':'Start Daily 20'}
   renderWeek();renderWord('#homeWord');
 }
 function renderWeek(){
@@ -1556,6 +1626,95 @@ $('#timerBtn').onclick=()=>{
 $('#timerReset').onclick=()=>{clearInterval(T.int);T.running=false;const t=today();if((t.readSec||0)<GOAL_S){t.readSec=0;save()}renderTimer()};
 $('#bookTitle').addEventListener('input',e=>{today().book=e.target.value.slice(0,80);save()});
 setInterval(()=>{if(T.running)save()},15000);
+
+/* ---------- Daily 20 ---------- */
+const DY={day:null,int:null};
+const DCHECK='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+const SAYICON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/></svg>';
+function seeded(seed,fn){const o=Math.random;Math.random=rng(seed);try{return fn()}finally{Math.random=o}}
+function scramble(w){let x=w;for(let k=0;k<10&&x===w;k++)x=shuffle([...w]).join('');return x}
+function dailySet(){
+  const dn=dayNum();if(DY.day===dn)return;DY.day=dn;
+  DY.facts=seeded(dn*31+7,()=>Array.from({length:20},()=>{const t=pick(['x','x','d','a','s']);
+    if(t==='x'){const a=ri(2,10),b=ri(2,10);return {q:`${a} × ${b}`,a:a*b}}
+    if(t==='d'){const b=ri(2,10),c=ri(2,10);return {q:`${b*c} ÷ ${b}`,a:c}}
+    if(t==='a'){const a=ri(6,19),b=ri(5,19);return {q:`${a} + ${b}`,a:a+b}}
+    const a=ri(11,30),b=ri(2,a-1);return {q:`${a} − ${b}`,a:a-b}}));
+  DY.math=seeded(dn*17+3,()=>['mult','div','addsub','addsub','round','frac','frac','time','word','word','mult','div'].map(k=>GEN[k]()));
+  const start=(dn*8)%SPELL.length;DY.words=Array.from({length:8},(_,i)=>SPELL[(start+i)%SPELL.length]);
+  DY.hints=seeded(dn*5+11,()=>DY.words.map(scramble));
+}
+const dState=()=>{const t=today();return t.daily||(t.daily={})};
+function dLeft(){const d=dState();return d.timerEnd?Math.max(0,d.timerEnd-Date.now()):(d.timerLeft!=null?d.timerLeft:20*60000)}
+function dTimerPaint(){const el=$('#dTime');if(!el)return;const l=dLeft(),d=dState();el.textContent=Math.floor(l/60000)+':'+pad(Math.floor(l/1000)%60);
+  const b=$('#dTimerBtn');if(b){b.textContent=l<=0?'20 minutes done!':d.timerEnd?'Pause':l<20*60000?'Keep going':'Start my 20 minutes';b.disabled=l<=0}
+  const ring=$('#dRing');if(ring)ring.setAttribute('stroke-dashoffset',(314.16*(l/(20*60000))).toFixed(1))}
+DY.int=setInterval(()=>{const d=today().daily;if(!d||!d.timerEnd)return;if(Date.now()>=d.timerEnd){d.timerEnd=null;d.timerLeft=0;save();SFX.win();toast(`${STAR}<span>20 minutes of practice. Amazing!</span>`);confetti()}if(current==='daily')dTimerPaint()},500);
+function renderDaily(){
+  dailySet();const d=dState(),[vw,vpos,vdef,vex]=wordOfDay();
+  $('#dailyStage').innerHTML=`
+  <section class="panel dtimer">
+    <svg class="ring" viewBox="0 0 120 120" aria-hidden="true"><circle class="bg" cx="60" cy="60" r="50"/><circle class="fg" id="dRing" cx="60" cy="60" r="50" stroke-dasharray="314.16" stroke-dashoffset="314.16"/></svg>
+    <div style="display:grid;gap:10px"><span class="dtime" id="dTime">20:00</span><button class="btn" type="button" id="dTimerBtn">Start my 20 minutes</button></div>
+    <ol class="dplan">
+      <li class="${d.facts!=null?'done':''}"><span class="ck">${d.facts!=null?DCHECK:''}</span><span><b>Fast facts</b> · about 4 minutes${d.facts!=null?` · ${d.facts}/20`:''}</span></li>
+      <li class="${d.math!=null?'done':''}"><span class="ck">${d.math!=null?DCHECK:''}</span><span><b>Mixed math</b> · about 10 minutes${d.math!=null?` · ${d.math}/12`:''}</span></li>
+      <li class="${d.words!=null?'done':''}"><span class="ck">${d.words!=null?DCHECK:''}</span><span><b>Word list</b> · about 6 minutes${d.words!=null?` · ${d.words}/8`:''}</span></li>
+    </ol>
+  </section>
+  ${d.done?`<section class="panel donebox"><div class="pip small happy">${bunnyImg('orig')}</div><div><h3>Today’s Daily 20 is done!</h3><p>Fast facts ${d.facts}/20 · Mixed math ${d.math}/12 · Word list ${d.words}/8</p><p class="note">You can practice again below. New questions come tomorrow.</p></div></section>`:''}
+  <section class="panel" id="dFacts">
+    <div class="dhead"><span class="dstep">1</span><div><h2>Fast facts</h2><p class="note">20 quick facts. Answer as many as you can, then check.</p></div></div>
+    <div class="fgrid">${DY.facts.map((f,i)=>`<label class="fact" for="df${i}"><span>${f.q} =</span><input id="df${i}" class="fin" inputmode="numeric" pattern="[0-9]*" autocomplete="off" maxlength="3"><span class="fans" hidden></span></label>`).join('')}</div>
+    <div class="dcheck"><button class="btn" type="button" data-dcheck="facts">Check fast facts</button><p class="feedback" id="dFactsFb" aria-live="polite"></p></div>
+  </section>
+  <section class="panel" id="dMath">
+    <div class="dhead"><span class="dstep">2</span><div><h2>Mixed math</h2><p class="note">12 questions from everything you’re learning. Show your work on paper if it helps!</p></div></div>
+    <div class="dqlist">${DY.math.map((q,i)=>`<div class="dq-item" data-i="${i}"><span class="dqn">${i+1}</span><div class="dq-body"><span class="tag">${q.label}</span><div class="dq-prompt">${q.prompt}</div>
+      ${q.type==='num'?`<input class="dq-in" id="dm${i}" inputmode="numeric" pattern="[0-9]*" autocomplete="off" maxlength="5" aria-label="Answer for question ${i+1}">`:`<div class="dq-ch" role="group" aria-label="Choices for question ${i+1}">${q.choices.map(c=>`<button type="button" class="chip" data-ch="${esc(c)}" aria-pressed="false">${c.includes('/')?fracHTML(c):c}</button>`).join('')}</div>`}
+      <p class="dq-fb"></p></div></div>`).join('')}</div>
+    <div class="dcheck"><button class="btn" type="button" data-dcheck="math">Check mixed math</button><p class="feedback" id="dMathFb" aria-live="polite"></p></div>
+  </section>
+  <section class="panel" id="dWords">
+    <div class="dhead"><span class="dstep">3</span><div><h2>Word list</h2><p class="note">Read each word. Say it out loud. Spell it out loud. Then cover the list and spell it from memory.</p></div></div>
+    <div class="wlist" id="wlist">${DY.words.map(w=>`<div class="wcard"><span>${w}</span>${canSpeak?`<button type="button" class="mini-say" data-say="${w}" aria-label="Hear ${w}">${SAYICON}</button>`:''}</div>`).join('')}</div>
+    <div class="dword"><p class="eyebrow">Bonus word of the day</p><p><b>${vw}</b> <i>(${vpos})</i>: ${vdef} <span class="note">“${vex}”</span></p></div>
+    <div class="row" style="justify-content:flex-start;margin-top:16px"><button class="btn ghost" type="button" id="dCover">Cover the list</button></div>
+    <h3 style="margin-top:20px">Spelling check</h3><p class="note">The mixed-up letters are a clue.${canSpeak?' Tap the speaker to hear the word.':''}</p>
+    <div class="spgrid">${DY.words.map((w,i)=>`<div class="sprow">${canSpeak?`<button type="button" class="mini-say" data-say="${w}" aria-label="Hear word ${i+1}">${SAYICON}</button>`:''}<div style="display:grid;gap:3px;flex:1;min-width:0"><span class="sphint">${DY.hints[i]}</span><input class="sp-in" id="dw${i}" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Spell word ${i+1}"></div></div>`).join('')}</div>
+    <div class="dcheck"><button class="btn" type="button" data-dcheck="words">Check my spelling</button><p class="feedback" id="dWordsFb" aria-live="polite"></p></div>
+  </section>`;
+  dTimerPaint();
+  $('#dTimerBtn').onclick=()=>{const d=dState();if(d.timerEnd){d.timerLeft=Math.max(0,d.timerEnd-Date.now());d.timerEnd=null}else{const l=dLeft();if(l<=0)return;d.timerEnd=Date.now()+l}save();dTimerPaint()};
+  $('#dCover').onclick=()=>{const l=$('#wlist'),c=l.classList.toggle('covered');$('#dCover').textContent=c?'Show the list':'Cover the list'};
+}
+$('#dailyStage').addEventListener('click',e=>{
+  const ch=e.target.closest('.dq-ch .chip');if(ch&&!ch.disabled){$$('.chip',ch.parentNode).forEach(b=>b.setAttribute('aria-pressed',b===ch));return}
+  const c=e.target.closest('[data-dcheck]');if(c)dailyCheck(c.dataset.dcheck,c);
+});
+$('#dailyStage').addEventListener('input',e=>{if(e.target.matches('.fin,.dq-in'))e.target.value=e.target.value.replace(/\D/g,'')});
+function dailyCheck(part,btn){
+  const d=dState();let score=0,total=0,fb;
+  if(part==='facts'){DY.facts.forEach((f,i)=>{const inp=$('#df'+i),ok=inp.value!==''&&+inp.value===f.a,box=inp.closest('.fact');total++;if(ok)score++;
+      box.classList.add(ok?'right':'wrong');inp.readOnly=true;if(!ok){const a=$('.fans',box);a.hidden=false;a.textContent=f.a}});
+    fb=$('#dFactsFb');d.facts=score;const st=Math.floor(score/4);if(st)addStars(st,'Fast facts!')}
+  else if(part==='math'){DY.math.forEach((q,i)=>{const item=$(`.dq-item[data-i="${i}"]`),f=$('.dq-fb',item);let ok;
+      if(q.type==='num'){const inp=$('#dm'+i);ok=inp.value!==''&&+inp.value===q.answer;inp.classList.add(ok?'right':'wrong');inp.readOnly=true}
+      else{const sel=$('.chip[aria-pressed="true"]',item);ok=!!sel&&sel.dataset.ch===q.answer;$$('.chip',item).forEach(b=>{b.disabled=true;if(b.dataset.ch===q.answer)b.classList.add('right');else if(b===sel)b.classList.add('wrong')})}
+      total++;if(ok)score++;f.className='dq-fb '+(ok?'good':'bad');f.innerHTML=ok?pick(PRAISE):`The answer is <b>${q.show||q.answer}</b>. ${q.hint.replace(/<div[\s\S]*<\/div>/,'').replace(/<\/?p>/g,' ')}`});
+    fb=$('#dMathFb');d.math=score;if(score)addStars(score,'Math stars!')}
+  else{DY.words.forEach((w,i)=>{const inp=$('#dw'+i),ok=inp.value.trim().toLowerCase()===w;total++;if(ok)score++;inp.classList.add(ok?'right':'wrong');inp.readOnly=true;
+      if(!ok){const h=inp.previousElementSibling;h.textContent='Correct spelling: '+w;h.classList.add('fix')}});
+    $('#wlist').classList.remove('covered');$('#dCover').textContent='Cover the list';fb=$('#dWordsFb');d.words=score;if(score)addStars(score,'Spelling stars!')}
+  btn.disabled=true;btn.textContent='Checked';fb.className='feedback '+(score/total>=.8?'good':'try');
+  fb.textContent=`${score} of ${total} correct. ${score===total?'Perfect!':score/total>=.8?'Great work!':'Look at the ones in red and try them again on paper.'}`;
+  SFX[score/total>=.8?'combo':'right']();
+  const first=!d.done&&d.facts!=null&&d.math!=null&&d.words!=null;
+  if(first){d.done=true;S.stars+=3;save();renderHeader();setTimeout(()=>{toast(`${STAR}<span>Daily 20 complete! +3 bonus</span>`);confetti();SFX.win()},700)}
+  save();
+  const plan=$$('.dplan li'),idx={facts:0,math:1,words:2}[part],tot={facts:20,math:12,words:8}[part];
+  if(plan[idx]){plan[idx].classList.add('done');$('.ck',plan[idx]).innerHTML=DCHECK;plan[idx].lastElementChild.insertAdjacentHTML('beforeend',` · ${score}/${tot}`)}
+}
 
 /* ---------- Writing ---------- */
 const W={tab:'story'};
@@ -2293,10 +2452,11 @@ function renderGrownups(){
       <td class="${r.math&&r.math.sets?'':'dim'}">${r.math&&r.math.sets?`${r.math.correct}/${r.math.total} (${Math.round(r.math.correct/r.math.total*100)}%)`:'—'}</td>
       <td class="${r.reading&&r.reading.done?'':'dim'}">${r.reading&&r.reading.done?`${r.reading.correct}/${r.reading.total} · ${esc(r.reading.title)}`:'—'}</td>
       <td class="${r.writing&&r.writing.done?'':'dim'}">${r.writing&&r.writing.done?r.writing.words+' words':'—'}</td>
+      <td class="${r.daily&&r.daily.done?'':'dim'}">${r.daily&&r.daily.done?`Facts ${r.daily.facts}/20 · Math ${r.daily.math}/12 · Words ${r.daily.words}/8`:'—'}</td>
       <td class="${r.social&&r.social.done?'':'dim'}">${r.social&&r.social.done?esc(r.social.what):'—'}</td>
       <td class="${r.readSec?'':'dim'}">${r.readSec?Math.round(r.readSec/60)+' min'+(r.book?' · '+esc(r.book):''):'—'}</td></tr>`;
     d.setDate(d.getDate()-1)}
-  $('#report').innerHTML=`<thead><tr><th>Day</th><th>Math</th><th>Reading quiz</th><th>Writing</th><th>Social studies</th><th>Own book</th></tr></thead><tbody>${rows}</tbody>`;
+  $('#report').innerHTML=`<thead><tr><th>Day</th><th>Math</th><th>Reading quiz</th><th>Writing</th><th>Daily 20</th><th>Social studies</th><th>Own book</th></tr></thead><tbody>${rows}</tbody>`;
   $('#setName').value=S.name;$('#setGoal').value=String(S.wordGoal);$('#setMsg').textContent='';
   $('#resetConfirm').hidden=true;$('#resetBtn').hidden=false;
 }
