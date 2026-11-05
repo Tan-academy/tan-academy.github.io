@@ -533,6 +533,9 @@ h1 em,h2 em{font-style:italic;font-weight:500;color:var(--gold)}
 .mtop{background-color:var(--c-soft);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96'%3E%3Cg fill='%23D9A93F' opacity='.38'%3E%3Cpath d='M22 8l2.2 6.8L31 17l-6.8 2.2L22 26l-2.2-6.8L13 17l6.8-2.2z'/%3E%3Cpath d='M72 54l1.5 4.5 4.5 1.5-4.5 1.5L72 66l-1.5-4.5L66 60l4.5-1.5z'/%3E%3Ccircle cx='76' cy='18' r='1.8'/%3E%3Ccircle cx='30' cy='74' r='1.5'/%3E%3Ccircle cx='52' cy='38' r='1.1'/%3E%3C/g%3E%3C/svg%3E");background-size:96px 96px;min-height:124px;align-items:center}
 .mtop svg.icon{width:80px;height:80px;filter:drop-shadow(0 4px 6px rgba(120,70,90,.15))}
 .mbody h2{font-size:2rem}
+.mbody{display:flex;flex-direction:column;gap:10px}
+.mbody .btn{margin-top:auto;align-self:flex-start}
+.mstatus{min-height:0}
 .mstatus{font-size:.95rem}
 .badge{border-width:2px}
 .chip{border-width:1.5px;font-family:var(--ui);letter-spacing:.02em}
@@ -1788,7 +1791,7 @@ const MAPICON={
   bridge:'<rect x="2" y="12" width="36" height="16" fill="#A0652E"/><path d="M8 12v16M14 12v16M20 12v16M26 12v16M32 12v16" stroke="#7A4A1F" stroke-width="1.5"/>'
 };
 const mapIcon=t=>`<svg viewBox="0 0 40 40" aria-hidden="true">${MAPICON[t]}</svg>`;
-const COMPASS='<svg viewBox="0 0 90 90" class="compass-svg" role="img" aria-label="Compass rose. North is up, south is down, east is right, west is left."><circle cx="45" cy="45" r="27" fill="none" stroke="var(--line-strong)" stroke-width="2"/><path d="M45 18l6 27h-12z" fill="var(--bad)"/><path d="M45 72l6-27h-12z" fill="var(--ink)"/><path d="M18 45l27-6v12z" fill="var(--muted)"/><path d="M72 45l-27-6v12z" fill="var(--muted)"/><g font-family="Baloo 2, sans-serif" font-weight="800" font-size="14" fill="var(--ink)" text-anchor="middle"><text x="45" y="13">N</text><text x="45" y="88">S</text><text x="8" y="50">W</text><text x="82" y="50">E</text></g></svg>';
+const COMPASS='<svg viewBox="0 0 90 90" class="compass-svg" role="img" aria-label="Compass rose. North is up, south is down, east is right, west is left."><circle cx="45" cy="45" r="27" fill="none" stroke="var(--line-strong)" stroke-width="2"/><path d="M45 18l6 27h-12z" fill="var(--bad)"/><path d="M45 72l6-27h-12z" fill="var(--ink)"/><path d="M18 45l27-6v12z" fill="var(--muted)"/><path d="M72 45l-27-6v12z" fill="var(--muted)"/><g font-family="Jost, sans-serif" font-weight="800" font-size="14" fill="var(--ink)" text-anchor="middle"><text x="45" y="13">N</text><text x="45" y="88">S</text><text x="8" y="50">W</text><text x="82" y="50">E</text></g></svg>';
 const cellsOf=ty=>{const r=[];MAP.forEach((row,ri)=>row.forEach((t,ci)=>{if(t===ty)r.push(COLS[ci]+(ri+1))}));return r};
 const typeAt=(r,c)=>(MAP[r]||[])[c];
 const DIRS={north:[-1,0],south:[1,0],east:[0,1],west:[0,-1]};
@@ -2045,7 +2048,7 @@ function nnatPuzzle(grade){
   return finalizeN(t==='latinH'?NGEN.latin(true):t==='overlayH'?NGEN.overlay(true):NGEN[t]());
 }
 function puzzleHTML(p){
-  if(p.big)return `<div class="nbig"><svg viewBox="0 0 300 200" role="img" aria-label="A pattern with a missing piece"><defs><clipPath id="pclip"><rect width="300" height="200" rx="10"/></clipPath></defs><g clip-path="url(#pclip)">${patContent(p.big)}<rect x="${p.x}" y="${p.y}" width="70" height="70" fill="#fff" stroke="${NS}" stroke-width="2.5" stroke-dasharray="6 4"/><text x="${p.x+35}" y="${p.y+47}" text-anchor="middle" font-family="Baloo 2, sans-serif" font-weight="800" font-size="34" fill="${NS}">?</text></g><rect width="300" height="200" rx="10" fill="none" stroke="${NS}" stroke-width="3"/></svg></div>`;
+  if(p.big)return `<div class="nbig"><svg viewBox="0 0 300 200" role="img" aria-label="A pattern with a missing piece"><defs><clipPath id="pclip"><rect width="300" height="200" rx="10"/></clipPath></defs><g clip-path="url(#pclip)">${patContent(p.big)}<rect x="${p.x}" y="${p.y}" width="70" height="70" fill="#fff" stroke="${NS}" stroke-width="2.5" stroke-dasharray="6 4"/><text x="${p.x+35}" y="${p.y+47}" text-anchor="middle" font-family="Jost, sans-serif" font-weight="800" font-size="34" fill="${NS}">?</text></g><rect width="300" height="200" rx="10" fill="none" stroke="${NS}" stroke-width="3"/></svg></div>`;
   const n=p.grid[0].length;
   return `<div class="nmatrix" style="--n:${n}" role="img" aria-label="A ${n} by ${n} grid of pictures with one missing">${p.grid.map((row,r)=>row.map((c,ci)=>r===p.miss[0]&&ci===p.miss[1]?'<div class="ncellbox nq">?</div>':`<div class="ncellbox">${cellSVG(c)}</div>`).join('')).join('')}</div>`;
 }
