@@ -1,0 +1,1483 @@
+<title>Star Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&family=Baloo+2:wght@500;700;800&family=Lexend:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F3F6FC; --card:#FFFFFF; --ink:#1C2541; --muted:#58627F; --line:#DDE4F1; --line-strong:#C2CCE2;
+  --math:#D9640F; --math-deep:#A44A04; --math-soft:#FFEBD9;
+  --read:#0E8679; --read-deep:#0A6157; --read-soft:#D6F3EF;
+  --write:#B5377A; --write-deep:#86225A; --write-soft:#F9DDEB;
+  --star:#F2B200; --star-soft:#FFF2C2;
+  --good:#1F8445; --good-soft:#DDF4E4; --bad:#C23838; --bad-soft:#FBE3E3; --try:#9A6400; --try-soft:#FFF1D1;
+  --grape:#6E56F0; --grape-soft:#ECE8FF; --sky:#1C86D6; --sky-soft:#DDEFFF; --leaf:#2A9A4A; --leaf-soft:#DEF4E3;
+  --on-c:#FFFFFF; --sheet:#FFFFFF; --paper-line:#C6D6EF; --margin-line:#F0A3A3;
+  --shadow:0 1px 2px rgba(28,37,65,.05),0 8px 24px rgba(28,37,65,.06);
+  --display:"Baloo 2","Trebuchet MS",system-ui,sans-serif;
+  --ui:"Lexend",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --read-font:"Andika","Comic Sans MS",system-ui,sans-serif;
+  --c:var(--math); --c-deep:var(--math-deep); --c-soft:var(--math-soft);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --paper:#0F1629; --card:#172038; --ink:#EDF1FA; --muted:#A3AECB; --line:#27324F; --line-strong:#3A4870;
+    --math:#FF8C3F; --math-deep:#B85A12; --math-soft:#3A2414;
+    --read:#36C3AF; --read-deep:#178575; --read-soft:#0E302C;
+    --write:#EF6CAC; --write-deep:#A83A72; --write-soft:#3A1830;
+    --star:#FFCE3A; --star-soft:#3A3110;
+    --good:#52CC7F; --good-soft:#123222; --bad:#F47272; --bad-soft:#3B1818; --try:#FFC24D; --try-soft:#3A2D10;
+    --grape:#A595FF; --grape-soft:#28214A; --sky:#5DB3F5; --sky-soft:#12293F; --leaf:#5ACB78; --leaf-soft:#13301D;
+    --on-c:#0F1629; --sheet:#131B30; --paper-line:#2B3959; --margin-line:#6E3442;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --paper:#0F1629; --card:#172038; --ink:#EDF1FA; --muted:#A3AECB; --line:#27324F; --line-strong:#3A4870;
+  --math:#FF8C3F; --math-deep:#B85A12; --math-soft:#3A2414;
+  --read:#36C3AF; --read-deep:#178575; --read-soft:#0E302C;
+  --write:#EF6CAC; --write-deep:#A83A72; --write-soft:#3A1830;
+  --star:#FFCE3A; --star-soft:#3A3110;
+  --good:#52CC7F; --good-soft:#123222; --bad:#F47272; --bad-soft:#3B1818; --try:#FFC24D; --try-soft:#3A2D10;
+  --grape:#A595FF; --grape-soft:#28214A; --sky:#5DB3F5; --sky-soft:#12293F; --leaf:#5ACB78; --leaf-soft:#13301D;
+    --on-c:#0F1629; --sheet:#131B30; --paper-line:#2B3959; --margin-line:#6E3442;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font:400 16px/1.55 var(--ui);-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:var(--display);line-height:1.1;margin:0;text-wrap:balance;letter-spacing:-.01em}
+h1{font-size:clamp(2rem,5vw,2.9rem);font-weight:800}
+h2{font-size:1.6rem;font-weight:700}
+h3{font-size:1.3rem;font-weight:700}
+p{margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--c);outline-offset:3px;border-radius:10px}
+.wrap{max-width:1000px;margin:0 auto;padding-inline:20px}
+.eyebrow{font:600 .78rem/1.2 var(--ui);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.lede{color:var(--muted);font-size:1.05rem;max-width:60ch}
+.subject-math{--c:var(--math);--c-deep:var(--math-deep);--c-soft:var(--math-soft)}
+.subject-read{--c:var(--read);--c-deep:var(--read-deep);--c-soft:var(--read-soft)}
+.subject-write{--c:var(--write);--c-deep:var(--write-deep);--c-soft:var(--write-soft)}
+
+/* Header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.topin{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:12px 6px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font:800 1.45rem/1 var(--display)}
+.mark{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:var(--ink);color:var(--paper);font:800 1.35rem/1 var(--display);transform:rotate(-6deg)}
+.stats{display:flex;gap:8px}
+.stat{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:var(--card);border:1px solid var(--line);font-size:.9rem;font-variant-numeric:tabular-nums}
+.stat b{font:800 1.1rem/1 var(--display)}
+.stat svg{width:18px;height:18px}
+.stat.stars svg{fill:var(--star)}
+.stat.streak svg{fill:var(--math)}
+.stat .lbl{color:var(--muted)}
+.nav{display:flex;gap:4px;padding-block:4px 10px;flex-wrap:wrap}
+.nav button{border:0;background:transparent;padding:8px 14px;border-radius:12px;font:600 .95rem/1 var(--ui);color:var(--muted)}
+.nav button:hover{background:var(--card);color:var(--ink)}
+.nav button[aria-current="page"]{background:var(--ink);color:var(--paper)}
+
+main{padding-block:28px 80px}
+.view{display:grid;gap:24px}
+
+/* Buttons */
+.btn{--sh:var(--c-deep);display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:14px;padding:12px 22px;background:var(--c);color:var(--on-c);font:700 1.1rem/1 var(--display);box-shadow:0 4px 0 var(--sh);transition:transform .08s,box-shadow .08s;min-height:48px}
+.btn:hover{filter:brightness(1.05)}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--sh)}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:0 4px 0 var(--sh)}
+.btn.big{font-size:1.3rem;padding:16px 28px}
+.btn.ghost{background:var(--card);color:var(--ink);--sh:var(--line-strong);border:2px solid var(--line-strong)}
+.link{background:none;border:0;color:var(--c);font-weight:600;text-decoration:underline;text-underline-offset:3px;padding:8px 4px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:24px;box-shadow:var(--shadow)}
+.tag{display:inline-block;padding:3px 10px;border-radius:999px;background:var(--c-soft);color:var(--c-deep);font:600 .75rem/1.4 var(--ui);letter-spacing:.06em;text-transform:uppercase;vertical-align:middle}
+:root[data-theme="dark"] .tag{color:var(--c)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .tag{color:var(--c)}}
+
+/* Home */
+.hello{display:grid;gap:8px}
+.missions{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.mission{background:var(--card);border:2px solid var(--line);border-radius:24px;overflow:hidden;display:flex;flex-direction:column}
+.mtop{background:var(--c-soft);color:var(--c);padding:20px 22px;display:flex;justify-content:space-between;align-items:flex-start;min-height:110px}
+.mtop svg.icon{width:58px;height:58px}
+.badge{width:40px;height:40px;border-radius:50%;border:3px dashed color-mix(in srgb,var(--c) 45%,transparent);display:grid;place-items:center}
+.badge svg{width:22px;height:22px;opacity:0}
+.mission.done .badge{background:var(--c);border:3px solid var(--c)}
+.mission.done .badge svg{opacity:1;stroke:var(--on-c)}
+.mbody{padding:18px 22px 22px;display:grid;gap:10px;flex:1;align-content:start}
+.mbody .btn{justify-self:start;margin-top:6px}
+.mstatus{color:var(--muted);min-height:3em}
+.mission.done{border-color:color-mix(in srgb,var(--c) 40%,var(--line))}
+.home-row{display:grid;grid-template-columns:1.3fr 1fr;gap:18px}
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:14px}
+.day{display:grid;justify-items:center;gap:4px;padding:10px 2px;border-radius:14px;background:var(--paper)}
+.day.today{outline:2px solid var(--ink)}
+.day.future{opacity:.5}
+.dname{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.dnum{font:700 1.2rem/1 var(--display);font-variant-numeric:tabular-nums}
+.dots{display:flex;gap:3px}
+.dots i{width:8px;height:8px;border-radius:50%;border:1.5px solid var(--line-strong)}
+.dots i.m.on{background:var(--math);border-color:var(--math)}
+.dots i.r.on{background:var(--read);border-color:var(--read)}
+.dots i.w.on{background:var(--write);border-color:var(--write)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;font-size:.82rem;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:9px;height:9px;border-radius:50%;display:inline-block}
+.wordcard{display:grid;gap:8px}
+.wordcard .w{font:800 2.2rem/1 var(--display);color:var(--ink)}
+.wordcard .pos{font-style:italic;color:var(--muted);font-size:.95rem}
+.wordcard .ex{font-family:var(--read-font);font-size:1.1rem;padding:10px 14px;border-left:4px solid var(--star);background:var(--star-soft);border-radius:0 10px 10px 0}
+.speak{display:inline-flex;align-items:center;gap:6px;border:2px solid var(--line-strong);background:var(--card);border-radius:999px;padding:6px 14px;font-weight:600;font-size:.9rem}
+.speak svg{width:18px;height:18px}
+
+/* Subject header */
+.view-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.view-head h1{color:var(--ink)}
+.view-head .eyebrow{color:var(--c)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{border:2px solid var(--line-strong);background:var(--card);border-radius:999px;padding:8px 16px;font-weight:500;font-size:.95rem;display:inline-flex;align-items:center;gap:6px}
+.chip:hover{border-color:var(--c)}
+.chip.on,.chip[aria-pressed="true"]{background:var(--c);border-color:var(--c);color:var(--on-c)}
+.chip small{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;opacity:.8}
+.chip svg{width:14px;height:14px;stroke:currentColor}
+
+/* Math */
+.intro{display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center}
+.intro-ex{min-width:180px;min-height:140px;border-radius:20px;background:var(--c-soft);color:var(--c-deep);display:grid;place-items:center;font:800 2.4rem/1 var(--display);padding:16px;font-variant-numeric:tabular-nums}
+:root[data-theme="dark"] .intro-ex{color:var(--c)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .intro-ex{color:var(--c)}}
+.intro div{display:grid;gap:10px;justify-items:start}
+.qtop{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:.9rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.bar{height:10px;border-radius:999px;background:var(--paper);margin:12px 0 4px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--c);border-radius:999px;transition:width .3s}
+.qbody{padding:26px 0 18px;display:grid;justify-items:center;gap:16px;text-align:center}
+.eq{font:800 clamp(2.6rem,9vw,3.8rem)/1 var(--display);font-variant-numeric:tabular-nums}
+.blank{display:inline-block;min-width:1.4em;border-bottom:5px solid var(--c);color:var(--c)}
+.stack{display:grid;grid-template-columns:auto auto;column-gap:14px;font:800 clamp(2.6rem,9vw,3.6rem)/1.1 var(--display);font-variant-numeric:tabular-nums;text-align:right}
+.stack span:nth-child(3),.stack span:nth-child(4){border-bottom:5px solid var(--ink);padding-bottom:6px}
+.wp{font-family:var(--read-font);font-size:1.4rem;line-height:1.5;max-width:34ch;text-align:left}
+.qtext{font-size:1.25rem;font-weight:500}
+.qtext b{font:800 1.6rem/1 var(--display);color:var(--c)}
+.frac{display:inline-flex;flex-direction:column;align-items:center;font:800 1em/1 var(--display);vertical-align:middle;font-variant-numeric:tabular-nums}
+.frac span:first-child{border-bottom:.08em solid currentColor;padding:0 .15em .05em}
+.frac span:last-child{padding-top:.05em}
+.fbar{max-width:100%;height:auto}
+.fbar .fill{fill:var(--c);stroke:var(--c-deep);stroke-width:2}
+.fbar .empty{fill:var(--card);stroke:var(--line-strong);stroke-width:2}
+.clock{width:200px;height:200px;max-width:100%}
+.clock .face{fill:var(--sheet);stroke:var(--ink);stroke-width:5}
+.clock .tk{stroke:var(--line-strong);stroke-width:1.5}
+.clock .tk.big{stroke:var(--ink);stroke-width:3}
+.clock text{font:700 17px var(--display);fill:var(--ink)}
+.clock .hand{stroke-linecap:round}
+.clock .hour{stroke:var(--ink);stroke-width:7}
+.clock .minute{stroke:var(--c);stroke-width:4.5}
+.clock .pin{fill:var(--ink)}
+.ans{display:grid;justify-items:center;gap:14px}
+.numrow{display:flex;gap:10px;align-items:stretch}
+.numin{width:170px;max-width:46vw;text-align:center;font:800 2.2rem/1 var(--display);padding:8px 12px;border:3px solid var(--line-strong);border-radius:16px;background:var(--sheet);font-variant-numeric:tabular-nums}
+.numin:focus{outline:none;border-color:var(--c)}
+.keypad{display:grid;grid-template-columns:repeat(3,72px);gap:8px}
+.key{height:58px;border-radius:14px;border:2px solid var(--line);background:var(--paper);font:700 1.5rem/1 var(--display);box-shadow:0 3px 0 var(--line-strong)}
+.key:active{transform:translateY(2px);box-shadow:0 1px 0 var(--line-strong)}
+.key.small{font:600 .9rem/1 var(--ui)}
+.choices{display:grid;grid-template-columns:repeat(2,minmax(0,220px));gap:12px;width:100%;justify-content:center}
+.choice,.opt{border:2px solid var(--line-strong);background:var(--card);border-radius:16px;padding:14px 16px;text-align:left;transition:border-color .15s,background .15s}
+.choice{font:800 1.8rem/1.1 var(--display);text-align:center;min-height:72px;box-shadow:0 3px 0 var(--line-strong)}
+.choice:hover:not(:disabled),.opt:hover:not(:disabled){border-color:var(--c)}
+.right{border-color:var(--good)!important;background:var(--good-soft)!important;color:var(--ink)}
+.wrong{border-color:var(--bad)!important;background:var(--bad-soft)!important;opacity:.75;text-decoration:line-through;text-decoration-thickness:2px}
+.choice:disabled,.opt:disabled{cursor:default}
+.feedback{min-height:1.6em;text-align:center;font:700 1.25rem/1.3 var(--display)}
+.feedback.good{color:var(--good)}
+.feedback.try{color:var(--try)}
+.feedback.bad{color:var(--bad)}
+.hintbox{background:var(--try-soft);border:2px dashed color-mix(in srgb,var(--try) 50%,transparent);border-radius:16px;padding:14px 18px;display:grid;gap:10px;justify-items:center;text-align:center}
+.hintbox p{max-width:46ch}
+.qactions{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap}
+.dotgrid{display:grid;grid-template-columns:repeat(var(--cols),14px);gap:5px}
+.dotgrid i{width:14px;height:14px;border-radius:50%;background:var(--c)}
+.dotgrid i:nth-child(n){opacity:.9}
+.results{display:grid;justify-items:center;text-align:center;gap:14px;padding-block:20px}
+.score{font:800 4.5rem/1 var(--display);color:var(--c);font-variant-numeric:tabular-nums}
+.row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+
+/* Reading */
+.read-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:20px;align-items:start}
+.passage{--rsize:1.2rem}
+.passage-tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.sizebtn{width:42px;height:38px;border-radius:12px;border:2px solid var(--line-strong);background:var(--card);font:700 1rem/1 var(--display)}
+.passage h2{font-size:2rem;margin:6px 0 14px}
+.ptext p{font-family:var(--read-font);font-size:var(--rsize);line-height:1.75;max-width:62ch}
+.ptext p+p{margin-top:.9em}
+.rq{border:0;padding:0;margin:0;display:grid;gap:10px}
+.rq+.rq{border-top:1px solid var(--line);padding-top:18px;margin-top:18px}
+.rq legend{font-weight:500;font-size:1.05rem;padding:0;margin-bottom:10px;line-height:1.5}
+.qn{font:800 1.15rem/1 var(--display);color:var(--c)}
+.opts{display:grid;gap:8px}
+.opt{font-family:var(--read-font);font-size:1.05rem}
+.rfb{font-size:.92rem;min-height:1.2em}
+.rfb.good{color:var(--good);font-weight:600}
+.rfb.try{color:var(--try)}
+.donebox{margin-top:20px;padding:18px;border-radius:16px;background:var(--c-soft);display:grid;gap:6px}
+.side{display:grid;gap:20px}
+.timer{display:grid;gap:12px}
+.timer-face{display:flex;align-items:center;gap:18px}
+.ring{width:110px;height:110px;flex:none}
+.ring circle{fill:none;stroke-width:10}
+.ring .bg{stroke:var(--paper)}
+.ring .fg{stroke:var(--c);stroke-linecap:round;transform:rotate(-90deg);transform-origin:50% 50%;transition:stroke-dashoffset .5s linear}
+.ttime{font:800 2.4rem/1 var(--display);font-variant-numeric:tabular-nums}
+.field{display:grid;gap:6px;font-size:.9rem;color:var(--muted)}
+.field input,.field select{border:2px solid var(--line-strong);border-radius:12px;padding:10px 12px;background:var(--sheet);color:var(--ink);font-size:1rem}
+.field input:focus,.field select:focus{outline:none;border-color:var(--c)}
+
+/* Writing */
+.tabs{display:flex;gap:8px;flex-wrap:wrap}
+.write-grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:20px;align-items:start}
+.prompt-card{display:grid;gap:10px}
+.prompt-text{font:700 1.6rem/1.25 var(--display)}
+.plan{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.plan label{display:grid;gap:4px;font:600 .78rem/1.2 var(--ui);letter-spacing:.06em;text-transform:uppercase;color:var(--c)}
+.plan textarea{border:2px solid var(--line);border-radius:12px;padding:8px 10px;min-height:76px;resize:vertical;background:var(--sheet);font:400 1rem/1.4 var(--read-font);text-transform:none;letter-spacing:0;color:var(--ink)}
+.plan textarea:focus{outline:none;border-color:var(--c)}
+.sheet{background:var(--sheet);border:2px solid var(--line);border-radius:18px;padding-block:14px;overflow:hidden}
+.sheet:focus-within{border-color:var(--c)}
+.sheet textarea{display:block;width:100%;min-height:20rem;border:0;outline:0;resize:vertical;color:var(--ink);font:400 1.3rem/2.3rem var(--read-font);padding:0 20px 0 60px;background-color:transparent;background-image:linear-gradient(90deg,transparent 42px,var(--margin-line) 42px,var(--margin-line) 44px,transparent 44px),repeating-linear-gradient(to bottom,transparent 0,transparent calc(2.3rem - 1px),var(--paper-line) calc(2.3rem - 1px),var(--paper-line) 2.3rem);background-attachment:local}
+.meter{display:grid;gap:6px}
+.meter-top{display:flex;justify-content:space-between;font-size:.9rem;font-variant-numeric:tabular-nums}
+.meter-top b{font:800 1.4rem/1 var(--display)}
+.checks{display:grid;gap:10px}
+.checks label{display:flex;gap:10px;align-items:flex-start;font-size:.95rem;cursor:pointer}
+.checks input{width:22px;height:22px;accent-color:var(--c);flex:none;margin-top:1px}
+.journal details{border-top:1px solid var(--line);padding-block:12px}
+.journal summary{cursor:pointer;font-weight:600;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.journal summary small{color:var(--muted);font-weight:400}
+.journal .jtext{font-family:var(--read-font);font-size:1.1rem;white-space:pre-wrap;margin-top:10px;line-height:1.7}
+.fix-opts{display:grid;gap:10px}
+.fix-opts .opt{font-size:1.25rem;padding:16px 18px}
+.spell-word{font:800 clamp(2.8rem,10vw,4.4rem)/1 var(--display);letter-spacing:.04em;color:var(--c)}
+.tiles{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.tiles i{width:30px;height:40px;border-radius:8px;background:var(--c-soft);border:2px solid color-mix(in srgb,var(--c) 30%,transparent)}
+.spellin{width:min(360px,100%);text-align:center;font:700 2rem/1 var(--display);padding:12px;border:3px solid var(--line-strong);border-radius:16px;background:var(--sheet);letter-spacing:.04em}
+.spellin:focus{outline:none;border-color:var(--c)}
+.steps{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.steps span{padding:4px 12px;border-radius:999px;background:var(--paper);color:var(--muted);font-size:.82rem;font-weight:600}
+.steps span.on{background:var(--c);color:var(--on-c)}
+.compare{display:grid;gap:6px;font-size:1.1rem}
+.compare b{font-family:var(--display);font-size:1.5rem;letter-spacing:.04em}
+.lt{display:inline-block;padding:0 1px;border-radius:4px}
+.lt.x{background:var(--bad-soft);color:var(--bad);text-decoration:underline}
+
+/* Grown-ups */
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;font-size:.95rem}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+td.dim{color:var(--muted)}
+.settings{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;align-items:end}
+.confirm{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:12px 14px;border-radius:14px;background:var(--bad-soft)}
+.btn.danger{--c:var(--bad);--c-deep:color-mix(in srgb,var(--bad) 70%,black)}
+.note{font-size:.88rem;color:var(--muted)}
+
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:12px 20px;border-radius:999px;font:700 1.1rem/1 var(--display);display:flex;gap:8px;align-items:center;z-index:50;box-shadow:var(--shadow);max-width:calc(100% - 32px)}
+.toast svg{width:20px;height:20px;fill:var(--star)}
+.toast.show{animation:pop .35s ease-out}
+@keyframes pop{from{transform:translate(-50%,20px);opacity:0}to{transform:translate(-50%,0);opacity:1}}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:40}
+
+/* Reading activities */
+.rsteps{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:18px}
+.rstep{display:grid;justify-items:center;gap:4px;border:2px solid var(--line);background:var(--paper);border-radius:14px;padding:8px 4px;font:600 .78rem/1.15 var(--ui);color:var(--muted);text-align:center}
+.rstep.on{border-color:var(--c);color:var(--ink);background:var(--c-soft)}
+.rnum{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--card);border:2px solid var(--line-strong);font:800 .9rem/1 var(--display);color:var(--ink)}
+.rnum svg{width:14px;height:14px;stroke:var(--on-c)}
+.rstep.done .rnum{background:var(--good);border-color:var(--good)}
+.rbody{display:grid;gap:12px}
+.nextup{display:grid;gap:10px;justify-items:start;padding:14px 16px;border-radius:16px;background:var(--c-soft);margin-top:14px}
+.detective{display:flex;gap:14px;align-items:center}
+.magnify{flex:none;width:58px;height:58px;border-radius:18px;background:var(--star);color:#3A2A00;display:grid;place-items:center;transform:rotate(-8deg)}
+.magnify svg{width:34px;height:34px}
+.dq{font:700 1.3rem/1.3 var(--display)}
+.passage.hunt{outline:3px dashed var(--star);outline-offset:-6px}
+.hunt .sent{cursor:pointer;border-radius:6px;transition:background .15s;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.hunt .sent:hover,.hunt .sent:focus-visible{background:var(--star-soft);outline:none}
+.sent.found{background:var(--good-soft);box-shadow:0 0 0 2px var(--good);border-radius:6px}
+.sent.nope{animation:nope .6s}
+@keyframes nope{30%{background:var(--bad-soft)}}
+.slots{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.slot{display:flex;gap:10px;align-items:center;min-height:52px;padding:8px 12px;border:2px dashed var(--line-strong);border-radius:14px;font-family:var(--read-font);font-size:1.05rem}
+.slot.filled{border-style:solid;border-color:var(--good);background:var(--good-soft)}
+.snum{flex:none;font:800 .75rem/1 var(--ui);letter-spacing:.06em;text-transform:uppercase;color:var(--c);width:44px}
+.evcards{display:grid;gap:8px}
+.evcard{border:2px solid var(--line-strong);background:var(--card);border-radius:14px;padding:12px 14px;text-align:left;font-family:var(--read-font);font-size:1.05rem;box-shadow:0 3px 0 var(--line-strong)}
+.evcard:hover{border-color:var(--c)}
+.donebox{grid-template-columns:auto 1fr;align-items:center;gap:14px}
+.donebox .pip{width:80px;height:80px}
+/* Math games */
+#mathStage{display:grid;gap:20px}
+.menu-top{display:flex;gap:20px;align-items:center}
+.menu-top > div:last-child{display:grid;gap:6px}
+.section-label{font:800 1.4rem/1 var(--display);margin-top:6px}
+.games{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px}
+.gcard{--gc:var(--math);--gs:var(--math-soft);display:grid;gap:8px;justify-items:start;align-content:start;text-align:left;border:0;border-radius:24px;padding:18px 18px 20px;background:var(--gs);color:var(--ink);box-shadow:0 5px 0 color-mix(in srgb,var(--gc) 40%,transparent);transition:transform .15s}
+.gcard:hover{transform:translateY(-4px) rotate(-1deg)}
+.gcard:active{transform:translateY(2px)}
+.gicon{width:64px;height:64px;border-radius:20px;background:var(--gc);color:var(--card);display:grid;place-items:center;font:800 2.4rem/1 var(--display);transform:rotate(-6deg);margin-bottom:4px}
+.gicon svg{width:46px;height:46px}
+.gname{font:800 1.35rem/1.1 var(--display);display:block}
+.gsub{font-size:.9rem;color:var(--muted);display:block}
+.gbest{font-size:.82rem;font-weight:600;display:block;margin-top:4px}
+.arcade{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.gcard.wide{grid-template-columns:auto 1fr;align-items:center;gap:16px}
+.gcard.wide .gicon{width:76px;height:76px}
+.pip{width:150px;height:150px;flex:none}
+.pip.small{width:110px;height:110px}
+.pip svg{width:100%;height:100%;overflow:visible}
+.pip.idle svg{animation:breathe 3s ease-in-out infinite;transform-origin:50% 100%}
+.pip.happy{animation:hop .6s ease}
+.pip.oops{animation:wobble .5s ease}
+@keyframes hop{0%,100%{transform:translateY(0)}40%{transform:translateY(-26px) scale(1.05)}70%{transform:translateY(0) scale(1.08,.92)}}
+@keyframes wobble{0%,100%{transform:rotate(0)}25%{transform:rotate(-9deg)}75%{transform:rotate(9deg)}}
+@keyframes breathe{50%{transform:scaleY(.96)}}
+.arena{display:grid;grid-template-columns:210px minmax(0,1fr);gap:20px;align-items:start}
+.buddy{display:grid;justify-items:center;gap:12px;position:sticky;top:130px}
+.bubble{position:relative;background:var(--card);border:2px solid var(--line-strong);border-radius:18px;padding:12px 16px;font:700 1.05rem/1.35 var(--display);text-align:center;max-width:220px;min-height:3.2em}
+.bubble::before{content:"";position:absolute;top:-10px;left:50%;width:16px;height:16px;background:var(--card);border-left:2px solid var(--line-strong);border-top:2px solid var(--line-strong);transform:translateX(-50%) rotate(45deg)}
+.trail{display:flex;align-items:center;padding:12px 16px;background:var(--card);border:1px solid var(--line);border-radius:999px}
+.stone{flex:none;width:30px;height:30px;border-radius:50%;background:var(--paper);border:3px solid var(--line-strong);display:grid;place-items:center;font:800 .85rem/1 var(--display);color:var(--muted);transition:transform .2s}
+.stone svg{width:18px;height:18px;fill:var(--star)}
+.stone.gold{background:var(--star-soft);border-color:var(--star)}
+.stone.ok{background:var(--good-soft);border-color:var(--good)}
+.stone.miss{background:var(--line);border-color:var(--line-strong)}
+.stone.cur{border-color:var(--math);color:var(--math);transform:scale(1.18);animation:pulse 1.2s infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 7px color-mix(in srgb,var(--math) 25%,transparent)}}
+.path{flex:1;min-width:2px;height:4px;background:repeating-linear-gradient(90deg,var(--line-strong) 0 6px,transparent 6px 10px)}
+.flag{flex:none;width:34px;height:34px;color:var(--ink)}
+.combo{color:var(--math);font-family:var(--display);font-size:1.05rem}
+.shake{animation:shake .4s}
+@keyframes shake{20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+.floaty{position:fixed;z-index:45;pointer-events:none;font:800 1.4rem/1 var(--display);color:var(--star);display:flex;align-items:center;gap:2px;animation:floatup .9s ease-out forwards}
+.floaty svg{width:22px;height:22px;fill:var(--star)}
+@keyframes floatup{to{transform:translateY(-70px);opacity:0}}
+.pizza{max-width:100%;height:auto}
+.hatch{display:grid;place-items:center;height:170px}
+.hatch svg{width:150px;height:150px}
+.egg{animation:eggwobble .32s ease-in-out 4}
+.monster-new{animation:popin .55s cubic-bezier(.3,1.6,.5,1)}
+@keyframes popin{from{transform:scale(.2);opacity:0}}
+@keyframes eggwobble{25%{transform:rotate(-12deg)}75%{transform:rotate(12deg)}}
+.zoo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:12px;margin-top:14px}
+.zcell{display:grid;justify-items:center;gap:4px;padding:10px 6px;border-radius:16px;background:var(--paper);font:700 .92rem/1.1 var(--display);text-align:center}
+.zcell svg{width:72px;height:72px}
+.zcell.locked{color:var(--muted)}
+.zcell.locked svg{filter:grayscale(1);opacity:.45}
+.ltimer{height:14px;border-radius:999px;background:var(--paper);overflow:hidden;margin-top:12px}
+.ltimer i{display:block;height:100%;background:var(--star);border-radius:999px}
+.lstats{display:flex;justify-content:space-between;margin-top:10px;font-variant-numeric:tabular-nums;color:var(--muted)}
+.lstats b{font:800 1.6rem/1 var(--display);color:var(--ink)}
+div.numin{min-height:62px;display:grid;place-items:center}
+.numin.good{border-color:var(--good);background:var(--good-soft)}
+.sky{position:relative;height:380px;border-radius:20px;overflow:hidden;background:linear-gradient(var(--sky-soft),var(--card));margin-top:14px}
+.balloon{position:absolute;bottom:-130px;width:min(86px,21%);aspect-ratio:.82;border:0;padding:0;background:none;animation:rise var(--dur) linear infinite;animation-delay:var(--del)}
+.balloon .b{position:absolute;inset:0;border-radius:50% 50% 47% 47%;background:var(--bc);color:#fff;display:grid;place-items:center;font:800 clamp(1.2rem,5vw,1.8rem)/1 var(--display);box-shadow:inset -8px -10px 0 rgba(0,0,0,.12),inset 8px 8px 0 rgba(255,255,255,.25);transition:transform .25s,opacity .25s}
+.balloon .b::after{content:"";position:absolute;left:50%;top:100%;width:2px;height:44px;background:var(--line-strong)}
+.balloon.popped .b{transform:scale(1.7);opacity:0}
+.balloon.nope .b{animation:wobble .45s}
+.balloon:disabled{cursor:default}
+.balloon:disabled:not(.popped) .b{opacity:.35}
+@keyframes rise{to{transform:translateY(-540px)}}
+.sky-q{position:absolute;left:50%;top:14px;transform:translateX(-50%);z-index:2;background:var(--card);border:2px solid var(--line-strong);border-radius:18px;padding:8px 20px;font:800 2rem/1.1 var(--display);white-space:nowrap;font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion: reduce){.balloon{bottom:30%}}
+@media (max-width:820px){
+  .arena{grid-template-columns:1fr}
+  .buddy{grid-template-columns:auto 1fr;justify-items:start;align-items:center;position:static}
+  .buddy .pip{width:86px;height:86px}
+  .bubble{max-width:none;text-align:left}
+  .bubble::before{top:50%;left:-10px;transform:translateY(-50%) rotate(-45deg)}
+}
+@media (max-width:520px){
+  .menu-top{flex-direction:column;align-items:flex-start}
+  .trail{padding:10px 12px}
+  .stone{width:22px;height:22px;font-size:.7rem;border-width:2px}
+  .stone svg{width:13px;height:13px}
+  .flag{width:26px;height:26px}
+  .gcard.wide{grid-template-columns:1fr}
+}
+@media (max-width:820px){
+  .missions{grid-template-columns:1fr}
+  .mtop{min-height:auto}
+  .home-row,.read-grid,.write-grid{grid-template-columns:1fr}
+  .intro{grid-template-columns:1fr}
+  .intro-ex{min-height:100px}
+}
+@media (max-width:520px){
+  .wrap{padding-inline:16px}
+  .panel{padding:18px;border-radius:18px}
+  .stat .lbl{display:none}
+  .nav button{padding:8px 10px;font-size:.88rem}
+  .plan{grid-template-columns:1fr}
+  .choices{grid-template-columns:1fr 1fr}
+  .keypad{grid-template-columns:repeat(3,64px)}
+  .sheet textarea{padding-left:52px;background-image:linear-gradient(90deg,transparent 34px,var(--margin-line) 34px,var(--margin-line) 36px,transparent 36px),repeating-linear-gradient(to bottom,transparent 0,transparent calc(2.3rem - 1px),var(--paper-line) calc(2.3rem - 1px),var(--paper-line) 2.3rem)}
+}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<header class="top">
+  <div class="wrap topin">
+    <a class="brand" href="#home" data-go="home"><span class="mark" id="brandMark">S</span><span id="brandName">Star Academy</span></a>
+    <div class="stats">
+      <span class="stat streak" title="Days in a row with a finished mission"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.5 2c.6 3.6 4.9 5.8 4.9 11a5.4 5.4 0 0 1-10.8 0c0-2.4 1.1-4 2.3-5.1.1 2 1 3.2 2.2 3.4-.3-3.2-.4-6.2 1.4-9.3z"/></svg><b id="streakCount">0</b><span class="lbl">day streak</span></span>
+      <span class="stat stars" title="Stars earned"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.8-4.9 4.6 1.3 6.5L12 17.2l-5.9 3.2 1.3-6.5L2.5 9.3l6.6-.8z"/></svg><b id="starCount">0</b><span class="lbl">stars</span></span>
+    </div>
+  </div>
+  <nav class="wrap nav" aria-label="Sections">
+    <button type="button" data-go="home">Today</button>
+    <button type="button" data-go="math">Math</button>
+    <button type="button" data-go="reading">Reading</button>
+    <button type="button" data-go="writing">Writing</button>
+    <button type="button" data-go="grownups">Grown-ups</button>
+  </nav>
+</header>
+
+<main class="wrap">
+
+  <!-- HOME -->
+  <section id="view-home" class="view">
+    <div class="hello">
+      <p class="eyebrow" id="todayDate"></p>
+      <h1 id="hello">Hello!</h1>
+      <p class="lede" id="missionSummary">Three missions today: math, reading and writing.</p>
+    </div>
+    <div class="missions">
+      <article class="mission subject-math" id="mcMath">
+        <div class="mtop">
+          <svg class="icon" viewBox="0 0 48 48" aria-hidden="true"><g stroke="currentColor" stroke-width="3.6" stroke-linecap="round" fill="none"><path d="M14 7v13M7.5 13.5h13"/><path d="M30 9l9 9M39 9l-9 9"/><path d="M7.5 34.5h13"/><path d="M30 31h9M30 38h9"/></g></svg>
+          <span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+        </div>
+        <div class="mbody"><h2>Math</h2><p class="mstatus" id="msMath"></p><button class="btn" type="button" data-go="math">Start math</button></div>
+      </article>
+      <article class="mission subject-read" id="mcRead">
+        <div class="mtop">
+          <svg class="icon" viewBox="0 0 48 48" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="3.4" stroke-linejoin="round" stroke-linecap="round"><path d="M24 12c-4.5-3.2-10.5-4-17-3v27c6.5-1 12.5-.2 17 3 4.5-3.2 10.5-4 17-3V9c-6.5-1-12.5-.2-17 3z"/><path d="M24 12v27"/></g></svg>
+          <span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+        </div>
+        <div class="mbody"><h2>Reading</h2><p class="mstatus" id="msRead"></p><button class="btn" type="button" data-go="reading">Start reading</button></div>
+      </article>
+      <article class="mission subject-write" id="mcWrite">
+        <div class="mtop">
+          <svg class="icon" viewBox="0 0 48 48" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="3.4" stroke-linejoin="round" stroke-linecap="round"><path d="M9 39l2.4-9.6L32 8.8l7.2 7.2L18.6 36.6z"/><path d="M27.6 13.2l7.2 7.2M11.4 29.4l7.2 7.2"/></g></svg>
+          <span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+        </div>
+        <div class="mbody"><h2>Writing</h2><p class="mstatus" id="msWrite"></p><button class="btn" type="button" data-go="writing">Start writing</button></div>
+      </article>
+    </div>
+    <div class="home-row">
+      <section class="panel">
+        <h2>This week</h2>
+        <div class="week" id="week"></div>
+        <p class="legend"><span><i style="background:var(--math)"></i>Math</span><span><i style="background:var(--read)"></i>Reading</span><span><i style="background:var(--write)"></i>Writing</span></p>
+      </section>
+      <section class="panel subject-read" id="homeWord"></section>
+    </div>
+  </section>
+
+  <!-- MATH -->
+  <section id="view-math" class="view subject-math" hidden>
+    <div class="view-head">
+      <div><p class="eyebrow">Math</p><h1>Math Adventures</h1></div>
+      <button type="button" class="speak" id="soundBtn"></button>
+    </div>
+    <div id="mathStage"></div>
+  </section>
+
+  <!-- READING -->
+  <section id="view-reading" class="view subject-read" hidden>
+    <div class="view-head">
+      <div><p class="eyebrow">Reading</p><h1>Story time</h1></div>
+      <p class="lede">Read the story, then do three activities: answer questions, find the proof, and put the story in order.</p>
+    </div>
+    <div class="chips" id="storyList" role="group" aria-label="Choose a story"></div>
+    <div class="read-grid">
+      <article class="panel passage" id="passageBox">
+        <div class="passage-tools">
+          <button type="button" class="speak" id="readAloud"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/></svg><span>Read it to me</span></button>
+          <button type="button" class="sizebtn" id="sizeDown" aria-label="Smaller text">A−</button>
+          <button type="button" class="sizebtn" id="sizeUp" aria-label="Bigger text">A+</button>
+        </div>
+        <div id="passage" class="ptext"></div>
+      </article>
+      <div class="side">
+        <section class="panel" id="questionsBox">
+          <h2>Check your understanding</h2>
+          <div id="questions" style="margin-top:14px"></div>
+        </section>
+        <section class="panel timer">
+          <div><h2>Reading log</h2><p class="note" style="margin-top:4px">Read your own book for 20 minutes.</p></div>
+          <label class="field" for="bookTitle">Book I'm reading<input id="bookTitle" type="text" placeholder="Book title" autocomplete="off"></label>
+          <div class="timer-face">
+            <svg class="ring" viewBox="0 0 120 120" aria-hidden="true"><circle class="bg" cx="60" cy="60" r="50"/><circle class="fg" id="ringFg" cx="60" cy="60" r="50" stroke-dasharray="314.16" stroke-dashoffset="0"/></svg>
+            <div style="display:grid;gap:10px">
+              <span class="ttime" id="timerText">20:00</span>
+              <div class="row" style="justify-content:flex-start"><button class="btn" type="button" id="timerBtn">Start</button><button class="link" type="button" id="timerReset">Reset</button></div>
+            </div>
+          </div>
+          <p class="note" id="timerNote"></p>
+        </section>
+        <section class="panel" id="readWord"></section>
+      </div>
+    </div>
+  </section>
+
+  <!-- WRITING -->
+  <section id="view-writing" class="view subject-write" hidden>
+    <div class="view-head">
+      <div><p class="eyebrow">Writing</p><h1>Writing studio</h1></div>
+      <div class="tabs" role="tablist" aria-label="Writing activities">
+        <button type="button" class="chip" role="tab" data-wtab="story">Daily writing</button>
+        <button type="button" class="chip" role="tab" data-wtab="fix">Sentence fixer</button>
+        <button type="button" class="chip" role="tab" data-wtab="spell">Spelling</button>
+      </div>
+    </div>
+
+    <div id="wStory" class="view">
+      <div class="write-grid">
+        <div style="display:grid;gap:18px">
+          <section class="panel prompt-card">
+            <div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap"><span class="tag" id="promptType"></span><button class="link" type="button" id="newPrompt">Give me a different idea</button></div>
+            <p class="prompt-text" id="promptText"></p>
+            <div class="plan" id="plan"></div>
+          </section>
+          <div class="sheet"><textarea id="story" aria-label="Write here" placeholder="Start writing here…"></textarea></div>
+        </div>
+        <div class="side">
+          <section class="panel meter">
+            <div class="meter-top"><span><b id="wc">0</b> words</span><span class="note">Goal: <span id="wgoal">50</span></span></div>
+            <div class="bar" aria-hidden="true"><i id="wbar" style="width:0%"></i></div>
+            <p class="note" id="wmsg">Write at least 50 words to finish.</p>
+          </section>
+          <section class="panel">
+            <h3>Check my writing</h3>
+            <div class="checks" id="checks" style="margin-top:12px"></div>
+          </section>
+          <button class="btn big" type="button" id="finishStory" disabled>Save to my journal</button>
+        </div>
+      </div>
+      <section class="panel journal">
+        <h2>My journal</h2>
+        <div id="journal" style="margin-top:8px"></div>
+      </section>
+    </div>
+
+    <div id="wFix" class="panel" hidden></div>
+    <div id="wSpell" class="panel" hidden></div>
+  </section>
+
+  <!-- GROWN-UPS -->
+  <section id="view-grownups" class="view" hidden>
+    <div class="view-head">
+      <div><p class="eyebrow">For parents</p><h1>Grown-ups corner</h1></div>
+      <p class="lede">See the last 7 days and change settings. Progress is saved in this browser on this device.</p>
+    </div>
+    <section class="panel">
+      <h2>Last 7 days</h2>
+      <div class="tablewrap" style="margin-top:12px"><table id="report"></table></div>
+    </section>
+    <section class="panel">
+      <h2>Settings</h2>
+      <form class="settings" id="settingsForm" style="margin-top:14px">
+        <label class="field" for="setName">Child's name<input id="setName" type="text" maxlength="20" autocomplete="off" placeholder="Optional. Saved only on this device"></label>
+        <label class="field" for="setGoal">Daily writing goal
+          <select id="setGoal"><option value="30">30 words</option><option value="50">50 words</option><option value="75">75 words</option><option value="100">100 words</option><option value="150">150 words</option></select>
+        </label>
+        <button class="btn" type="submit" style="--c:var(--ink);--c-deep:var(--muted);--on-c:var(--paper)">Save settings</button>
+      </form>
+      <p class="note" id="setMsg" style="margin-top:10px" aria-live="polite"></p>
+    </section>
+    <section class="panel" style="display:grid;gap:12px">
+      <h2>Start over</h2>
+      <p class="note">Clears all stars, streaks, scores and journal entries on this device.</p>
+      <div><button class="btn ghost" type="button" id="resetBtn">Reset progress</button></div>
+      <div class="confirm" id="resetConfirm" hidden><span>This can't be undone. Reset everything?</span><button class="btn danger" type="button" id="resetYes">Yes, reset</button><button class="link" type="button" id="resetNo">Cancel</button></div>
+    </section>
+  </section>
+</main>
+
+<div class="toast" id="toast" hidden role="status"></div>
+<canvas id="confetti" aria-hidden="true"></canvas>
+
+<script>
+(function(){
+'use strict';
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pad=n=>String(n).padStart(2,'0');
+const keyOf=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const todayKey=()=>keyOf(new Date());
+const dayNum=()=>{const d=new Date();return Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/864e5)};
+const ri=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const reduceMotion=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+const STAR='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.8-4.9 4.6 1.3 6.5L12 17.2l-5.9 3.2 1.3-6.5L2.5 9.3l6.6-.8z"/></svg>';
+const CHECK='<svg viewBox="0 0 24 24" fill="none" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+const PRAISE=['Great job!','You got it!','Super thinking!','Correct!','Nailed it!','Way to go!','Awesome!','Brilliant!'];
+
+/* ---------- Storage ---------- */
+const STORE='star-academy-v1',OLD_STORE=['bel','la-academy-v1'].join('');
+let S=load();
+function load(){let s=null;try{s=JSON.parse(localStorage.getItem(STORE)||localStorage.getItem(OLD_STORE))}catch(e){}s=s||{};
+  return {name:s.name||'',stars:s.stars||0,wordGoal:s.wordGoal||50,days:s.days||{},journal:s.journal||[],draft:s.draft||null,readLog:s.readLog||{},sound:s.sound!==false,monsters:s.monsters||[],lightningBest:s.lightningBest||0}}
+function save(){try{localStorage.setItem(STORE,JSON.stringify(S))}catch(e){}}
+function today(){const k=todayKey();return S.days[k]||(S.days[k]={})}
+function anyDone(d){return !!(d&&((d.math&&d.math.sets)||(d.reading&&d.reading.done)||(d.writing&&d.writing.done)))}
+function streak(){let n=0;const d=new Date();if(!anyDone(S.days[keyOf(d)]))d.setDate(d.getDate()-1);
+  while(anyDone(S.days[keyOf(d)])){n++;d.setDate(d.getDate()-1)}return n}
+
+/* ---------- Speech ---------- */
+const canSpeak=('speechSynthesis' in window)&&typeof SpeechSynthesisUtterance!=='undefined';
+function speak(text,onend){if(!canSpeak)return false;try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.rate=.9;u.pitch=1.05;if(onend)u.onend=onend;speechSynthesis.speak(u);return true}catch(e){return false}}
+function stopSpeak(){try{if(canSpeak)speechSynthesis.cancel()}catch(e){}}
+
+/* ---------- Feedback ---------- */
+let toastT;
+function toast(html){const t=$('#toast');t.innerHTML=html;t.hidden=false;t.classList.remove('show');void t.offsetWidth;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>{t.hidden=true},2400)}
+function addStars(n,msg){S.stars+=n;save();renderHeader();toast(`<span>+${n}</span>${STAR}<span>${msg||(n===1?'star':'stars')}</span>`)}
+const SUBJ={math:'Math',reading:'Reading',writing:'Writing'};
+function missionComplete(sub){S.stars+=3;save();renderHeader();toast(`${STAR}<span>${SUBJ[sub]} mission complete! +3 bonus</span>`);confetti()}
+function confetti(){
+  if(reduceMotion)return;const c=$('#confetti'),ctx=c.getContext('2d');if(!ctx)return;
+  const W=c.width=innerWidth,H=c.height=innerHeight,cs=getComputedStyle(document.documentElement);
+  const cols=['--math','--read','--write','--star'].map(v=>cs.getPropertyValue(v).trim()||'#f90');
+  const P=Array.from({length:150},()=>({x:W/2+(Math.random()-.5)*W*.3,y:H*.35,vx:(Math.random()-.5)*14,vy:-Math.random()*14-4,r:Math.random()*6+4,a:Math.random()*6,va:(Math.random()-.5)*.4,c:pick(cols)}));
+  let f=0;(function tick(){ctx.clearRect(0,0,W,H);P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.38;p.vx*=.99;p.a+=p.va;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.a);ctx.fillStyle=p.c;ctx.fillRect(-p.r/2,-p.r/4,p.r,p.r/2);ctx.restore()});
+    if(++f<120)requestAnimationFrame(tick);else ctx.clearRect(0,0,W,H)})()}
+
+/* ---------- Content ---------- */
+const VOCAB=[
+ ['curious','adjective','Wanting to know or learn about something.','The curious kitten sniffed every box in the room.'],
+ ['enormous','adjective','Very, very big.','The elephant left enormous footprints in the mud.'],
+ ['fragile','adjective','Easy to break.','Carry the eggs slowly because they are fragile.'],
+ ['observe','verb','To watch something carefully.','We observed the caterpillar every day to see it change.'],
+ ['investigate','verb','To look closely to find out what happened.','The class investigated why the plant was drooping.'],
+ ['nervous','adjective','Worried or a little bit scared.','Ivy felt nervous before her piano recital.'],
+ ['ancient','adjective','Very, very old.','We saw ancient pottery at the museum.'],
+ ['peculiar','adjective','Strange or unusual.','The soup had a peculiar purple color.'],
+ ['predict','verb','To say what you think will happen.','I predict that it will snow tomorrow.'],
+ ['mischief','noun','Playful behavior that causes a little trouble.','The puppy got into mischief and chewed a sock.'],
+ ['triumph','noun','A big win or success.','Finishing the 500-piece puzzle was a triumph.'],
+ ['swift','adjective','Very fast.','The swift rabbit dashed into the bushes.'],
+ ['glimmer','verb','To shine with a faint, flickering light.','The stars glimmered in the night sky.'],
+ ['cozy','adjective','Warm and comfortable.','We read books in a cozy blanket fort.'],
+ ['gather','verb','To bring things together into one place.','We gathered acorns in the park.'],
+ ['generous','adjective','Happy to share or give to others.','My generous friend shared her markers with everyone.'],
+ ['cautious','adjective','Careful to stay safe.','Be cautious when you cross the street.'],
+ ['exhausted','adjective','Very, very tired.','After the long hike, we were exhausted.'],
+ ['furious','adjective','Very, very angry.','The cat was furious when it got wet.'],
+ ['brilliant','adjective','Very bright, or very smart.','Mia had a brilliant idea for the science fair.']
+];
+
+const PASSAGES=[
+ {title:'The Moonflower Surprise',genre:'Fiction',body:[
+  'Every summer, Grandma Rosa planted something new in her backyard. This year, she planted moonflowers along the old wooden fence.',
+  '“Why are they called moonflowers?” Lena asked. The buds were twisted shut like tiny umbrellas.',
+  '“You will see,” Grandma said with a wink. “Come back after supper.”',
+  'That evening, Lena and Grandma sat on the porch steps. The sky turned orange, then purple. Lena held a flashlight in her lap. Slowly, one of the buds began to move. It unrolled, bit by bit, until it was a wide white circle. Then another opened, and another.',
+  '“They bloom at night!” Lena whispered. The air smelled sweet and fragrant, like vanilla and lemons.',
+  'A fuzzy gray moth fluttered over and landed in the middle of a flower. “The moths visit while the bees are asleep,” Grandma said. “Night flowers need night friends.”',
+  'Lena clicked off her flashlight. She wanted to see the flowers glow in the moonlight.'],
+  qs:[
+  {k:'Main idea',q:'What is this story mostly about?',o:['Lena and Grandma watch flowers open at night','Lena learns how to build a fence','A moth gets lost in the dark','Grandma cooks supper'],a:0,why:'Think about what Lena and Grandma wait for during the whole story.'},
+  {k:'Key detail',q:'When do the moonflowers open?',o:['In the evening, after supper','Early in the morning','At lunchtime','Only when it rains'],a:0,why:'Grandma tells Lena to come back after supper.'},
+  {k:'Vocabulary',q:'“The air smelled sweet and fragrant.” What does fragrant mean?',o:['Having a nice smell','Very loud','Cold and wet','Hard to see'],a:0,why:'Look at the words around it: “smelled sweet.”'},
+  {k:'Inference',q:'Why did Lena turn off her flashlight at the end?',o:['She wanted to see the flowers in the moonlight','The batteries ran out','She was scared of the moth','Grandma told her to go to bed'],a:0,why:'Reread the very last sentence.'}]},
+ {title:'Busy Builders: Beavers',genre:'Nonfiction',body:[
+  'Beavers are some of the best builders in the animal world. They live in ponds, rivers, and streams across North America.',
+  'A beaver’s front teeth are orange and very strong. They never stop growing! Beavers chew on wood all the time, which keeps their teeth from getting too long. A beaver can cut down a small tree in just a few minutes.',
+  'Beavers use branches, rocks, and mud to build dams across streams. A dam blocks the moving water and makes a calm, deep pond. In the middle of the pond, beavers build a home called a lodge. The door to the lodge is underwater, so wolves and bears cannot get inside.',
+  'Beaver dams help other animals, too. Ducks, frogs, fish, and turtles make their homes in the new pond. That is why scientists call beavers “ecosystem engineers.” They change the land in ways that help many living things.'],
+  qs:[
+  {k:'Main idea',q:'What is the main idea of this article?',o:['Beavers are skilled builders who change the land','Beavers have orange teeth','Wolves and bears live in ponds','Ducks like to swim'],a:0,why:'The first sentence and the last paragraph tell the big idea.'},
+  {k:'Key detail',q:'Why do beavers chew on wood all the time?',o:['It keeps their teeth from growing too long','They want the trees to grow taller','They are building a nest in the branches','It scares away bears'],a:0,why:'Look in the second paragraph.'},
+  {k:'Key detail',q:'Why is the door to the lodge underwater?',o:['So wolves and bears cannot get in','So the beavers can drink','So the lodge stays dry','Because beavers cannot climb'],a:0,why:'Read the last sentence of the third paragraph.'},
+  {k:'Vocabulary',q:'Scientists call beavers “ecosystem engineers.” What does that mean?',o:['They change the land in ways that help many living things','They drive trains','They fix broken machines','They only live in cities'],a:0,why:'The very next sentence explains it.'}]},
+ {title:'Omar and the Blue Mitten',genre:'Fiction',body:[
+  'On a snowy Saturday morning, Omar found a small blue mitten on the sidewalk. It had a white star stitched on the thumb.',
+  '“Someone’s hands must be cold,” Omar said to his dad.',
+  'First, Omar looked up and down the street. Nobody was there. Next, he went home and got paper and markers. He wrote FOUND: BLUE MITTEN WITH A STAR in big letters. He added his apartment number at the bottom. Then he taped the sign to the lamppost on the corner.',
+  'The next day, there was a knock at the door. It was Mrs. Kim from the third floor. Her little granddaughter, June, was holding her hand.',
+  '“June has been looking everywhere for that mitten,” Mrs. Kim said. “I knitted it for her myself.”',
+  'June smiled a big smile when Omar handed her the mitten. Omar felt warm all over, even though it was freezing outside.'],
+  qs:[
+  {k:'Sequence',q:'What did Omar do right after he looked up and down the street?',o:['He went home to make a sign','He taped the sign to a lamppost','He knocked on Mrs. Kim’s door','He put the mitten on'],a:0,why:'Look for the word “Next.”'},
+  {k:'Character',q:'Which word best describes Omar?',o:['Helpful','Lazy','Grumpy','Sneaky'],a:0,why:'Think about what Omar did with the mitten he found.'},
+  {k:'Key detail',q:'How did Mrs. Kim know where to find the mitten?',o:['Omar’s sign had his apartment number','She saw Omar pick it up','June found it on the sidewalk','Omar’s dad called her'],a:0,why:'What did Omar write at the bottom of the sign?'},
+  {k:'Figurative',q:'“Omar felt warm all over, even though it was freezing outside.” What does this mean?',o:['He felt happy that he helped','He had a fever','He was wearing a big coat','The sun came out'],a:0,why:'It was freezing outside, so this “warm” is about his feelings.'}]},
+ {title:'Why Do Leaves Change Color?',genre:'Nonfiction',body:[
+  'In the fall, many trees put on a colorful show. Their green leaves turn yellow, orange, and red. But where do these colors come from?',
+  'All summer long, leaves are busy making food for the tree. They use sunlight, water, and air. A special green material called chlorophyll helps them do this job. There is so much chlorophyll in a leaf that it hides all the other colors.',
+  'When fall comes, the days get shorter and cooler. There is less sunlight, so the tree stops making food. The chlorophyll slowly breaks down, and the green fades away. Now the yellow and orange colors that were hiding all along can finally be seen!',
+  'Some trees, like red maples, make brand-new red colors in the fall. Soon, the leaves dry up and drop to the ground. The tree rests through the winter and grows new green leaves in the spring.'],
+  qs:[
+  {k:'Key detail',q:'What does chlorophyll do?',o:['Helps leaves make food from sunlight','Makes leaves fall off','Turns leaves red','Keeps trees warm in winter'],a:0,why:'Look in the second paragraph.'},
+  {k:'Cause & effect',q:'Why does the green fade from leaves in the fall?',o:['There is less sunlight, so the chlorophyll breaks down','Animals eat the green parts','It rains more in the fall','The wind blows the color away'],a:0,why:'The third paragraph tells what happens when days get shorter.'},
+  {k:'Inference',q:'Where were the yellow and orange colors during the summer?',o:['Hidden in the leaf under the green','In the tree’s roots','In the sky','They did not exist yet'],a:0,why:'The article says they were “hiding all along.”'},
+  {k:'Sequence',q:'What does the tree do in the winter?',o:['It rests','It grows new leaves','It turns red','It makes the most food'],a:0,why:'Read the last sentence.'}]},
+ {title:'Priya’s Best Jump',genre:'Fiction',body:[
+  'Priya wanted to win the jump rope contest at Field Day more than anything. Every afternoon for two weeks, she practiced in her driveway. At first, she tripped after ten jumps. Her rope tangled around her sneakers again and again.',
+  '“Keep your elbows close and jump small,” her big brother Dev told her. Priya tried it. Twenty jumps. Then thirty. By the end of the second week, she could do fifty-two jumps without stopping.',
+  'On Field Day, Priya’s heart thumped as the whistle blew. She jumped and counted in her head. Forty… fifty… sixty! When she finally tripped, the teacher shouted, “Sixty-one!”',
+  'A girl named Hana won the contest with eighty jumps. For a moment, Priya felt disappointed. Then she remembered tripping after ten jumps just two weeks ago.',
+  '“Sixty-one is my new record,” she told Dev with a grin. “Next year, I’m going for a hundred.”'],
+  qs:[
+  {k:'Theme',q:'What lesson does this story teach?',o:['Practice helps you improve, even if you don’t win','Winning is the only thing that matters','Jump rope is too hard','Big brothers are always right'],a:0,why:'Think about how Priya felt at the end, even without winning.'},
+  {k:'Key detail',q:'What advice did Dev give Priya?',o:['Keep your elbows close and jump small','Jump as high as you can','Use a longer rope','Practice only on weekends'],a:0,why:'Look at what Dev says in the second paragraph.'},
+  {k:'Vocabulary',q:'“Priya felt disappointed.” What does disappointed mean?',o:['Sad because something didn’t go the way you hoped','Very sleepy','Surprised and excited','Angry at a friend'],a:0,why:'She had just found out she did not win.'},
+  {k:'Character',q:'How did Priya feel at the end of the story?',o:['Proud of her new record','Ready to quit','Jealous of Hana','Bored'],a:0,why:'She says “my new record” with a grin.'}]},
+ {title:'The Honeybee Dance',genre:'Nonfiction',body:[
+  'Honeybees live together in large groups called colonies. A single hive can hold more than 20,000 bees! Each bee has a job to do.',
+  'Worker bees fly out of the hive to find flowers. They drink a sweet liquid called nectar and collect a yellow powder called pollen. Back at the hive, the bees turn nectar into honey.',
+  'But how does a bee tell the others where the best flowers are? It dances! When a worker bee finds lots of flowers, it returns to the hive and does a special move called the waggle dance. The bee walks in a straight line while wiggling its body. Then it circles around and does it again.',
+  'The direction of the dance points the way to the flowers. The longer the bee waggles, the farther away the flowers are. Other bees watch closely, then zoom off to find the food.'],
+  qs:[
+  {k:'Main idea',q:'What is this article mostly about?',o:['How honeybees work together and share information','How to keep bees as pets','Why flowers are yellow','How factories make honey'],a:0,why:'Think about what most of the paragraphs explain.'},
+  {k:'Vocabulary',q:'What is nectar?',o:['A sweet liquid in flowers','A yellow powder','A kind of dance','The bees’ home'],a:0,why:'The second paragraph tells you.'},
+  {k:'Key detail',q:'What does a long waggle tell the other bees?',o:['The flowers are far away','The flowers are very close','It is time to sleep','There is danger nearby'],a:0,why:'Read the last paragraph carefully.'},
+  {k:'Vocabulary',q:'What is a colony?',o:['A large group of bees that live together','A single flower','A type of honey','A bee’s wings'],a:0,why:'Look at the very first sentence.'}]},
+ {title:'A Letter from Camp',genre:'Letter',body:[
+  'Dear Mom, Dad, and Rosie,',
+  'Camp Pinecrest is awesome! I have been here for four days, and I have already learned so much.',
+  'On Monday, I learned how to paddle a canoe. My partner Jamal and I went in circles at first, but by the end we made it all the way across the lake. On Tuesday, we hiked to Eagle Rock. My legs were tired, but the view was worth it. I could see the whole lake from the top!',
+  'The food is okay. The pancakes are great, but I miss Dad’s spaghetti.',
+  'Tonight we are having a campfire. Our counselor will teach us how to make s’mores and tell us a spooky story. I hope it’s not too spooky!',
+  'Please give Rosie a hug for me, and tell her not to touch my comic books.',
+  'Love, Sam'],
+  qs:[
+  {k:'Purpose',q:'Why did Sam write this letter?',o:['To tell his family about camp','To ask for spaghetti','To invite Jamal over','To tell a spooky story'],a:0,why:'What is most of the letter about?'},
+  {k:'Sequence',q:'What did Sam do on Tuesday?',o:['Hiked to Eagle Rock','Learned to paddle a canoe','Made s’mores','Went home'],a:0,why:'Find the word “Tuesday” in the letter.'},
+  {k:'Inference',q:'Who is Rosie most likely?',o:['Sam’s sister','Sam’s camp counselor','Sam’s canoe partner','Sam’s teacher'],a:0,why:'Rosie is at home with Mom and Dad, and Sam worries about his comic books.'},
+  {k:'Character',q:'How does Sam feel about camp?',o:['He is having a great time','He wants to go home right away','He is bored','He is angry at Jamal'],a:0,why:'Look at the very first sentence after “Dear…”.'}]},
+ {title:'The Rocket Castle',genre:'Fiction',body:[
+  'When the new refrigerator arrived, Nia and Jay cared more about the box than the fridge. It was the biggest box they had ever seen.',
+  '“Let’s make a rocket ship!” said Jay.',
+  '“No, a castle!” said Nia. She crossed her arms.',
+  'They argued until Grandpa walked in with a roll of tape. “Why not both?” he asked. “A castle can have a rocket tower.”',
+  'The twins looked at each other and grinned. Nia drew stone walls with a gray marker. Jay cut a round window at the top and made a cone out of a paper plate. Grandpa helped them cut a door that opened and closed.',
+  'By dinnertime, the Rocket Castle stood in the middle of the living room. It was even better than either idea alone.',
+  '“Ready for launch, Your Majesty?” Jay asked. “Ready!” said Nia, and they counted down together.'],
+  qs:[
+  {k:'Problem',q:'What problem do Nia and Jay have at the beginning?',o:['They want to build different things','They cannot find any tape','The box is too small','Grandpa wants the box'],a:0,why:'Look at what Jay and Nia each say they want to make.'},
+  {k:'Solution',q:'How do they solve the problem?',o:['They build a castle with a rocket tower','They get a second box','Nia lets Jay decide','They throw the box away'],a:0,why:'What idea does Grandpa have?'},
+  {k:'Inference',q:'“She crossed her arms.” How was Nia feeling?',o:['Upset and stubborn','Sleepy','Cold','Excited to share'],a:0,why:'Think about what people do with their arms when they don’t agree.'},
+  {k:'Theme',q:'What lesson does the story teach?',o:['Working together can make ideas even better','Big boxes are the best toys','Rockets are better than castles','Never argue with a twin'],a:0,why:'Read the sentence that says “even better than either idea alone.”'}],
+  ev:{q:'What did Jay make for the top of the tower?',s:'Jay cut a round window at the top'},
+  seq:['A huge box arrives.','The twins argue about what to build.','Grandpa says, “Why not both?”','The twins count down for launch.']},
+ {title:'A Sea Turtle’s Journey',genre:'Nonfiction',body:[
+  'Sea turtles spend almost their whole lives in the ocean. But every few years, a mother sea turtle swims back to the same beach where she was born.',
+  'At night, she crawls onto the sand and digs a deep hole with her back flippers. She lays about 100 eggs that look like ping-pong balls. Then she covers them with sand and returns to the sea.',
+  'About two months later, the baby turtles, called hatchlings, break out of their shells. They wait until night, when it is cooler and safer. Then they scramble toward the ocean, following the bright light of the moon on the water.',
+  'The trip is dangerous. Crabs and birds try to catch them. That is why some beaches turn off their lights at night. Bright lights from buildings can confuse the hatchlings and lead them the wrong way.'],
+  qs:[
+  {k:'Key detail',q:'About how many eggs does a mother sea turtle lay?',o:['About 100','About 10','About 2','About 1,000'],a:0,why:'Look in the second paragraph.'},
+  {k:'Vocabulary',q:'What are hatchlings?',o:['Baby turtles that just came out of their eggs','Crabs on the beach','Holes in the sand','Mother turtles'],a:0,why:'The third paragraph says “the baby turtles, called hatchlings.”'},
+  {k:'Cause & effect',q:'Why do some beaches turn off their lights at night?',o:['So hatchlings don’t go the wrong way','So people can sleep','To save money','So crabs can see'],a:0,why:'Read the last two sentences.'},
+  {k:'Key detail',q:'Why do hatchlings wait until night to go to the ocean?',o:['It is cooler and safer','They sleep all day','The ocean is closed in the day','Their mother tells them to'],a:0,why:'Look in the third paragraph.'}],
+  ev:{q:'How do the hatchlings find their way to the ocean?',s:'following the bright light of the moon'},
+  seq:['The mother turtle digs a hole.','She lays her eggs.','The hatchlings break out of their shells.','The hatchlings scramble to the ocean.']},
+ {title:'Mo and the Mystery Noise',genre:'Mystery',body:[
+  'Every night that week, Mo heard a strange noise. Scritch, scratch. Scritch, scratch. It came from inside the kitchen wall.',
+  '“Maybe it’s a ghost,” said his little sister, Bea, pulling her blanket up to her nose.',
+  'Mo was a detective, so he made a list of clues. Clue one: the noise only happened at night. Clue two: crumbs were missing from under the toaster. Clue three: there was a tiny hole near the bottom of the pantry door.',
+  'Mo put a small piece of cheese next to the hole and waited with a flashlight. Soon, a gray nose poked out. Two round ears followed. Then a little mouse grabbed the cheese and scurried away!',
+  '“Case closed,” said Mo. “Our ghost has whiskers.”',
+  'The next day, Dad set a kind trap that caught the mouse without hurting it. The whole family drove to the park and let it go near the woods.'],
+  qs:[
+  {k:'Inference',q:'What was making the scritch-scratch noise?',o:['A mouse','A ghost','The toaster','Bea'],a:0,why:'What poked out of the hole?'},
+  {k:'Clues',q:'Which clue told Mo where to wait?',o:['A tiny hole near the pantry door','The noise was loud','Bea was scared','Dad had a flashlight'],a:0,why:'Look at clue three, then where Mo put the cheese.'},
+  {k:'Figurative',q:'“Our ghost has whiskers.” What does Mo mean?',o:['The “ghost” was really an animal','Ghosts are real','Bea has whiskers','He saw a cat'],a:0,why:'What animal has whiskers in this story?'},
+  {k:'Character',q:'How is the family kind to the mouse?',o:['They let it go near the woods','They give it a name','They keep it as a pet','They feed it every day'],a:0,why:'Read the last paragraph.'}],
+  ev:{q:'Which sentence shows that Bea was scared?',s:'pulling her blanket up to her nose'},
+  seq:['Mo hears a strange noise.','Mo makes a list of clues.','Mo waits with cheese and a flashlight.','The family lets the mouse go.']},
+ {title:'Make a Pinecone Bird Feeder',genre:'How-to',body:[
+  'Birds need extra food in the winter, when seeds and bugs are hard to find. You can help them by making a simple pinecone bird feeder.',
+  'What you need: a large pinecone, a piece of string, a spoon, sunflower butter or peanut butter, and birdseed.',
+  'Step 1: Tie the string tightly around the top of the pinecone. Leave a long piece so you can hang it later.',
+  'Step 2: Use the spoon to spread sunflower butter all over the pinecone. Push it into the spaces between the scales.',
+  'Step 3: Pour birdseed onto a plate. Roll the sticky pinecone in the seeds until it is completely covered.',
+  'Step 4: Hang your feeder on a tree branch outside a window. Then watch quietly. Soon, chickadees, finches, and other birds will stop by for a snack!'],
+  qs:[
+  {k:'Purpose',q:'Why did the author write this?',o:['To teach how to make a bird feeder','To tell a funny story about birds','To explain why pinecones fall','To sell birdseed'],a:0,why:'Think about what the steps help you do.'},
+  {k:'Sequence',q:'What do you do right after spreading on the sunflower butter?',o:['Roll the pinecone in birdseed','Tie the string','Hang the feeder','Find a pinecone'],a:0,why:'Look at Step 3.'},
+  {k:'Key detail',q:'Why do birds need extra food in winter?',o:['Seeds and bugs are hard to find','Birds are bigger in winter','Pinecones are closed','It is too windy to fly'],a:0,why:'Read the very first sentence.'},
+  {k:'Text feature',q:'Why does the author use “Step 1,” “Step 2,” and so on?',o:['To show the order to do things','To count the birds','To count the pinecones','To make the words bigger'],a:0,why:'What do the numbers help you keep track of?'}],
+  ev:{q:'Where should you hang the feeder?',s:'Hang your feeder on a tree branch'},
+  seq:['Tie string around the pinecone.','Spread sunflower butter on it.','Roll it in birdseed.','Hang it on a tree branch.']},
+ {title:'Ruby Bridges Takes a Brave Step',genre:'Biography',body:[
+  'In 1960, many schools in the United States were separated. Black children and white children were not allowed to go to the same schools. A judge said this was unfair and had to change.',
+  'Ruby Bridges was six years old when she was chosen to start first grade at William Frantz Elementary School in New Orleans. She would be the first Black student there.',
+  'On her first day, crowds of angry people shouted outside the school. Four U.S. marshals walked beside Ruby to keep her safe. Ruby held her head high and walked inside.',
+  'Many families kept their children home, so Ruby was the only student in her class. Her teacher, Mrs. Barbara Henry, taught her every day for the whole year. They became good friends.',
+  'Ruby’s courage helped open the door for other children. Today, she visits schools to talk about kindness and fairness for everyone.'],
+  qs:[
+  {k:'Main idea',q:'What is this biography mostly about?',o:['A brave girl who helped change unfair school rules','How to get to New Orleans','A teacher who moved schools','Why first grade is fun'],a:0,why:'Think about what the whole article tells about Ruby.'},
+  {k:'Key detail',q:'Why did four U.S. marshals walk with Ruby?',o:['To keep her safe','To show her the classrooms','To carry her books','To be her teachers'],a:0,why:'Look in the third paragraph.'},
+  {k:'Vocabulary',q:'Ruby showed courage. What does courage mean?',o:['Being brave even when something is scary','Being very fast','Being very quiet','Being tired'],a:0,why:'Think about how Ruby acted on her first day.'},
+  {k:'Cause & effect',q:'Why was Ruby the only student in her class?',o:['Many families kept their children home','She came to school early','The school was very small','Her teacher wanted only one student'],a:0,why:'Read the beginning of the fourth paragraph.'}],
+  ev:{q:'Which sentence shows that Ruby was brave on her first day?',s:'Ruby held her head high and walked inside.'},
+  seq:['A judge says separated schools must change.','Ruby is chosen for a new school.','Marshals walk beside Ruby on her first day.','Ruby visits schools to talk about fairness.']},
+ {title:'Zoe’s Zucchini Problem',genre:'Fiction',body:[
+  'Zoe planted one tiny zucchini seed in May. “I hope it grows,” she said.',
+  'It grew. And grew. And GREW. By August, the plant was as wide as a trampoline, and it made zucchini faster than anyone could eat them.',
+  'Zoe’s family ate zucchini bread, zucchini soup, and zucchini pancakes. Her dad even tried zucchini ice cream. Nobody asked for seconds.',
+  '“We have to do something,” said Zoe. She put a table at the end of the driveway with a sign: FREE ZUCCHINI! TAKE AS MANY AS YOU WANT!',
+  'Neighbors came all afternoon. Mr. Ortiz took three for his famous stew. The Chang twins took one shaped like a duck. By evening, the table was empty.',
+  'The next morning, Zoe looked at the garden and groaned. Seven brand-new zucchini were waiting for her.'],
+  qs:[
+  {k:'Problem',q:'What is Zoe’s problem?',o:['Her plant grows too many zucchini','Her seed will not grow','A rabbit eats her garden','She does not like soup'],a:0,why:'Read the second paragraph.'},
+  {k:'Inference',q:'“Nobody asked for seconds.” What does this tell you?',o:['Nobody liked the zucchini ice cream','Everyone wanted more','The ice cream melted','Dad ate it all'],a:0,why:'Asking for seconds means wanting more.'},
+  {k:'Solution',q:'How does Zoe try to solve her problem?',o:['She gives zucchini away to neighbors','She pulls out the plant','She sells zucchini at a store','She feeds them to a duck'],a:0,why:'Look at the sign Zoe made.'},
+  {k:'Ending',q:'Why does Zoe groan at the end?',o:['More zucchini have already grown','Her table broke','The neighbors brought zucchini back','It started to rain'],a:0,why:'Read the very last sentence.'}],
+  ev:{q:'How big did the zucchini plant get?',s:'as wide as a trampoline'},
+  seq:['Zoe plants one seed.','Dad tries zucchini ice cream.','Neighbors take free zucchini.','Seven new zucchini appear.']},
+ {title:'The Moon Up Close',genre:'Nonfiction',body:[
+  'The Moon is Earth’s closest neighbor in space. It is about 239,000 miles away. If you could drive there in a car, the trip would take about six months!',
+  'The Moon does not make its own light. It shines because sunlight bounces off it. As the Moon travels around Earth, we see different amounts of its sunny side. These shapes are called phases. Sometimes we see a full circle, and sometimes only a thin sliver.',
+  'The Moon has no air, no wind, and no rain. Footprints left by astronauts in 1969 are probably still there today, because nothing blows them away.',
+  'The Moon’s surface is covered with craters. Craters are bowl-shaped holes made when space rocks crashed into the Moon long ago.'],
+  qs:[
+  {k:'Key detail',q:'Why does the Moon shine?',o:['Sunlight bounces off it','It is on fire','It has lights inside','Stars shine on it'],a:0,why:'Look at the start of the second paragraph.'},
+  {k:'Vocabulary',q:'What are the Moon’s phases?',o:['The different shapes of the Moon we see','Holes on the Moon','Astronaut footprints','Rocks in space'],a:0,why:'The second paragraph explains “phases.”'},
+  {k:'Cause & effect',q:'Why are the astronauts’ footprints probably still there?',o:['There is no wind or rain to blow them away','Astronauts go back to fix them','They are made of metal','The Moon is very cold'],a:0,why:'Read the third paragraph.'},
+  {k:'Key detail',q:'What made the craters?',o:['Space rocks crashing into the Moon','Astronauts digging','Moon rain','Earthquakes'],a:0,why:'Look at the last paragraph.'}],
+  ev:{q:'How long would it take to drive to the Moon?',s:'the trip would take about six months'},
+  seq:['A space rock zooms through space.','It crashes into the Moon.','It makes a bowl-shaped hole.','The crater stays for a very long time.']}
+
+];
+const EVSEQ={
+ 'The Moonflower Surprise':{ev:{q:'What visits the moonflowers at night?',s:'A fuzzy gray moth fluttered over'},seq:['Grandma plants moonflowers by the fence.','Lena asks why they are called moonflowers.','The buds unroll into white circles.','Lena turns off her flashlight.']},
+ 'Busy Builders: Beavers':{ev:{q:'How fast can a beaver cut down a small tree?',s:'cut down a small tree in just a few minutes'},seq:['Beavers gather branches, rocks and mud.','They build a dam across a stream.','The water becomes a calm, deep pond.','Ducks, frogs and fish move into the pond.']},
+ 'Omar and the Blue Mitten':{ev:{q:'Who made the blue mitten?',s:'I knitted it for her myself.'},seq:['Omar finds a blue mitten.','Omar makes a FOUND sign.','Omar tapes the sign to a lamppost.','Mrs. Kim and June knock on the door.']},
+ 'Why Do Leaves Change Color?':{ev:{q:'What do leaves use to make food?',s:'They use sunlight, water, and air.'},seq:['Leaves make food all summer.','Days get shorter and cooler.','The green chlorophyll fades away.','Leaves drop to the ground.']},
+ 'Priya’s Best Jump':{ev:{q:'How do you know Priya practiced a lot?',s:'Every afternoon for two weeks'},seq:['Priya trips after ten jumps.','Dev gives Priya advice.','Priya jumps 61 times on Field Day.','Priya plans to go for 100 next year.']},
+ 'The Honeybee Dance':{ev:{q:'What does the direction of the dance show?',s:'The direction of the dance points the way to the flowers.'},seq:['A worker bee finds lots of flowers.','The bee flies back to the hive.','The bee does the waggle dance.','Other bees zoom off to find the food.']},
+ 'A Letter from Camp':{ev:{q:'Which sentence shows the hike was hard work?',s:'My legs were tired'},seq:['Sam learns to paddle a canoe.','Sam hikes to Eagle Rock.','Sam writes this letter.','Sam goes to the campfire tonight.']}
+};
+PASSAGES.forEach(p=>{if(EVSEQ[p.title])Object.assign(p,EVSEQ[p.title])});
+
+
+const PROMPTS=[
+ ['Story','You find a tiny door at the bottom of a tree. What happens when you open it?'],
+ ['Opinion','What is the best season of the year? Give three reasons.'],
+ ['How-to','Teach someone how to make your favorite snack, step by step.'],
+ ['Story','Your pet can talk for one whole day. What does it say?'],
+ ['Opinion','Should kids get homework? Tell what you think and why.'],
+ ['Informational','Describe an animal you know a lot about.'],
+ ['Story','A friendly dragon moves in next door. Tell the story.'],
+ ['Opinion','Which is better: cats or dogs? Explain your opinion.'],
+ ['How-to','Explain how to play your favorite game.'],
+ ['Story','You wake up and you are only two inches tall. What do you do?'],
+ ['Opinion','What is the best book you have ever read? Convince a friend to read it.'],
+ ['Informational','Tell about a holiday or tradition your family celebrates.'],
+ ['Story','Write about a time you were brave.'],
+ ['Opinion','Should recess be longer? Give your reasons.'],
+ ['Informational','Describe your school to someone who has never seen it.'],
+ ['Story','You get to be the teacher for a day. What happens?'],
+ ['Opinion','What is the most important rule at home? Why?'],
+ ['Informational','What do plants need to grow? Explain.'],
+ ['Story','Write about a day when everything went wrong, and how it got better.'],
+ ['How-to','Explain how to be a good friend.'],
+ ['Story','You open your lunchbox and find a map inside. Where does it lead?'],
+ ['Informational','Pick a job you would like to have when you grow up. What does that person do?']
+];
+const PLANS={Story:['Beginning','Middle','End'],Opinion:['My opinion','My reasons','Closing'],'How-to':['What you need','The steps','Last step'],Informational:['Topic','Facts','Wrap-up']};
+const CHECKLIST=['I started each sentence with a capital letter.','I ended each sentence with . ? or !','I used at least two describing words.','I read my writing out loud one more time.'];
+
+const GRAMMAR=[
+ [['My dog likes to run.','my dog likes to run.','My dog likes to run'],'Start with a capital letter and end with punctuation.'],
+ [['Where is my backpack?','Where is my backpack.','where is my backpack?'],'A question ends with a question mark.'],
+ [['We went to the park on Saturday.','We went to the park on saturday.','we went to the Park on Saturday.'],'Days of the week start with a capital letter.'],
+ [['I have two cats and one dog.','I has two cats and one dog.','I have two cat and one dog.'],'Use “I have,” and add -s for more than one cat.'],
+ [['She ran to the bus.','She runned to the bus.','She run to the bus yesterday.'],'Some past-tense verbs are irregular: run becomes ran.'],
+ [['The children played tag.','The childs played tag.','The childrens played tag.'],'The plural of child is children.'],
+ [['Wow! That is a huge pumpkin!','wow that is a huge pumpkin','Wow, that is a huge pumpkin?'],'Use ! to show strong feeling.'],
+ [['Our teacher, Mr. Lee, reads to us.','Our teacher, mr. lee, reads to us.','Our teacher, Mr. lee, reads to us.'],'People’s names and titles start with capital letters.'],
+ [['I bought apples, bananas, and grapes.','I bought apples bananas and grapes.','I bought, apples bananas, and grapes.'],'Use commas between things in a list.'],
+ [['They’re going to the zoo.','Their going to the zoo.','There going to the zoo.'],'They’re is short for “they are.”'],
+ [['The dog’s bone is buried.','The dogs bone is buried.','The dog,s bone is buried.'],'Use an apostrophe to show something belongs to someone.'],
+ [['Ava and I built a fort.','Me and Ava built a fort.','Ava and me built a fort.'],'Take away “Ava and.” You would say “I built,” not “me built.”'],
+ [['The bird sings in the tree.','The bird sing in the tree.','The bird singing in the tree.'],'One bird sings. The verb needs an -s.'],
+ [['We visited Chicago in July.','We visited chicago in july.','We visited Chicago in july.'],'Names of cities and months start with capital letters.'],
+ [['I can’t find my shoes.','I cant find my shoes.','I can’t find my shoe’s.'],'Can’t needs an apostrophe. Shoes is just a plural, no apostrophe.']
+];
+
+const SPELL=['because','friend','different','again','through','laugh','beautiful','enough','favorite','answer','early','caught','thought','believe','special','until','finally','probably','surprise','library','minute','quiet','piece','whole','heard','written','choose','neighbor','important','together','family','careful','people','question','finished','island','tomorrow','sometimes','straight','children'];
+
+/* ---------- Router ---------- */
+const VIEWS=['home','math','reading','writing','grownups'];
+let current='home';
+function go(v){
+  if(!VIEWS.includes(v))v='home';
+  if(current==='reading'&&v!=='reading'){stopSpeak();setReadLabel(false)}
+  if(current==='math'&&v!=='math')stopArcade();
+  current=v;
+  VIEWS.forEach(x=>{$('#view-'+x).hidden=x!==v});
+  $$('.nav button').forEach(b=>b.setAttribute('aria-current',b.dataset.go===v?'page':'false'));
+  ({home:renderHome,math:renderMath,reading:renderReading,writing:renderWriting,grownups:renderGrownups})[v]();
+  try{history.replaceState(null,'','#'+v)}catch(e){}
+  window.scrollTo(0,0);
+}
+document.addEventListener('click',e=>{const g=e.target.closest('[data-go]');if(g){e.preventDefault();go(g.dataset.go)}});
+
+function renderHeader(){
+  $('#starCount').textContent=S.stars;$('#streakCount').textContent=streak();
+}
+
+/* ---------- Home ---------- */
+function wordOfDay(){return VOCAB[dayNum()%VOCAB.length]}
+function renderWord(sel){
+  const [w,pos,def,ex]=wordOfDay();
+  $(sel).innerHTML=`<div class="wordcard"><p class="eyebrow">Word of the day</p><div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><span class="w">${w}</span>${canSpeak?`<button type="button" class="speak" data-say="${esc(w+'. '+def+' '+ex)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/></svg>Hear it</button>`:''}</div><span class="pos">${pos}</span><p>${def}</p><p class="ex">${ex}</p></div>`;
+}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-say]');if(b)speak(b.dataset.say)});
+
+function renderHome(){
+  const h=new Date().getHours();
+  $('#hello').textContent=`${h<12?'Good morning':h<17?'Good afternoon':'Good evening'}, ${S.name||'superstar'}!`;
+  $('#todayDate').textContent=new Date().toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'});
+  const t=today(),p=PASSAGES[dayNum()%PASSAGES.length],pr=PROMPTS[storyPromptIdx()];
+  const done={math:!!(t.math&&t.math.sets),reading:!!(t.reading&&t.reading.done),writing:!!(t.writing&&t.writing.done)};
+  const n=Object.values(done).filter(Boolean).length;
+  $('#missionSummary').textContent=n===3?'All three missions done. Amazing work today!':n===0?'Three missions today. Pick any one to start.':`${n} of 3 missions done. Keep going!`;
+  $('#mcMath').classList.toggle('done',done.math);$('#mcRead').classList.toggle('done',done.reading);$('#mcWrite').classList.toggle('done',done.writing);
+  $('#msMath').textContent=done.math?`Done! ${t.math.correct} of ${t.math.total} correct today.`:'10 questions. Pick a skill or mix them up.';
+  $('#msRead').textContent=done.reading?`Done! ${t.reading.correct} of ${t.reading.total} on “${t.reading.title}”.`:`Today’s story: “${p.title}”`;
+  $('#msWrite').textContent=done.writing?`Done! You wrote ${t.writing.words} words.`:`Today’s idea: ${pr[1]}`;
+  $('#mcMath .btn').textContent=done.math?'Practice more':'Start math';
+  $('#mcRead .btn').textContent=done.reading?'Read another':'Start reading';
+  $('#mcWrite .btn').textContent=done.writing?'Write more':'Start writing';
+  renderWeek();renderWord('#homeWord');
+}
+function renderWeek(){
+  const now=new Date(),dow=(now.getDay()+6)%7,start=new Date(now);start.setDate(now.getDate()-dow);let html='';
+  for(let i=0;i<7;i++){const d=new Date(start);d.setDate(start.getDate()+i);const k=keyOf(d),r=S.days[k]||{},isT=k===todayKey(),fut=d>now&&!isT;
+    html+=`<div class="day${isT?' today':''}${fut?' future':''}"><span class="dname">${d.toLocaleDateString(undefined,{weekday:'short'})}</span><span class="dnum">${d.getDate()}</span><span class="dots"><i class="m${r.math&&r.math.sets?' on':''}"></i><i class="r${r.reading&&r.reading.done?' on':''}"></i><i class="w${r.writing&&r.writing.done?' on':''}"></i></span></div>`}
+  $('#week').innerHTML=html;
+}
+
+/* ---------- Math ---------- */
+/* Sounds (start only after a tap) */
+let AC=null;
+function tone(freqs,dur=.13,type='sine',gap=.09){
+  if(!S.sound)return;try{if(!AC)AC=new (window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume();
+  freqs.forEach((f,i)=>{const o=AC.createOscillator(),g=AC.createGain(),t=AC.currentTime+i*gap;o.type=type;o.frequency.value=f;
+    g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.16,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+dur);o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+dur+.03)})}catch(e){}}
+const SFX={right:()=>tone([660,880]),wrong:()=>tone([300,210],.2,'triangle',.12),combo:()=>tone([660,880,1175],.13),win:()=>tone([523,659,784,1047],.22,'sine',.13),pop:()=>tone([900,1300],.06,'square',.04)};
+function renderSoundBtn(){$('#soundBtn').innerHTML=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/>${S.sound?'<path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/>':'<path d="M17 9l5 6M22 9l-5 6"/>'}</svg>${S.sound?'Sound on':'Sound off'}`}
+$('#soundBtn').onclick=()=>{S.sound=!S.sound;save();renderSoundBtn();SFX.right()};
+
+/* Little effects */
+function shake(el){if(!el)return;el.classList.remove('shake');void el.offsetWidth;el.classList.add('shake')}
+function burst(el,n=1){if(reduceMotion||!el)return;const r=el.getBoundingClientRect(),f=document.createElement('span');f.className='floaty';f.innerHTML=`+${n}${STAR}`;
+  f.style.left=(r.left+r.width/2-20)+'px';f.style.top=(r.top-10)+'px';document.body.appendChild(f);setTimeout(()=>f.remove(),950)}
+
+/* Pip the mascot */
+function pipSVG(mood){
+  const ink='#2A1B4D',px=mood==='think'?3:0,py=mood==='think'?-4:0;
+  const eyes=mood==='happy'
+    ?`<path d="M37 60q9-11 18 0M65 60q9-11 18 0" fill="none" stroke="${ink}" stroke-width="4.5" stroke-linecap="round"/>`
+    :`<circle cx="46" cy="58" r="12" fill="#fff"/><circle cx="74" cy="58" r="12" fill="#fff"/><circle cx="${47+px}" cy="${60+py}" r="6" fill="${ink}"/><circle cx="${75+px}" cy="${60+py}" r="6" fill="${ink}"/><circle cx="${49+px}" cy="${57+py}" r="2" fill="#fff"/><circle cx="${77+px}" cy="${57+py}" r="2" fill="#fff"/>`;
+  const mouth={idle:`<path d="M50 82q10 8 20 0" fill="none" stroke="${ink}" stroke-width="4" stroke-linecap="round"/>`,
+    happy:`<path d="M44 78q16 22 32 0z" fill="${ink}"/><path d="M52 87q8 5 16 0" fill="#FF7BA9"/>`,
+    oops:`<ellipse cx="60" cy="85" rx="6" ry="7" fill="${ink}"/>`,
+    think:`<path d="M50 85q10-5 20 1" fill="none" stroke="${ink}" stroke-width="4" stroke-linecap="round"/>`}[mood]||'';
+  return `<svg viewBox="0 0 120 120" aria-hidden="true"><path d="M42 34L33 14M78 34l9-20" stroke="#6E56F0" stroke-width="4" stroke-linecap="round"/><circle cx="32" cy="12" r="6.5" fill="#FFC93C"/><circle cx="88" cy="12" r="6.5" fill="#FFC93C"/>
+    <ellipse cx="43" cy="109" rx="12" ry="6" fill="#5640D0"/><ellipse cx="77" cy="109" rx="12" ry="6" fill="#5640D0"/>
+    <path d="M60 28c26 0 44 18 44 42s-18 38-44 38-44-14-44-38 18-42 44-42z" fill="#7B61FF"/><ellipse cx="60" cy="82" rx="27" ry="20" fill="#9C88FF"/>
+    ${eyes}<circle cx="33" cy="74" r="5.5" fill="#FF7BA9" opacity=".75"/><circle cx="87" cy="74" r="5.5" fill="#FF7BA9" opacity=".75"/>${mouth}</svg>`;
+}
+function say(t,mood){const b=$('#bubble');if(b)b.innerHTML=t;const p=$('#pip');if(p&&mood){p.className='pip';void p.offsetWidth;p.className='pip '+mood;p.innerHTML=pipSVG(mood)}}
+
+/* Monsters for the zoo */
+function rng(seed){let s=(seed>>>0)||1;return()=>{s=(s*1664525+1013904223)>>>0;return s/4294967296}}
+const MCOL=[['#FF8A3D','#FFC29A'],['#2FBFA8','#9BE8DC'],['#EF6CAC','#F9B8D6'],['#7B61FF','#C2B6FF'],['#4CB050','#A6E0A8'],['#F5B700','#FFE08A'],['#3A9BF0','#A3D1F9'],['#E5484D','#F5A3A6']];
+const SYL1=['Zib','Bo','Fizz','Mo','Gloo','Tik','Wum','Pax','Nub','Riz','Yo','Squee','Bloop','Kip','Doodle','Mim'],SYL2=['bert','ly','o','kins','zoo','ble','ster','wig','pop','muffin','boo','dot'];
+function monsterName(seed){const r=rng(seed+77);return SYL1[Math.floor(r()*SYL1.length)]+SYL2[Math.floor(r()*SYL2.length)]}
+function monsterSVG(seed,crown){
+  const r=rng(seed),[c,l]=MCOL[Math.floor(r()*MCOL.length)],body=Math.floor(r()*3),eyes=1+Math.floor(r()*3),top=Math.floor(r()*4),mouth=Math.floor(r()*3),spots=r()<.6,ink='#2A1B4D';
+  const B=['M60 24c28 0 42 22 42 48s-16 38-42 38-42-14-42-38 14-48 42-48z','M60 24c22 0 34 10 34 30v36c0 14-12 20-34 20s-34-6-34-20V54c0-20 12-30 34-30z','M60 22c18 0 28 36 38 64 5 16-8 24-38 24s-43-8-38-24c10-28 20-64 38-64z'][body];
+  const T=[`<path d="M40 38L30 10l22 20z" fill="${l}"/><path d="M80 38l10-28-22 20z" fill="${l}"/>`,
+    `<path d="M60 28V8" stroke="${c}" stroke-width="4" stroke-linecap="round"/><circle cx="60" cy="8" r="7" fill="${l}"/>`,
+    `<circle cx="32" cy="40" r="12" fill="${c}"/><circle cx="88" cy="40" r="12" fill="${c}"/><circle cx="32" cy="40" r="6" fill="${l}"/><circle cx="88" cy="40" r="6" fill="${l}"/>`,
+    `<path d="M44 32l6-15 6 12 6-15 6 12 6-12 2 18z" fill="${l}"/>`][top];
+  const xs=[[60],[46,74],[40,60,80]][eyes-1],er=[15,11,9][eyes-1];
+  const E=xs.map(x=>`<circle cx="${x}" cy="58" r="${er}" fill="#fff"/><circle cx="${x+1}" cy="60" r="${(er*.5).toFixed(1)}" fill="${ink}"/><circle cx="${x+3}" cy="56" r="${(er*.18).toFixed(1)}" fill="#fff"/>`).join('');
+  const Mo=[`<path d="M44 82q16 16 32 0z" fill="${ink}"/><rect x="50" y="82" width="7" height="6" fill="#fff"/><rect x="63" y="82" width="7" height="6" fill="#fff"/>`,`<ellipse cx="60" cy="87" rx="8" ry="9" fill="${ink}"/>`,`<path d="M42 82q18 12 36 0" fill="none" stroke="${ink}" stroke-width="4" stroke-linecap="round"/>`][mouth];
+  const Sp=spots?`<circle cx="38" cy="92" r="5" fill="${l}" opacity=".8"/><circle cx="82" cy="90" r="6" fill="${l}" opacity=".8"/><circle cx="70" cy="102" r="4" fill="${l}" opacity=".8"/>`:'';
+  const CR=`<path d="M40 26l5-18 10 10 5-12 5 12 10-10 5 18z" fill="#FFC93C" stroke="#D99A00" stroke-width="2" stroke-linejoin="round"/>`;
+  return `<svg viewBox="0 0 120 120" role="img" aria-label="Monster"><ellipse cx="44" cy="110" rx="11" ry="6" fill="${c}"/><ellipse cx="76" cy="110" rx="11" ry="6" fill="${c}"/>${crown?'':T}<path d="${B}" fill="${c}"/>${Sp}${E}${Mo}${crown?CR:''}</svg>`;
+}
+const EGG='<svg viewBox="0 0 120 130" aria-hidden="true"><path d="M60 8c24 0 42 38 42 66s-19 48-42 48-42-20-42-48S36 8 60 8z" fill="#FFF1D0" stroke="#E8B04A" stroke-width="4"/><circle cx="44" cy="60" r="7" fill="#FFB65C"/><circle cx="76" cy="84" r="9" fill="#7EE0D0"/><circle cx="56" cy="104" r="6" fill="#F7A6CD"/><circle cx="70" cy="42" r="5" fill="#AE9EFF"/></svg>';
+function zooHTML(){const m=S.monsters,slots=Math.max(8,Math.ceil((m.length+1)/8)*8);let h=m.map(x=>`<div class="zcell">${monsterSVG(x.seed,x.crown)}<span>${esc(x.name)}</span></div>`).join('');
+  for(let i=m.length;i<slots;i++)h+=`<div class="zcell locked">${EGG}<span>?</span></div>`;return h}
+
+/* Drawings */
+const fracHTML=f=>{const [n,d]=f.split('/');return `<span class="frac"><span>${n}</span><span>${d}</span></span>`};
+function pizzaSVG(n,d,size=150){
+  const c=75,R=62,rad=x=>(x-90)*Math.PI/180,pt=(a,r)=>[(c+r*Math.cos(rad(a))).toFixed(1),(c+r*Math.sin(rad(a))).toFixed(1)];
+  let s=`<circle cx="75" cy="75" r="72" fill="#D58A3A"/>`;
+  for(let i=0;i<d;i++){const a0=i*360/d,a1=(i+1)*360/d,[x0,y0]=pt(a0,R),[x1,y1]=pt(a1,R);
+    s+=`<path d="M75 75L${x0} ${y0}A${R} ${R} 0 0 1 ${x1} ${y1}Z" fill="${i<n?'#FFC23D':'#FBE7B5'}" stroke="#B86B22" stroke-width="2.5" stroke-linejoin="round"/>`;
+    if(i<n){const m=(a0+a1)/2,span=360/d;(d>=6?[[.6,0]]:[[.64,0],[.34,-.22],[.34,.22]]).forEach(([rr,off])=>{const [px,py]=pt(m+off*span,R*rr);s+=`<circle cx="${px}" cy="${py}" r="${d>=6?7:8}" fill="#D93A3A"/>`})}}
+  return `<svg class="pizza" viewBox="0 0 150 150" width="${size}" height="${size}" role="img" aria-label="Pizza cut into ${d} equal slices, ${n} with pepperoni">${s}</svg>`;
+}
+function clockSVG(h,m){const rad=x=>x*Math.PI/180,hr=((h%12)+m/60)*30,mn=m*6;let t='',nums='';
+  for(let i=0;i<60;i++){const a=rad(i*6),big=i%5===0,r1=big?80:85;t+=`<line x1="${(100+r1*Math.sin(a)).toFixed(1)}" y1="${(100-r1*Math.cos(a)).toFixed(1)}" x2="${(100+90*Math.sin(a)).toFixed(1)}" y2="${(100-90*Math.cos(a)).toFixed(1)}" class="tk${big?' big':''}"/>`}
+  for(let i=1;i<=12;i++){const a=rad(i*30);nums+=`<text x="${(100+67*Math.sin(a)).toFixed(1)}" y="${(100-67*Math.cos(a)).toFixed(1)}" dy=".35em" text-anchor="middle">${i}</text>`}
+  return `<svg class="clock" viewBox="0 0 200 200" role="img" aria-label="An analog clock"><circle cx="100" cy="100" r="95" class="face"/>${t}${nums}<line x1="100" y1="100" x2="${(100+44*Math.sin(rad(hr))).toFixed(1)}" y2="${(100-44*Math.cos(rad(hr))).toFixed(1)}" class="hand hour"/><line x1="100" y1="100" x2="${(100+72*Math.sin(rad(mn))).toFixed(1)}" y2="${(100-72*Math.cos(rad(mn))).toFixed(1)}" class="hand minute"/><circle cx="100" cy="100" r="6" class="pin"/></svg>`}
+const tm=(h,m)=>{h=((h-1+12)%12)+1;m=((m%60)+60)%60;return h+':'+pad(m)};
+const NAMES=['Maya','Leo','Ava','Sam','Zoe','Eli','Nora','Max','Ruby','Theo','Iris','Omar'];
+const FLAG='<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M8 4v25" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M9.5 5H26l-4.5 5.5L26 16H9.5z" fill="#EF6CAC"/></svg>';
+const BOLT='<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M28 3L9 28h13l-4 17 21-27H26z" fill="currentColor"/></svg>';
+const BALLOON_ICON='<svg viewBox="0 0 48 48" aria-hidden="true"><ellipse cx="24" cy="19" rx="13" ry="15" fill="currentColor"/><path d="M24 34l-3 4h6z" fill="currentColor"/><path d="M24 38q-4 4 0 8" fill="none" stroke="currentColor" stroke-width="2"/></svg>';
+
+/* Question makers */
+const GEN={
+  mult(){const a=ri(2,10),b=ri(0,10);
+    const hint=(b>0&&a*b<=60)?`<p>${a} groups of ${b}. Count all the dots!</p><div class="dotgrid" style="--cols:${b}">${'<i></i>'.repeat(a*b)}</div>`
+      :b===0?`<p>Any number times 0 is 0. Zero groups means nothing at all!</p>`:`<p>Skip count by ${b}, ${a} times: ${Array.from({length:Math.min(a,4)},(_,i)=>b*(i+1)).join(', ')}, …</p>`;
+    return {label:'Multiply',prompt:`<div class="eq">${a} × ${b} = <span class="blank">?</span></div>`,answer:a*b,type:'num',hint}},
+  div(){const b=ri(2,10),q=ri(1,10),a=b*q;
+    return {label:'Divide',prompt:`<p class="qtext">Share ${a} cookies with ${b} friends.</p><div class="eq">${a} ÷ ${b} = <span class="blank">?</span></div>`,answer:q,type:'num',hint:`<p>Think of a times fact: <b>${b} × ? = ${a}</b></p>`}},
+  addsub(){if(Math.random()<.5){const a=ri(100,800),b=ri(100,999-a);
+      return {label:'Add',prompt:`<div class="stack" role="img" aria-label="${a} plus ${b}"><span></span><span>${a}</span><span>+</span><span>${b}</span></div>`,answer:a+b,type:'num',hint:'<p>Add the ones first. 10 or more? Carry 1 to the tens. Then the tens, then the hundreds.</p>'}}
+    const a=ri(200,999),b=ri(100,a-1);
+    return {label:'Subtract',prompt:`<div class="stack" role="img" aria-label="${a} minus ${b}"><span></span><span>${a}</span><span>−</span><span>${b}</span></div>`,answer:a-b,type:'num',hint:'<p>Start with the ones. If the top digit is smaller, borrow 1 ten from the tens place.</p>'}},
+  round(){const to=Math.random()<.5?10:100,n=to===10?ri(11,989):ri(110,949);
+    return {label:'Rounding',prompt:`<p class="qtext">Roll <b>${n}</b> to the nearest <b>${to}</b>.</p>`,answer:Math.round(n/to)*to,type:'num',hint:`<p>Look at the <b>${to===10?'ones':'tens'}</b> digit. 5 or more rolls up the hill. 4 or less rolls back down.</p>`}},
+  frac(){
+    if(Math.random()<.55){const d=pick([2,3,4,6,8]),n=ri(1,d-1),ans=`${n}/${d}`,set=new Set([ans]);
+      shuffle([`${d-n}/${d}`,`${n}/${d+1}`,`${d}/${n}`,`${n+1}/${d}`,`${n}/${d-n}`,`${n}/${d+2}`]).forEach(c=>{if(set.size<4)set.add(c)});
+      return {label:'Pizza fractions',prompt:`<p class="qtext">What fraction of the pizza has pepperoni?</p>${pizzaSVG(n,d,180)}`,answer:ans,show:fracHTML(ans),type:'choice',choices:shuffle([...set]),hint:'<p>Bottom number: how many slices in all.<br>Top number: how many slices have pepperoni.</p>'}}
+    let f1,f2,ans,hint;
+    if(Math.random()<.5){const d=pick([3,4,6,8]);let a=ri(1,d-1),b;do{b=ri(1,d-1)}while(b===a);f1=`${a}/${d}`;f2=`${b}/${d}`;ans=a>b?f1:f2;
+      hint=`<p>Same size slices! More slices means more pizza.</p><div class="row">${pizzaSVG(a,d,110)}${pizzaSVG(b,d,110)}</div>`}
+    else{const n=ri(1,2),[d1,d2]=shuffle([3,4,6,8]).slice(0,2);f1=`${n}/${d1}`;f2=`${n}/${d2}`;ans=d1<d2?f1:f2;
+      hint=`<p>Fewer slices means each slice is bigger!</p><div class="row">${pizzaSVG(n,d1,110)}${pizzaSVG(n,d2,110)}</div>`}
+    return {label:'Pizza fractions',prompt:`<p class="qtext">Which one is more pizza?</p>`,answer:ans,show:fracHTML(ans),type:'choice',choices:[f1,f2],hint}},
+  time(){const h=ri(1,12),m=ri(0,11)*5,ans=tm(h,m),set=new Set([ans]);
+    shuffle([tm(m/5||12,h*5),tm(h+1,m),tm(h,m+5),tm(h,m-5),tm(h-1,m),tm(h,m+15),tm(h,m+30)]).forEach(c=>{if(set.size<4)set.add(c)});
+    return {label:'Clock detective',prompt:`<p class="qtext">What time does the clock say?</p>${clockSVG(h,m)}`,answer:ans,type:'choice',choices:shuffle([...set]),hint:'<p>The <b>short</b> hand points to the hour. The <b>long</b> hand shows minutes: count by 5s from the 12.</p>'}},
+  word(){const n=pick(NAMES),T=[
+    ()=>{const a=ri(3,9),b=ri(2,9);return [`${n}’s pet dragon eats ${b} tacos every day. How many tacos does it eat in ${a} days?`,a*b,`${a} days with ${b} tacos each day. Multiply: ${a} × ${b}.`]},
+    ()=>{const a=ri(3,9),b=ri(2,6);return [`A spaceship has ${a} windows. ${b} aliens wave from each window. How many aliens are waving?`,a*b,`${a} windows, ${b} aliens in each. Multiply!`]},
+    ()=>{const a=ri(2,8),b=ri(2,9);return [`${a} unicorns share ${a*b} cupcakes equally. How many cupcakes does each unicorn get?`,b,`Sharing equally means divide: ${a*b} ÷ ${a}.`]},
+    ()=>{const a=ri(3,8),b=ri(2,6);return [`${a*b} penguins slide down a snowy hill in groups of ${b}. How many groups slide down?`,a,`How many groups of ${b} make ${a*b}? Divide: ${a*b} ÷ ${b}.`]},
+    ()=>{const x=ri(120,500),y=ri(80,400);return [`A pirate found ${x} gold coins on Monday and ${y} gold coins on Tuesday. How many coins did the pirate find in all?`,x+y,'“In all” means add.']},
+    ()=>{const x=ri(200,600),y=ri(50,x-40);return [`A robot had ${x} bolts. It used ${y} bolts to build a robot puppy. How many bolts are left?`,x-y,'“Left” means subtract.']},
+    ()=>{const a=ri(3,5),b=ri(4,8),c=ri(2,a*b-4);return [`${n} bakes ${a} trays of cookies with ${b} cookies on each tray. Then the dog sneaks ${c} cookies! How many cookies are left?`,a*b-c,`Two steps! First ${a} × ${b}. Then take away the ${c} cookies the dog ate.`]},
+    ()=>{const a=ri(2,4),b=ri(3,6);return [`A monster has ${a} heads. Each head wears ${b} silly hats. How many hats is the monster wearing?`,a*b,`${a} heads with ${b} hats each. Multiply!`]}];
+    const [t,ans,h]=pick(T)();return {label:'Silly story',prompt:`<p class="wp">${t}</p>`,answer:ans,type:'num',hint:`<p>${h}</p>`}}
+};
+/* name, subtitle, color, soft color, icon, Pip's opening line */
+const GAMES={
+  mult:['Times Table Treasure','Multiply 0 to 10','--math','--math-soft','×','Treasure is waiting at the flag. Every right answer is one hop!'],
+  div:['Cookie Share','Divide into equal groups','--write','--write-soft','÷','Let’s share cookies fairly with everyone!'],
+  frac:['Pizza Fractions','Slices, parts and wholes','--star','--star-soft','pizza','Pizza party! Let’s count the slices.'],
+  time:['Clock Detective','Tell time to 5 minutes','--read','--read-soft','clock','Detective Pip needs help reading the clocks!'],
+  word:['Silly Story Problems','Dragons, aliens and more','--grape','--grape-soft','bubble','Get ready for some very silly stories!'],
+  addsub:['Big Number Bridge','Add & subtract to 1,000','--leaf','--leaf-soft','+','Big numbers! Line up the ones, tens and hundreds.'],
+  round:['Roll Down the Hill','Round to 10 or 100','--sky','--sky-soft','≈','Numbers roll to the closest ten or hundred. Wheee!'],
+  mixed:['Mystery Mix','A bit of everything','--ink','--line','?','Mystery time! Every question is a surprise.']
+};
+const MIX=['mult','mult','div','addsub','round','frac','time','word'];
+function gameIcon(k){const g=GAMES[k][4];
+  if(g==='pizza')return pizzaSVG(3,4,50);
+  if(g==='clock')return '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" aria-hidden="true"><circle cx="24" cy="24" r="17"/><path d="M24 13v11l7 5"/></svg>';
+  if(g==='bubble')return '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M8 10h32v22H22l-9 8v-8H8z"/><path d="M16 19h16M16 25h10"/></svg>';
+  return g}
+function genQ(s){return GEN[s==='mixed'?pick(MIX):s]()}
+function factQ(){if(Math.random()<.6){const a=ri(2,10),b=ri(1,10);return {t:`${a} × ${b}`,a:a*b}}const b=ri(2,10),q=ri(1,10);return {t:`${b*q} ÷ ${b}`,a:q}}
+
+/* Menu */
+const M={skill:'mixed',qs:[],res:[],i:0,correct:0,tries:0,combo:0,locked:false,active:false};
+function renderMath(){renderSoundBtn();if(!M.active&&!L.active&&!BP.active)mathMenu()}
+function mathMenu(){
+  const t=today(),n=S.monsters.length;
+  $('#mathStage').innerHTML=`
+  <div class="panel menu-top"><div class="pip small idle" id="pip">${pipSVG('idle')}</div><div><h2>Hi ${esc(S.name||'there')}! I’m Pip.</h2><p class="lede">Pick a game! Answer 10 questions to hop all the way to the flag, and a brand-new monster hatches for your zoo.</p>${t.math&&t.math.sets?`<p class="note">Adventures finished today: ${t.math.sets}</p>`:''}</div></div>
+  <h2 class="section-label">Quick games</h2>
+  <div class="arcade">
+    <button type="button" class="gcard wide" id="goLightning" style="--gc:var(--math);--gs:var(--math-soft)"><span class="gicon">${BOLT}</span><span><span class="gname">Lightning Round</span><span class="gsub">How many times and divide facts can you answer in 60 seconds?</span><span class="gbest">${S.lightningBest?'Your record: '+S.lightningBest:'No record yet. Set one!'}</span></span></button>
+    <button type="button" class="gcard wide" id="goBalloon" style="--gc:var(--sky);--gs:var(--sky-soft)"><span class="gicon">${BALLOON_ICON}</span><span><span class="gname">Balloon Pop</span><span class="gsub">Pop the balloon with the right answer before it floats away!</span><span class="gbest">10 balloons to pop</span></span></button>
+  </div>
+  <h2 class="section-label">Adventures</h2>
+  <div class="games">${Object.keys(GAMES).map(k=>{const g=GAMES[k];return `<button type="button" class="gcard" data-game="${k}" style="--gc:var(${g[2]});--gs:var(${g[3]})"><span class="gicon">${gameIcon(k)}</span><span class="gname">${g[0]}</span><span class="gsub">${g[1]}</span></button>`}).join('')}</div>
+  <section class="panel"><div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap"><h2>My Monster Zoo</h2><span class="note">${n} ${n===1?'monster':'monsters'} hatched</span></div><div class="zoo-grid">${zooHTML()}</div></section>`;
+  $$('[data-game]').forEach(b=>b.onclick=()=>startGame(b.dataset.game));
+  $('#goLightning').onclick=lightningStart;$('#goBalloon').onclick=balloonStart;
+}
+function startGame(k){M.skill=k;M.qs=Array.from({length:10},()=>genQ(k));M.res=[];M.i=0;M.correct=0;M.combo=0;M.active=true;renderQ()}
+
+/* Adventure questions */
+function trailHTML(){let h='';M.qs.forEach((_,i)=>{const r=M.res[i];h+=`<span class="stone${r===1?' gold':r===2?' ok':r===0?' miss':''}${i===M.i&&r==null?' cur':''}">${r===1?STAR:r==null?i+1:''}</span><i class="path"></i>`});return h+`<span class="flag">${FLAG}</span>`}
+function updateTrail(){const t=$('#trail');if(t)t.innerHTML=trailHTML()}
+function keypadHTML(id){return `<div class="keypad" id="${id}">${[1,2,3,4,5,6,7,8,9].map(n=>`<button type="button" class="key" data-k="${n}">${n}</button>`).join('')}<button type="button" class="key small" data-k="clear">Clear</button><button type="button" class="key" data-k="0">0</button><button type="button" class="key small" data-k="del" aria-label="Delete">Delete</button></div>`}
+function renderQ(){
+  const q=M.qs[M.i];M.tries=0;M.locked=false;
+  const ans=q.type==='num'
+    ?`<div class="numrow"><input id="mInput" class="numin" inputmode="numeric" pattern="[0-9]*" autocomplete="off" maxlength="5" aria-label="Your answer"><button class="btn" type="button" id="mCheck">Check</button></div>${keypadHTML('keypad')}`
+    :`<div class="choices">${q.choices.map(c=>`<button type="button" class="choice" data-v="${c}">${c.includes('/')?fracHTML(c):c}</button>`).join('')}</div>`;
+  $('#mathStage').innerHTML=`<div class="trail" id="trail" aria-hidden="true">${trailHTML()}</div>
+  <div class="arena">
+    <div class="buddy"><div class="pip idle" id="pip">${pipSVG('idle')}</div><p class="bubble" id="bubble" aria-live="polite"></p></div>
+    <div class="panel">
+      <div class="qtop"><span class="tag" style="--c:var(${GAMES[M.skill][2]});--c-soft:var(${GAMES[M.skill][3]})">${q.label}</span><span>${M.combo>=2?`<b class="combo">${M.combo} in a row!</b> · `:''}Stone ${M.i+1} of ${M.qs.length}</span></div>
+      <div class="qbody">${q.prompt}</div><div class="ans">${ans}</div>
+      <div class="hintbox" id="mHint" hidden style="margin-top:16px">${q.hint}</div>
+      <div class="qactions"><button class="link" type="button" id="mQuit">Back to games</button><span class="row"><button class="link" type="button" id="mHintBtn">Ask Pip for a hint</button><button class="btn" type="button" id="mNext" hidden>Next</button></span></div>
+    </div>
+  </div>`;
+  say(M.i===0?GAMES[M.skill][5]:pick(['You can do it!','Here comes the next one!','Hop to the next stone!','Take your time. No rush!','Ready? Let’s go!','I believe in you!']),'idle');
+  $('#mHintBtn').onclick=()=>{$('#mHint').hidden=false;$('#mHintBtn').hidden=true;say('Here’s my secret trick. Look below!','think')};
+  $('#mNext').onclick=nextQ;$('#mQuit').onclick=()=>{M.active=false;mathMenu()};
+  if(q.type==='num'){const inp=$('#mInput');
+    inp.addEventListener('input',()=>{inp.value=inp.value.replace(/\D/g,'')});
+    inp.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();M.locked?nextQ():mathAnswer(inp.value)}});
+    $('#mCheck').onclick=()=>mathAnswer(inp.value);
+    $('#keypad').addEventListener('click',e=>{const k=e.target.closest('[data-k]');if(!k||M.locked)return;const v=k.dataset.k;
+      if(v==='clear')inp.value='';else if(v==='del')inp.value=inp.value.slice(0,-1);else if(inp.value.length<5)inp.value+=v});
+    if(matchMedia('(pointer:fine)').matches)inp.focus();
+  }else{$$('.choice').forEach(b=>b.onclick=()=>mathAnswer(b.dataset.v,b))}
+}
+function mathAnswer(v,btn){
+  if(M.locked)return;const q=M.qs[M.i],target=btn||$('#mInput');
+  if(q.type==='num'&&v===''){say('Type your answer first, then press Check!','think');return}
+  const ok=q.type==='num'?Number(v)===q.answer:v===q.answer;
+  if(ok){const first=M.tries===0;M.res[M.i]=first?1:2;if(btn)btn.classList.add('right');
+    if(first){M.correct++;M.combo++;const bonus=[3,5,8,10].includes(M.combo);addStars(bonus?2:1,bonus?'Combo bonus!':'star');burst(target,bonus?2:1);
+      if(bonus){SFX.combo();say(`${M.combo} in a row! You get a combo bonus star!`,'happy')}else{SFX.right();say(pick(PRAISE),'happy')}}
+    else{M.combo=0;SFX.right();say('You got it! Hints help us learn.','happy')}
+    if(target&&!btn)target.classList.add('right');lockQ();updateTrail();return}
+  M.tries++;M.combo=0;SFX.wrong();shake(target);
+  if(btn){btn.classList.add('wrong');btn.disabled=true}
+  if(M.tries<2){say(pick(['Oops! So close. Peek at my hint and try again.','Hmm, not quite! Check the hint, then try again.','Almost! Let’s look at the hint together.']),'oops');
+    $('#mHint').hidden=false;$('#mHintBtn').hidden=true;const inp=$('#mInput');if(inp){inp.value='';inp.focus()}}
+  else{M.res[M.i]=0;say(`The answer is <b>${q.show||q.answer}</b>. That’s okay, we’ll get the next one!`,'think');$('#mHint').hidden=false;
+    $$('.choice').forEach(b=>{if(b.dataset.v===q.answer)b.classList.add('right')});lockQ();updateTrail()}
+}
+function lockQ(){M.locked=true;$('#mHintBtn').hidden=true;$$('#mathStage .choice,#mathStage .key,#mCheck').forEach(b=>b.disabled=true);
+  const inp=$('#mInput');if(inp)inp.readOnly=true;
+  const nb=$('#mNext');nb.hidden=false;nb.textContent=M.i===M.qs.length-1?'Reach the flag!':'Hop to the next stone';nb.focus()}
+function nextQ(){M.i++;if(M.i<M.qs.length)renderQ();else mathDone()}
+function mathDone(){
+  M.active=false;const t=today();t.math=t.math||{sets:0,correct:0,total:0};const first=!t.math.sets;
+  t.math.sets++;t.math.correct+=M.correct;t.math.total+=M.qs.length;
+  const c=M.correct,crown=c===10,mon={seed:Math.floor(Math.random()*1e9),crown,date:todayKey()};mon.name=monsterName(mon.seed);S.monsters.push(mon);save();
+  SFX.win();
+  const msg=c===10?'PERFECT! Your monster gets a golden crown!':c>=8?'Amazing! You made it to the flag!':c>=6?'Great job! You reached the flag!':'You made it to the flag! Every game makes your brain stronger.';
+  $('#mathStage').innerHTML=`<div class="trail" aria-hidden="true">${trailHTML()}</div>
+  <div class="panel results"><div class="score">${c}/10</div><h2>${msg}</h2>
+    <div class="hatch" id="hatch"><div class="egg">${EGG}</div></div>
+    <p class="lede" id="hatchMsg">Your egg is hatching…</p>
+    <p class="note">You earned ${c} ${c===1?'star':'stars'}${first?' plus a 3-star mission bonus':''}.</p>
+    <div class="row"><button class="btn" type="button" id="mAgain">Play again</button><button class="btn ghost" type="button" id="mMenu">More games</button></div></div>`;
+  const reveal=()=>{const h=$('#hatch');if(!h)return;h.innerHTML=`<div class="monster-new">${monsterSVG(mon.seed,crown)}</div>`;$('#hatchMsg').innerHTML=`You hatched <b>${esc(mon.name)}</b>! ${crown?'A royal monster! ':''}Say hi in your Monster Zoo.`;SFX.combo()};
+  reduceMotion?reveal():setTimeout(reveal,1300);
+  $('#mAgain').onclick=()=>startGame(M.skill);$('#mMenu').onclick=mathMenu;
+  if(first)missionComplete('math');else confetti();
+}
+
+/* Lightning Round: 60 seconds of facts */
+const L={active:false,end:0,score:0,q:null,int:null,val:''};
+function lightningStart(){
+  L.active=true;L.score=0;L.val='';L.end=Date.now()+60000;
+  $('#mathStage').innerHTML=`<div class="panel"><div class="qtop"><span class="tag">Lightning Round</span><button class="link" type="button" id="lQuit">Stop</button></div>
+    <div class="ltimer" aria-hidden="true"><i id="lbar" style="width:100%"></i></div>
+    <div class="lstats"><span><b id="lsec">60</b> seconds</span><span><b id="lscore">0</b> correct</span></div>
+    <div class="qbody"><div class="eq" id="leq"></div></div>
+    <div class="ans"><div class="numin" id="lin">&nbsp;</div>${keypadHTML('lpad')}<p class="note">Just type. The answer checks itself!</p></div></div>`;
+  $('#lpad').addEventListener('click',e=>{const k=e.target.closest('[data-k]');if(k)lKey(k.dataset.k)});
+  $('#lQuit').onclick=()=>{stopArcade();mathMenu()};
+  nextL();L.int=setInterval(tickL,100);
+}
+function nextL(){L.q=factQ();L.val='';$('#leq').innerHTML=`${L.q.t} = <span class="blank">?</span>`;$('#lin').innerHTML='&nbsp;';$('#lin').classList.remove('good')}
+function lKey(k){
+  if(!L.active||L.wait)return;const box=$('#lin');
+  if(k==='del')L.val=L.val.slice(0,-1);else if(k==='clear')L.val='';else if(L.val.length<3)L.val+=k;
+  box.textContent=L.val||' ';const want=String(L.q.a);
+  if(L.val.length>=want.length){
+    if(L.val===want){L.score++;$('#lscore').textContent=L.score;SFX.pop();box.classList.add('good');L.wait=true;setTimeout(()=>{L.wait=false;if(L.active)nextL()},180)}
+    else{SFX.wrong();shake(box);L.val='';setTimeout(()=>{if(L.active&&!L.val)box.innerHTML='&nbsp;'},300)}}
+}
+function tickL(){const rem=Math.max(0,L.end-Date.now());const bar=$('#lbar');if(bar)bar.style.width=(rem/600)+'%';const sec=$('#lsec');if(sec)sec.textContent=Math.ceil(rem/1000);if(rem<=0)endL()}
+function endL(){
+  clearInterval(L.int);L.active=false;const sc=L.score,rec=sc>S.lightningBest;if(rec)S.lightningBest=sc;save();
+  const stars=sc>0?Math.max(1,Math.floor(sc/4)):0;if(stars)addStars(stars,'Lightning stars!');SFX.win();if(rec&&sc>0)confetti();
+  $('#mathStage').innerHTML=`<div class="panel results"><div class="pip happy" id="pip">${pipSVG('happy')}</div><p class="eyebrow">Lightning Round</p><div class="score">${sc}</div>
+    <h2>${rec&&sc>0?'NEW RECORD!':sc>=15?'Lightning fast!':'Nice zapping!'}</h2><p class="lede">${sc} facts in 60 seconds. Your record is ${S.lightningBest}.${stars?` You earned ${stars} ${stars===1?'star':'stars'}.`:''}</p>
+    <div class="row"><button class="btn" type="button" id="lAgain">Try again</button><button class="btn ghost" type="button" id="lMenu">More games</button></div></div>`;
+  $('#lAgain').onclick=lightningStart;$('#lMenu').onclick=mathMenu;
+}
+document.addEventListener('keydown',e=>{if(!L.active||current!=='math')return;
+  if(/^\d$/.test(e.key)){e.preventDefault();lKey(e.key)}else if(e.key==='Backspace'){e.preventDefault();lKey('del')}});
+
+/* Balloon Pop */
+const BP={active:false,i:0,score:0,q:null,tries:0,total:10};
+const BCOL=['#EF6CAC','#FF8A3D','#7B61FF','#2FBFA8','#3A9BF0','#E5484D'];
+function balloonStart(){
+  BP.active=true;BP.i=0;BP.score=0;
+  $('#mathStage').innerHTML=`<div class="panel"><div class="qtop"><span class="tag" style="--c:var(--sky);--c-soft:var(--sky-soft)">Balloon Pop</span><span id="bpCount"></span><button class="link" type="button" id="bpQuit">Stop</button></div>
+    <div class="sky" id="sky"></div></div>`;
+  $('#bpQuit').onclick=()=>{stopArcade();mathMenu()};
+  nextB();
+}
+function nextB(){
+  if(!BP.active)return;if(BP.i>=BP.total)return endB();
+  const f=Math.random()<.25?(()=>{const a=ri(11,60),b=ri(5,39);return {t:`${a} + ${b}`,a:a+b}})():factQ();BP.q=f;BP.tries=0;
+  const set=new Set([f.a]);while(set.size<4){const d=f.a+pick([-10,-2,-1,1,2,10,ri(-6,6)]);if(d>=0)set.add(d)}
+  const lefts=shuffle(['3%','27%','51%','75%']),vals=shuffle([...set]);
+  $('#bpCount').textContent=`Balloon ${BP.i+1} of ${BP.total} · ${BP.score} popped`;
+  $('#sky').innerHTML=`<div class="sky-q">${f.t} = ?</div>`+vals.map((v,k)=>`<button type="button" class="balloon" data-v="${v}" style="left:${lefts[k]};--bc:${BCOL[(BP.i+k)%BCOL.length]};--dur:${(7+Math.random()*3).toFixed(1)}s;--del:-${(1+Math.random()*3.5).toFixed(1)}s" aria-label="${v}"><span class="b">${v}</span></button>`).join('');
+  $$('#sky .balloon').forEach(b=>b.onclick=()=>popB(b));
+}
+function popB(b){
+  if(!BP.active||b.disabled)return;
+  if(+b.dataset.v===BP.q.a){b.classList.add('popped');SFX.pop();$$('#sky .balloon').forEach(x=>x.disabled=true);
+    if(!BP.tries){BP.score++;addStars(1);burst(b)}BP.i++;setTimeout(nextB,500)}
+  else{BP.tries++;SFX.wrong();b.classList.remove('nope');void b.offsetWidth;b.classList.add('nope');b.disabled=true}
+}
+function endB(){
+  BP.active=false;SFX.win();if(BP.score>=8)confetti();
+  $('#mathStage').innerHTML=`<div class="panel results"><div class="pip happy" id="pip">${pipSVG('happy')}</div><p class="eyebrow">Balloon Pop</p><div class="score">${BP.score}/${BP.total}</div>
+    <h2>${BP.score===BP.total?'You popped them all on the first try!':BP.score>=7?'Pop-tastic!':'Nice popping!'}</h2><p class="lede">You earned ${BP.score} ${BP.score===1?'star':'stars'}.</p>
+    <div class="row"><button class="btn" type="button" id="bpAgain">Play again</button><button class="btn ghost" type="button" id="bpMenu">More games</button></div></div>`;
+  $('#bpAgain').onclick=balloonStart;$('#bpMenu').onclick=mathMenu;
+}
+function stopArcade(){if(L.active){clearInterval(L.int);L.active=false}BP.active=false}
+
+/* ---------- Reading ---------- */
+const R={idx:null,step:'q',state:[],correct:0,ev:null,seq:null,finished:false,size:1.2};
+const STEPS=[['q','Questions'],['ev','Evidence Detective'],['seq','Story Order']];
+function sentences(t){return t.split(/(?<=[.!?][”"’]?)\s+(?=[A-Z“"])/)}
+function loadPassage(i){
+  const p=PASSAGES[i];R.idx=i;R.step='q';R.correct=0;R.finished=false;
+  R.state=p.qs.map(q=>({tries:0,done:false,wrong:[],order:shuffle(q.o.map((_,j)=>j))}));
+  R.ev={done:false,tries:0};
+  let order;do{order=shuffle([0,1,2,3])}while(order.join()==='0,1,2,3');
+  R.seq={placed:[],mistakes:0,done:false,order};
+  stopSpeak();setReadLabel(false);
+}
+const mcDone=()=>R.state.every(s=>s.done);
+function stepDone(k){return k==='q'?mcDone():k==='ev'?R.ev.done:R.seq.done}
+function renderReading(){
+  if(R.idx===null)loadPassage(dayNum()%PASSAGES.length);
+  const p=PASSAGES[R.idx],ti=dayNum()%PASSAGES.length,words=p.body.join(' ').split(/\s+/).length;
+  $('#storyList').innerHTML=PASSAGES.map((x,i)=>`<button type="button" class="chip" data-story="${i}" aria-pressed="${i===R.idx}">${S.readLog[i]?CHECK:''}${esc(x.title)}${i===ti?' <small>Today</small>':''}</button>`).join('');
+  $('#passage').innerHTML=`<p class="eyebrow">${p.genre} · ${words} words</p><h2>${p.title}</h2>`+
+    p.body.map((t,pi)=>`<p>${sentences(t).map((s,si)=>`<span class="sent" data-p="${pi}" data-s="${si}">${s}</span>`).join(' ')}</p>`).join('');
+  $('#passageBox').style.setProperty('--rsize',R.size+'rem');
+  $('#readAloud').hidden=!canSpeak;
+  renderActivity();renderWord('#readWord');renderTimer();
+  $('#bookTitle').value=today().book||'';
+}
+function setHunt(on){
+  $('#passageBox').classList.toggle('hunt',on);
+  $$('#passage .sent').forEach(s=>{if(on){s.setAttribute('tabindex','0');s.setAttribute('role','button')}else{s.removeAttribute('tabindex');s.removeAttribute('role')}});
+}
+function renderActivity(){
+  const p=PASSAGES[R.idx];
+  const tabs=`<div class="rsteps" role="tablist" aria-label="Reading activities">${STEPS.map(([k,l],i)=>`<button type="button" role="tab" class="rstep${R.step===k?' on':''}${stepDone(k)?' done':''}" data-step="${k}" aria-selected="${R.step===k}"><span class="rnum">${stepDone(k)?CHECK:i+1}</span>${l}</button>`).join('')}</div>`;
+  let body='';
+  if(R.step==='q'){
+    body=p.qs.map((q,qi)=>{const st=R.state[qi];
+      const fb=st.done?`<p class="rfb good">${st.tries?'You found it!':'Correct on the first try!'}</p>`:st.wrong.length?`<p class="rfb try">Look back: ${q.why}</p>`:'<p class="rfb"></p>';
+      return `<fieldset class="rq" data-q="${qi}"><legend><span class="qn">${qi+1}.</span> ${q.q} <span class="tag">${q.k}</span></legend><div class="opts">${st.order.map(j=>`<button type="button" class="opt${st.done&&j===q.a?' right':''}${st.wrong.includes(j)?' wrong':''}" data-o="${j}"${st.done||st.wrong.includes(j)?' disabled':''}>${q.o[j]}</button>`).join('')}</div>${fb}</fieldset>`}).join('');
+    if(mcDone()&&!R.finished)body+=`<div class="nextup"><p>Questions done! Next, be an Evidence Detective.</p><button class="btn" type="button" data-step="ev">Next activity</button></div>`;
+  }else if(R.step==='ev'){
+    const tp=p.body.findIndex(t=>t.includes(p.ev.s))+1;
+    body=`<div class="detective"><div class="magnify" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"><circle cx="20" cy="20" r="12"/><path d="M29 29l12 12"/></svg></div>
+      <div><p class="eyebrow">Find the proof</p><p class="dq">${p.ev.q}</p></div></div>
+      <p class="note">${R.ev.done?'':'Tap the sentence in the story that answers the question. The story is glowing so you know where to look.'}</p>
+      <p class="rfb ${R.ev.done?'good':R.ev.tries?'try':''}" id="evFb" aria-live="polite">${R.ev.done?(R.ev.tries?'You found the proof! Great detective work.':'Found it on the first try! Super sleuth!'):R.ev.tries>=2?`Clue: look in paragraph ${tp}.`:R.ev.tries?'Not that sentence. Read the question again and keep looking!':''}</p>`;
+    if(R.ev.done&&!R.seq.done)body+=`<div class="nextup"><p>Case closed! One more: put the story in order.</p><button class="btn" type="button" data-step="seq">Next activity</button></div>`;
+  }else{
+    const s=R.seq,left=s.order.filter(i=>!s.placed.includes(i));
+    body=`<p class="dq">What happened first, next, then last?</p><p class="note">Tap the events in order.</p>
+      <ol class="slots">${p.seq.map((_,i)=>`<li class="slot${s.placed[i]!=null?' filled':''}"><span class="snum">${['First','Next','Then','Last'][i]}</span>${s.placed[i]!=null?esc(p.seq[s.placed[i]]):''}</li>`).join('')}</ol>
+      <div class="evcards">${left.map(i=>`<button type="button" class="evcard" data-e="${i}">${esc(p.seq[i])}</button>`).join('')}</div>
+      <p class="rfb" id="seqFb" aria-live="polite">${s.done?(s.mistakes?'In order! Nice work.':'Perfect order on the first try!'):''}</p>`;
+  }
+  if(R.finished){const tot=p.qs.length;
+    body+=`<div class="donebox"><div class="pip small happy">${pipSVG('happy')}</div><div><h3>Story finished!</h3><p>Questions: ${R.correct} of ${tot} on the first try.<br>Evidence Detective: ${R.ev.tries?'found it':'first try!'} · Story Order: ${R.seq.mistakes?'done':'perfect!'}</p><p class="note">Pick another story above to keep reading.</p></div></div>`}
+  $('#questions').innerHTML=tabs+`<div class="rbody">${body}</div>`;
+  setHunt(R.step==='ev'&&!R.ev.done);
+  $$('#passage .sent').forEach(x=>x.classList.toggle('found',R.ev.done&&x.textContent.includes(p.ev.s)));
+}
+function checkFinished(){
+  if(R.finished||!mcDone()||!R.ev.done||!R.seq.done)return;
+  R.finished=true;const p=PASSAGES[R.idx],t=today(),first=!(t.reading&&t.reading.done);
+  t.reading={done:true,correct:R.correct,total:p.qs.length,title:p.title};S.readLog[R.idx]=true;save();
+  SFX.win();renderActivity();if(first)missionComplete('reading');else confetti();
+}
+$('#questions').addEventListener('click',e=>{
+  const st=e.target.closest('[data-step]');if(st){R.step=st.dataset.step;renderActivity();if(R.step==='ev'&&innerWidth<820)$('#passageBox').scrollIntoView({behavior:reduceMotion?'auto':'smooth'});return}
+  const b=e.target.closest('.opt');
+  if(b&&!b.disabled){const qi=+b.closest('.rq').dataset.q,j=+b.dataset.o,q=PASSAGES[R.idx].qs[qi],s=R.state[qi];if(s.done)return;
+    if(j===q.a){s.done=true;SFX.right();if(!s.tries){R.correct++;addStars(1);burst(b)}}else{s.tries++;s.wrong.push(j);SFX.wrong()}
+    renderActivity();checkFinished();const fs=$(`.rq[data-q="${qi}"] .opt:not(:disabled)`);if(fs&&!s.done)fs.focus();return}
+  const c=e.target.closest('.evcard');
+  if(c){const p=PASSAGES[R.idx],s=R.seq,i=+c.dataset.e;
+    if(i===s.placed.length){s.placed.push(i);SFX.pop();
+      if(s.placed.length===p.seq.length){s.done=true;const n=s.mistakes?1:2;addStars(n,s.mistakes?'star':'Perfect order!');}
+      renderActivity();checkFinished()}
+    else{s.mistakes++;SFX.wrong();shake(c);const fb=$('#seqFb');fb.className='rfb try';fb.textContent=s.placed.length?'Hmm, did that happen next? Look back at the story.':'What happened at the very beginning?'}}
+});
+function huntPick(el){
+  if(R.step!=='ev'||R.ev.done)return;const p=PASSAGES[R.idx];
+  if(el.textContent.includes(p.ev.s)){R.ev.done=true;SFX.combo();addStars(R.ev.tries?1:2,R.ev.tries?'star':'Super sleuth!');burst(el,R.ev.tries?1:2);renderActivity();checkFinished()}
+  else{R.ev.tries++;SFX.wrong();el.classList.remove('nope');void el.offsetWidth;el.classList.add('nope');renderActivity()}
+}
+$('#passage').addEventListener('click',e=>{const s=e.target.closest('.sent');if(s)huntPick(s)});
+$('#passage').addEventListener('keydown',e=>{const s=e.target.closest('.sent');if(s&&(e.key==='Enter'||e.key===' ')){e.preventDefault();huntPick(s)}});
+$('#storyList').addEventListener('click',e=>{const b=e.target.closest('[data-story]');if(!b)return;loadPassage(+b.dataset.story);renderReading()});
+function setReadLabel(on){const s=$('#readAloud span');if(s)s.textContent=on?'Stop reading':'Read it to me'}
+let reading=false;
+$('#readAloud').onclick=()=>{if(reading){stopSpeak();reading=false;setReadLabel(false);return}
+  const p=PASSAGES[R.idx];if(speak(p.title+'. '+p.body.join(' '),()=>{reading=false;setReadLabel(false)})){reading=true;setReadLabel(true)}};
+$('#sizeUp').onclick=()=>{R.size=Math.min(1.6,+(R.size+.1).toFixed(1));$('#passageBox').style.setProperty('--rsize',R.size+'rem')};
+$('#sizeDown').onclick=()=>{R.size=Math.max(1,+(R.size-.1).toFixed(1));$('#passageBox').style.setProperty('--rsize',R.size+'rem')};
+
+/* Reading timer */
+const GOAL_S=20*60;
+const T={running:false,endAt:0,int:null};
+function timerRemaining(){const used=(today().readSec||0);return Math.max(0,GOAL_S-used)}
+function renderTimer(){
+  const t=today(),used=t.readSec||0;let rem=Math.max(0,GOAL_S-used);
+  if(T.running)rem=Math.max(0,Math.round((T.endAt-Date.now())/1000));
+  $('#timerText').textContent=Math.floor(rem/60)+':'+pad(rem%60);
+  $('#ringFg').setAttribute('stroke-dashoffset',(314.16*(1-(GOAL_S-rem)/GOAL_S)).toFixed(1));
+  $('#timerBtn').textContent=T.running?'Pause':rem<GOAL_S&&rem>0?'Keep going':'Start';
+  $('#timerBtn').disabled=rem===0;
+  $('#timerNote').textContent=rem===0?`You read for 20 minutes today${t.book?' ('+t.book+')':''}. Great reading!`:T.running?'Happy reading! The timer keeps going while you read.':'';
+}
+function timerTick(){const rem=Math.max(0,Math.round((T.endAt-Date.now())/1000));const t=today();t.readSec=GOAL_S-rem;
+  if(rem===0){clearInterval(T.int);T.running=false;save();addStars(3,'20 minutes of reading!');confetti()}
+  if(current==='reading')renderTimer()}
+$('#timerBtn').onclick=()=>{
+  if(T.running){clearInterval(T.int);T.running=false;const rem=Math.max(0,Math.round((T.endAt-Date.now())/1000));today().readSec=GOAL_S-rem;save();renderTimer();return}
+  const rem=timerRemaining();if(!rem)return;T.endAt=Date.now()+rem*1000;T.running=true;T.int=setInterval(timerTick,500);renderTimer()};
+$('#timerReset').onclick=()=>{clearInterval(T.int);T.running=false;const t=today();if((t.readSec||0)<GOAL_S){t.readSec=0;save()}renderTimer()};
+$('#bookTitle').addEventListener('input',e=>{today().book=e.target.value.slice(0,80);save()});
+setInterval(()=>{if(T.running)save()},15000);
+
+/* ---------- Writing ---------- */
+const W={tab:'story'};
+function storyPromptIdx(){return S.draft&&S.draft.date===todayKey()?S.draft.p:dayNum()%PROMPTS.length}
+function getDraft(){if(!S.draft||S.draft.date!==todayKey())S.draft={date:todayKey(),p:dayNum()%PROMPTS.length,text:'',plan:['','',''],checks:[]};return S.draft}
+const countWords=s=>s.trim().split(/\s+/).filter(Boolean).length;
+
+function renderWriting(){
+  $$('[data-wtab]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.wtab===W.tab));
+  $('#wStory').hidden=W.tab!=='story';$('#wFix').hidden=W.tab!=='fix';$('#wSpell').hidden=W.tab!=='spell';
+  if(W.tab==='story')renderStory();else if(W.tab==='fix'){if(!F.items.length)newFix();renderFix()}else{if(!SP.words.length)newSpell();renderSpell()}
+}
+$$('[data-wtab]').forEach(b=>b.onclick=()=>{W.tab=b.dataset.wtab;renderWriting()});
+
+function renderStory(){
+  const d=getDraft(),[type,text]=PROMPTS[d.p],labels=PLANS[type];
+  $('#promptType').textContent=type;$('#promptText').textContent=text;
+  $('#plan').innerHTML=labels.map((l,i)=>`<label for="plan${i}">${l}<textarea id="plan${i}" data-plan="${i}" placeholder="A few words…">${esc(d.plan[i]||'')}</textarea></label>`).join('');
+  $('#story').value=d.text;
+  $('#checks').innerHTML=CHECKLIST.map((c,i)=>`<label for="chk${i}"><input type="checkbox" id="chk${i}" data-chk="${i}"${d.checks.includes(i)?' checked':''}>${c}</label>`).join('');
+  $('#wgoal').textContent=S.wordGoal;updateMeter();renderJournal();
+}
+function updateMeter(){
+  const n=countWords($('#story').value),g=S.wordGoal,t=today(),done=t.writing&&t.writing.done;
+  $('#wc').textContent=n;$('#wbar').style.width=Math.min(100,n/g*100)+'%';
+  $('#wmsg').textContent=n>=g?'You reached your goal! Check your writing, then save it.':`${g-n} more ${g-n===1?'word':'words'} to reach your goal.`;
+  $('#finishStory').disabled=n<g;$('#finishStory').textContent=done?'Save another entry':'Save to my journal';
+}
+$('#story').addEventListener('input',e=>{getDraft().text=e.target.value;save();updateMeter()});
+$('#plan').addEventListener('input',e=>{const i=e.target.dataset.plan;if(i!=null){getDraft().plan[+i]=e.target.value;save()}});
+$('#checks').addEventListener('change',e=>{const i=+e.target.dataset.chk,d=getDraft();d.checks=d.checks.filter(x=>x!==i);if(e.target.checked)d.checks.push(i);save()});
+$('#newPrompt').onclick=()=>{const d=getDraft();d.p=(d.p+1+ri(0,PROMPTS.length-2))%PROMPTS.length;d.plan=['','',''];save();renderStory()};
+$('#finishStory').onclick=()=>{
+  const d=getDraft(),text=$('#story').value.trim(),n=countWords(text);if(n<S.wordGoal)return;
+  const [type,prompt]=PROMPTS[d.p];S.journal.unshift({date:todayKey(),type,prompt,text,words:n});
+  const t=today(),first=!(t.writing&&t.writing.done);t.writing={done:true,words:(first?0:(t.writing.words||0))+n};
+  S.draft={date:todayKey(),p:(d.p+1)%PROMPTS.length,text:'',plan:['','',''],checks:[]};save();
+  addStars(5,'Saved to your journal!');if(first)missionComplete('writing');renderStory();
+};
+function renderJournal(){
+  $('#journal').innerHTML=S.journal.length?S.journal.slice(0,30).map(j=>`<details><summary>${esc(j.prompt)} <small>${new Date(j.date+'T12:00').toLocaleDateString(undefined,{month:'short',day:'numeric'})} · ${j.words} words</small></summary><div class="jtext">${esc(j.text)}</div></details>`).join('')
+    :'<p class="note" style="margin-top:6px">Your saved writing will show up here. Write your first entry above!</p>';
+}
+
+/* Sentence fixer */
+const F={items:[],i:0,correct:0,tries:0,locked:false};
+function newFix(){F.items=shuffle(GRAMMAR).slice(0,5).map(([o,tip])=>({right:o[0],opts:shuffle(o),tip}));F.i=0;F.correct=0}
+function renderFix(){
+  const box=$('#wFix');
+  if(F.i>=F.items.length){box.innerHTML=`<div class="results"><p class="eyebrow">Sentence fixer</p><div class="score">${F.correct}/${F.items.length}</div><h2>${F.correct===F.items.length?'Perfect editing!':'Nice editing work!'}</h2><button class="btn" type="button" id="fixAgain">Play again</button></div>`;
+    $('#fixAgain').onclick=()=>{newFix();renderFix()};return}
+  const it=F.items[F.i];F.tries=0;F.locked=false;
+  box.innerHTML=`<div class="qtop"><span class="tag">Editing</span><span>Sentence ${F.i+1} of ${F.items.length}</span></div><div class="bar" aria-hidden="true"><i style="width:${F.i/F.items.length*100}%"></i></div>
+    <h2 style="margin:20px 0 16px">Which sentence is written correctly?</h2><div class="fix-opts">${it.opts.map((o,k)=>`<button type="button" class="opt" data-k="${k}">${esc(o)}</button>`).join('')}</div>
+    <p class="feedback" id="fFb" style="margin-top:16px" aria-live="polite"></p><div class="qactions"><span></span><button class="btn" type="button" id="fNext" hidden>Next</button></div>`;
+  $$('#wFix .opt').forEach(b=>b.onclick=()=>{if(F.locked)return;const o=it.opts[+b.dataset.k],fb=$('#fFb');
+    if(o===it.right){b.classList.add('right');if(!F.tries){F.correct++;addStars(1)}fb.className='feedback good';fb.textContent=pick(PRAISE)+' '+it.tip;fix_lock()}
+    else{F.tries++;b.classList.add('wrong');b.disabled=true;fb.className='feedback try';fb.textContent='Not that one. Tip: '+it.tip;
+      if(F.tries>=2){$$('#wFix .opt').forEach(x=>{if(it.opts[+x.dataset.k]===it.right)x.classList.add('right')});fix_lock()}}});
+  $('#fNext').onclick=()=>{F.i++;renderFix()};
+}
+function fix_lock(){F.locked=true;$$('#wFix .opt').forEach(b=>b.disabled=true);const n=$('#fNext');n.hidden=false;n.textContent=F.i===F.items.length-1?'See my score':'Next';n.focus()}
+
+/* Spelling: Look, Say, Cover, Write, Check */
+const SP={words:[],i:0,step:'look',correct:0,last:''};
+function newSpell(){SP.words=shuffle(SPELL).slice(0,6);SP.i=0;SP.step='look';SP.correct=0}
+function renderSpell(){
+  const box=$('#wSpell');
+  if(SP.i>=SP.words.length){box.innerHTML=`<div class="results"><p class="eyebrow">Spelling</p><div class="score">${SP.correct}/${SP.words.length}</div><h2>${SP.correct===SP.words.length?'Spelling star!':'Good practice!'}</h2><p class="lede">Words that were tricky will come back another day.</p><button class="btn" type="button" id="spAgain">New word list</button></div>`;
+    $('#spAgain').onclick=()=>{newSpell();renderSpell()};return}
+  const w=SP.words[SP.i],steps=['Look','Say','Cover','Write','Check'],on=SP.step==='look'?[0,1]:SP.step==='write'?[2,3]:[4];
+  let body='';
+  if(SP.step==='look')body=`<div class="spell-word">${w}</div><p class="lede">Look at the word. Say it out loud. Spell it in your head.</p><div class="row">${canSpeak?`<button type="button" class="speak" data-say="${w}">Hear it</button>`:''}<button class="btn" type="button" id="spCover">Cover it</button></div>`;
+  else if(SP.step==='write')body=`<div class="tiles" aria-label="${w.length} letters">${'<i></i>'.repeat(w.length)}</div><p class="lede">Now write the word from memory.</p><input id="spIn" class="spellin" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Type the word"><div class="row">${canSpeak?`<button type="button" class="speak" data-say="${w}">Hear it again</button>`:''}<button class="btn" type="button" id="spCheck">Check</button></div>`;
+  else{const ok=SP.last.trim().toLowerCase()===w;
+    const diff=[...w].map((ch,i)=>`<span class="lt${(SP.last.toLowerCase()[i]||'')!==ch?' x':''}">${ch}</span>`).join('');
+    body=ok?`<div class="spell-word" style="color:var(--good)">${w}</div><p class="feedback good">${pick(PRAISE)}</p>`
+      :`<div class="compare"><span>You wrote: <b>${esc(SP.last)||'(nothing)'}</b></span><span>The word is: <b>${diff}</b></span></div><p class="feedback try">So close! Look at the underlined letters.</p>`;
+    body+=`<button class="btn" type="button" id="spNext">${SP.i===SP.words.length-1?'See my score':'Next word'}</button>`}
+  box.innerHTML=`<div class="qtop"><span class="tag">Spelling</span><span>Word ${SP.i+1} of ${SP.words.length}</span></div><div class="bar" aria-hidden="true"><i style="width:${SP.i/SP.words.length*100}%"></i></div>
+    <div class="results"><div class="steps">${steps.map((s,i)=>`<span class="${on.includes(i)?'on':''}">${s}</span>`).join('')}</div>${body}</div>`;
+  if(SP.step==='look')$('#spCover').onclick=()=>{SP.step='write';renderSpell();$('#spIn').focus()};
+  if(SP.step==='write'){const go_=()=>{SP.last=$('#spIn').value;SP.step='check';if(SP.last.trim().toLowerCase()===w){SP.correct++;addStars(1)}renderSpell();const n=$('#spNext');if(n)n.focus()};
+    $('#spCheck').onclick=go_;$('#spIn').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();go_()}})}
+  if(SP.step==='check')$('#spNext').onclick=()=>{SP.i++;SP.step='look';renderSpell()};
+}
+
+/* ---------- Grown-ups ---------- */
+function renderGrownups(){
+  let rows='';const d=new Date();
+  for(let i=0;i<7;i++){const k=keyOf(d),r=S.days[k]||{};
+    rows+=`<tr><td>${i===0?'Today':d.toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'})}</td>
+      <td class="${r.math&&r.math.sets?'':'dim'}">${r.math&&r.math.sets?`${r.math.correct}/${r.math.total} (${Math.round(r.math.correct/r.math.total*100)}%)`:'—'}</td>
+      <td class="${r.reading&&r.reading.done?'':'dim'}">${r.reading&&r.reading.done?`${r.reading.correct}/${r.reading.total} · ${esc(r.reading.title)}`:'—'}</td>
+      <td class="${r.writing&&r.writing.done?'':'dim'}">${r.writing&&r.writing.done?r.writing.words+' words':'—'}</td>
+      <td class="${r.readSec?'':'dim'}">${r.readSec?Math.round(r.readSec/60)+' min'+(r.book?' · '+esc(r.book):''):'—'}</td></tr>`;
+    d.setDate(d.getDate()-1)}
+  $('#report').innerHTML=`<thead><tr><th>Day</th><th>Math</th><th>Reading quiz</th><th>Writing</th><th>Own book</th></tr></thead><tbody>${rows}</tbody>`;
+  $('#setName').value=S.name;$('#setGoal').value=String(S.wordGoal);$('#setMsg').textContent='';
+  $('#resetConfirm').hidden=true;$('#resetBtn').hidden=false;
+}
+$('#settingsForm').addEventListener('submit',e=>{e.preventDefault();S.name=$('#setName').value.trim();S.wordGoal=+$('#setGoal').value||50;save();renderHeader();$('#setMsg').textContent='Settings saved.'});
+$('#resetBtn').onclick=()=>{$('#resetConfirm').hidden=false;$('#resetBtn').hidden=true};
+$('#resetNo').onclick=()=>{$('#resetConfirm').hidden=true;$('#resetBtn').hidden=false};
+$('#resetYes').onclick=()=>{const name=S.name,goal=S.wordGoal;S={name,stars:0,wordGoal:goal,days:{},journal:[],draft:null,readLog:{},sound:S.sound,monsters:[],lightningBest:0};save();renderHeader();renderGrownups();$('#setMsg').textContent='Progress has been reset.'};
+
+/* ---------- Boot ---------- */
+renderHeader();
+go((location.hash||'').slice(1)||'home');
+})();
+</script>
