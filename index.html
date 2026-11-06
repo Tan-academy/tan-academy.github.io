@@ -1663,7 +1663,7 @@ function renderDaily(){
       <li class="${d.words!=null?'done':''}"><span class="ck">${d.words!=null?DCHECK:''}</span><span><b>Word list</b> · about 6 minutes${d.words!=null?` · ${d.words}/8`:''}</span></li>
     </ol>
   </section>
-  ${d.done?`<section class="panel donebox"><div class="pip small happy">${bunnyImg('daily')}</div><div><h3>Today’s Daily 20 is done!</h3><p>Fast facts ${d.facts}/20 · Mixed math ${d.math}/12 · Word list ${d.words}/8</p><p class="note">You can practice again below. New questions come tomorrow.</p></div></section>`:''}
+  ${d.done?`<section class="panel donebox"><div class="pip small happy">${bunnyHi()}</div><div><h3>Today’s Daily 20 is done!</h3><p>Fast facts ${d.facts}/20 · Mixed math ${d.math}/12 · Word list ${d.words}/8</p><p class="note">You can practice again below. New questions come tomorrow.</p></div></section>`:''}
   <section class="panel" id="dFacts">
     <div class="dhead"><span class="dstep">1</span><div><h2>Fast facts</h2><p class="note">20 quick facts. Answer as many as you can, then check.</p></div></div>
     <div class="fgrid">${DY.facts.map((f,i)=>`<label class="fact" for="df${i}"><span>${f.q} =</span><input id="df${i}" class="fin" inputmode="numeric" pattern="[0-9]*" autocomplete="off" maxlength="3"><span class="fans" hidden></span></label>`).join('')}</div>
@@ -2467,7 +2467,7 @@ $('#resetNo').onclick=()=>{$('#resetConfirm').hidden=true;$('#resetBtn').hidden=
 $('#resetYes').onclick=()=>{const name=S.name,goal=S.wordGoal;S={name,stars:0,wordGoal:goal,days:{},journal:[],draft:null,readLog:{},sound:S.sound,monsters:[],lightningBest:0,ssLog:{},prepLog:[]};save();renderHeader();renderGrownups();$('#setMsg').textContent='Progress has been reset.'};
 
 /* ---------- Boot ---------- */
-$$('[data-bun]').forEach(el=>{el.innerHTML=bunnyImg(el.dataset.bun)});
+$$('[data-bun]').forEach(el=>{el.innerHTML=el.dataset.bun==='daily'?bunnyHi():bunnyImg(el.dataset.bun)});
 renderHeader();
 go((location.hash||'').slice(1)||'home');
 })();
