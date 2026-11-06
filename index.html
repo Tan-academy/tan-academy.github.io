@@ -632,6 +632,13 @@ h1 em,h2 em{font-style:italic;font-weight:500;color:var(--gold)}
 @media (max-width:520px){.hi-bun{width:104px;height:104px}}
 .welcome{font:italic 500 1.3rem/1.5 var(--display);color:var(--ink);max-width:60ch;margin-top:4px}
 .welcome b{font-weight:600;color:var(--gold)}
+.jactions{display:flex;justify-content:flex-end;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px}
+.jdel{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--line-strong);background:var(--card);color:var(--muted);border-radius:999px;padding:6px 14px;font:500 .9rem/1 var(--ui)}
+.jdel:hover{border-color:var(--bad);color:var(--bad)}
+.jdel svg{width:16px;height:16px}
+.jconfirm{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 12px;border-radius:14px;background:var(--bad-soft);font-size:.95rem}
+.jconfirm[hidden]{display:none!important}
+.jconfirm .btn{padding:9px 16px;font-size:.9rem;min-height:0}
 </style>
 
 <header class="top">
@@ -1763,9 +1770,17 @@ $('#finishStory').onclick=()=>{
   const first_=$('#journal details');if(first_){first_.open=true;first_.classList.add('fresh');first_.scrollIntoView({behavior:reduceMotion?'auto':'smooth',block:'center'})}
 };
 function renderJournal(){
-  $('#journal').innerHTML=S.journal.length?S.journal.slice(0,30).map(j=>`<details><summary>${esc(j.prompt)} <small>${new Date(j.date+'T12:00').toLocaleDateString(undefined,{month:'short',day:'numeric'})} · ${j.words} words</small></summary><div class="jtext">${esc(j.text)}</div></details>`).join('')
+  $('#journal').innerHTML=S.journal.length?S.journal.slice(0,30).map((j,i)=>`<details data-j="${i}"><summary>${esc(j.prompt)} <small>${new Date(j.date+'T12:00').toLocaleDateString(undefined,{month:'short',day:'numeric'})} · ${j.words} words</small></summary><div class="jtext">${esc(j.text)}</div>
+    <div class="jactions"><button type="button" class="jdel" data-jdel="${i}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></svg>Delete</button>
+    <span class="jconfirm" hidden>Delete this entry forever? <button type="button" class="btn danger" data-jyes="${i}">Yes, delete</button><button type="button" class="link" data-jno>Keep it</button></span></div></details>`).join('')
     :'<p class="note" style="margin-top:6px">Your saved writing will show up here. Write your first entry above!</p>';
 }
+$('#journal').addEventListener('click',e=>{
+  const del=e.target.closest('[data-jdel]');if(del){del.hidden=true;const c=$('.jconfirm',del.parentNode);c.hidden=false;$('[data-jyes]',c).focus();return}
+  const no=e.target.closest('[data-jno]');if(no){const box=no.closest('.jactions');$('.jconfirm',box).hidden=true;$('[data-jdel]',box).hidden=false;return}
+  const yes=e.target.closest('[data-jyes]');if(yes){const i=+yes.dataset.jyes,entry=S.journal[i];if(!entry)return;S.journal.splice(i,1);save();renderJournal();
+    const m=$('#saveMsg');if(m){m.className='feedback try';m.textContent='Journal entry deleted.'}toast(`<span>Deleted “${esc(entry.prompt.length>40?entry.prompt.slice(0,40)+'…':entry.prompt)}”</span>`)}
+});
 
 /* Sentence fixer */
 const F={items:[],i:0,correct:0,tries:0,locked:false};
