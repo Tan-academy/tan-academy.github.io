@@ -1663,7 +1663,7 @@ function renderDaily(){
       <li class="${d.words!=null?'done':''}"><span class="ck">${d.words!=null?DCHECK:''}</span><span><b>Word list</b> · about 6 minutes${d.words!=null?` · ${d.words}/8`:''}</span></li>
     </ol>
   </section>
-  ${d.done?`<section class="panel donebox"><div class="pip small happy">${bunnyHi()}</div><div><h3>Today’s Daily 20 is done!</h3><p>Fast facts ${d.facts}/20 · Mixed math ${d.math}/12 · Word list ${d.words}/8</p><p class="note">You can practice again below. New questions come tomorrow.</p></div></section>`:''}
+  ${d.done?`<section class="panel donebox"><div class="pip small happy">${bunnyImg('orig')}</div><div><h3>Today’s Daily 20 is done!</h3><p>Fast facts ${d.facts}/20 · Mixed math ${d.math}/12 · Word list ${d.words}/8</p><p class="note">You can practice again below. New questions come tomorrow.</p></div></section>`:''}
   <section class="panel" id="dFacts">
     <div class="dhead"><span class="dstep">1</span><div><h2>Fast facts</h2><p class="note">20 quick facts. Answer as many as you can, then check.</p></div></div>
     <div class="fgrid">${DY.facts.map((f,i)=>`<label class="fact" for="df${i}"><span>${f.q} =</span><input id="df${i}" class="fin" inputmode="numeric" pattern="[0-9]*" autocomplete="off" maxlength="3"><span class="fans" hidden></span></label>`).join('')}</div>
