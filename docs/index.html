@@ -2357,7 +2357,7 @@ const CWORD=[
   ()=>{const n=NM(),a=ri(12,45),b=ri(15,60);return {q:`${n} had some stickers. After giving ${a} stickers to friends, ${n} has ${b} stickers left. How many stickers did ${n} have at the start?`,ans:a+b,why:`Work backwards! Add back the ones given away: ${b} + ${a} = ${a+b}.`}},
   ()=>{const k=ri(3,6),per=ri(4,8),boxes=ri(2,4);return {q:`A baker puts ${per} muffins in each box. She fills ${boxes} boxes for each of ${k} classrooms. How many muffins is that in all?`,ans:per*boxes*k,why:`Muffins per classroom: ${per} × ${boxes} = ${per*boxes}. For ${k} classrooms: ${per*boxes} × ${k} = ${per*boxes*k}.`}},
   ()=>{const t=ri(3,6),each=pick([15,20,25,30]);return {q:`A movie has ${t} parts. Each part is ${each} minutes long. How many minutes long is the whole movie?`,ans:t*each,why:`${t} parts × ${each} minutes = ${t*each} minutes.`}},
-  ()=>{const n=NM(),legs=pick([[4,'dogs'],[2,'chickens']]),k=ri(3,9),c2=ri(2,6);return {q:`A farm has ${k} dogs and ${c2} chickens. How many legs are there in all?`,ans:k*4+c2*2,why:`Dogs: ${k} × 4 = ${k*4} legs. Chickens: ${c2} × 2 = ${c2*2} legs. Total: ${k*4} + ${c2*2} = ${k*4+c2*2}.`}}
+  ()=>{const k=ri(3,9),c2=ri(2,6);return {q:`A farm has ${k} dogs and ${c2} chickens. How many legs are there in all?`,ans:k*4+c2*2,why:`Dogs: ${k} × 4 = ${k*4} legs. Chickens: ${c2} × 2 = ${c2*2} legs. Total: ${k*4} + ${c2*2} = ${k*4+c2*2}.`}}
 ].map(g=>()=>{const r=g();return {label:'Word problem',q:r.q,ans:r.ans,opts:r.opts||nearNums(r.ans,Math.max(3,Math.round(r.ans*.15))),why:r.why}});
 const WORDS=[
   ['The hikers were <b>weary</b> after climbing the mountain all day.',['tired','excited','lost','hungry'],'They climbed all day, so they would feel worn out.'],
