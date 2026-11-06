@@ -696,6 +696,16 @@ h1 em,h2 em{font-style:italic;font-weight:500;color:var(--gold)}
 .pdel .confirm[hidden]{display:none!important}
 body.modal-open{overflow:hidden}
 @media (max-width:520px){.pnick{max-width:80px}.pmcard{padding:20px}}
+.gradepick{display:flex;gap:24px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.gptext{display:grid;gap:6px;max-width:52ch}
+.gpbtns{display:grid;grid-template-columns:repeat(4,minmax(78px,1fr));gap:10px}
+.gpbtn{display:grid;justify-items:center;gap:2px;padding:14px 10px;border-radius:22px;border:1.5px solid var(--line-strong);background:var(--paper);color:var(--ink)}
+.gpbtn b{font:600 1.8rem/1 var(--display)}
+.gpbtn span{font-size:.8rem;color:var(--muted);letter-spacing:.06em}
+.gpbtn:hover{border-color:var(--gold)}
+.gpbtn[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.gpbtn[aria-pressed="true"] span{color:var(--paper);opacity:.8}
+@media (max-width:520px){.gpbtns{grid-template-columns:repeat(4,1fr);width:100%}.gpbtn{padding:12px 4px}}
 </style>
 
 <header class="top">
@@ -774,6 +784,16 @@ body.modal-open{overflow:hidden}
       </section>
       <section class="panel subject-read" id="homeWord"></section>
     </div>
+    <section class="panel gradepick" aria-labelledby="gpTitle">
+      <div class="gptext"><p class="eyebrow">Grade level</p><h2 id="gpTitle">Choose your <em>grade</em></h2>
+        <p class="note">Math games, Daily 20 and Math 100 change to match your grade. Reading, writing and social studies stay at a 3rd grade level.</p></div>
+      <div class="gpbtns" role="group" aria-label="Grade level">
+        <button type="button" class="gpbtn" data-sgrade="3"><b>3rd</b><span>grade</span></button>
+        <button type="button" class="gpbtn" data-sgrade="4"><b>4th</b><span>grade</span></button>
+        <button type="button" class="gpbtn" data-sgrade="5"><b>5th</b><span>grade</span></button>
+        <button type="button" class="gpbtn" data-sgrade="6"><b>6th</b><span>grade</span></button>
+      </div>
+    </section>
   </section>
 
   <!-- DAILY 20 -->
@@ -789,7 +809,7 @@ body.modal-open{overflow:hidden}
   <section id="view-hundred" class="view subject-math" hidden>
     <div class="view-head">
       <div class="vh-title"><span class="pip head-bun" data-bun="spring"></span><div><p class="eyebrow">100 questions</p><h1>Math 100</h1></div></div>
-      <p class="lede">25 each of plus, minus, times and divide, all mixed up. Every number is from 1 to 20. Press Enter to jump to the next box.</p>
+      <p class="lede">25 each of plus, minus, times and divide, all mixed up. <span id="huLimit">Every number is from 1 to 20.</span> Press Enter to jump to the next box.</p>
     </div>
     <div id="hundredStage" class="view"></div>
   </section>
@@ -983,7 +1003,7 @@ const storeKey=()=>PF.active?STORE+':'+PF.active:STORE+':guest';
 const curProfile=()=>PF.list.find(x=>x.id===PF.active)||null;
 let S=load();
 function load(){let s=null;try{s=JSON.parse(lsGet(storeKey()))}catch(e){}s=s||{};const cp=curProfile();if(cp)s.name=cp.nick;
-  return {name:s.name||'',stars:s.stars||0,wordGoal:s.wordGoal||50,days:s.days||{},journal:s.journal||[],draft:s.draft||null,readLog:s.readLog||{},sound:s.sound!==false,monsters:s.monsters||[],ssLog:s.ssLog||{},prepLog:s.prepLog||[],lightningBest:s.lightningBest||0,hundredBest:s.hundredBest||null,olyLog:s.olyLog||{}}}
+  return {name:s.name||'',stars:s.stars||0,wordGoal:s.wordGoal||50,days:s.days||{},journal:s.journal||[],draft:s.draft||null,readLog:s.readLog||{},sound:s.sound!==false,monsters:s.monsters||[],ssLog:s.ssLog||{},prepLog:s.prepLog||[],lightningBest:s.lightningBest||0,hundredBest:s.hundredBest||null,olyLog:s.olyLog||{},grade:[3,4,5,6].includes(s.grade)?s.grade:3}}
 function save(){lsSet(storeKey(),JSON.stringify(S))}
 function today(){const k=todayKey();return S.days[k]||(S.days[k]={})}
 function anyDone(d){return !!(d&&((d.math&&d.math.sets)||(d.reading&&d.reading.done)||(d.writing&&d.writing.done)||(d.social&&d.social.done)||(d.daily&&d.daily.done)))}
@@ -1301,7 +1321,8 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-say]');if(
 function renderHome(){
   const h=new Date().getHours();
   $('#hello').innerHTML=`${h<12?'Good morning':h<17?'Good afternoon':'Good evening'}, <em>${esc(S.name||'little star')}</em>`;
-  $('#todayDate').textContent=new Date().toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'});
+  $('#todayDate').textContent=new Date().toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'})+' · '+ORD[G()]+' grade';
+  $$('[data-sgrade]').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.sgrade===G()));
   const t=today(),p=PASSAGES[dayNum()%PASSAGES.length],pr=PROMPTS[storyPromptIdx()];
   const done={math:!!(t.math&&t.math.sets),reading:!!(t.reading&&t.reading.done),writing:!!(t.writing&&t.writing.done),social:!!(t.social&&t.social.done)};
   const n=Object.values(done).filter(Boolean).length;
@@ -1436,6 +1457,39 @@ const GEN={
     const [t,ans,h]=pick(T)();return {label:'Silly story',prompt:`<p class="wp">${t}</p>`,answer:ans,type:'num',hint:`<p>${h}</p>`}}
 };
 /* name, subtitle, color, soft color, icon, BunBun's opening line */
+
+/* Grade levels: 3rd grade uses the originals above; 4th-6th get harder numbers */
+const G=()=>S.grade||3;
+const ORD={3:'3rd',4:'4th',5:'5th',6:'6th'};
+const GEN3={...GEN};
+const swapP=(a,b)=>Math.random()<.5?[a,b]:[b,a];
+const stackHTML=(a,op,b)=>`<div class="stack" role="img" aria-label="${a} ${op==='+'?'plus':'minus'} ${b}"><span></span><span>${a.toLocaleString('en-US')}</span><span>${op}</span><span>${b.toLocaleString('en-US')}</span></div>`;
+GEN.mult=()=>{const g=G();if(g===3)return GEN3.mult();let a,b;
+  if(g===4){a=ri(2,12);b=ri(2,12)}else if(g===5){a=ri(12,99);b=ri(2,9)}else{a=ri(11,45);b=ri(11,25)}[a,b]=swapP(a,b);
+  return {label:'Multiply',prompt:`<div class="eq">${a} × ${b} = <span class="blank">?</span></div>`,answer:a*b,type:'num',hint:g===4?`<p>Skip count by ${b}, ${a} times. Or use a fact you know and adjust.</p>`:`<p>Break the bigger number into tens and ones, multiply each part, then add.</p>`}};
+GEN.div=()=>{const g=G();if(g===3)return GEN3.div();let b,q;
+  if(g===4){if(Math.random()<.5){b=ri(2,12);q=ri(2,12)}else{b=ri(2,9);q=ri(11,40)}}else if(g===5){b=ri(3,9);q=ri(21,150)}else{b=ri(11,25);q=ri(11,45)}
+  return {label:'Divide',prompt:`<div class="eq">${b*q} ÷ ${b} = <span class="blank">?</span></div>`,answer:q,type:'num',hint:`<p>Think: ${b} × ? = ${b*q}. Make a guess, multiply to check, then adjust.</p>`}};
+GEN.addsub=()=>{const g=G();if(g===3)return GEN3.addsub();const lo=10**g,hi=lo*10-1;
+  if(Math.random()<.5){const a=ri(lo,Math.floor(hi*.6)),b=ri(lo/2,hi-a);return {label:'Add',prompt:stackHTML(a,'+',b),answer:a+b,type:'num',hint:'<p>Line up the places. Add the ones first, and carry when a column makes 10 or more.</p>'}}
+  const a=ri(lo*2,hi),b=ri(lo/2,a-1);return {label:'Subtract',prompt:stackHTML(a,'−',b),answer:a-b,type:'num',hint:'<p>Line up the places. Start with the ones, and regroup when the top digit is smaller.</p>'}};
+GEN.round=()=>{const g=G();if(g===3)return GEN3.round();
+  const [to,lo,hi]=pick({4:[[100,1000,9999],[1000,1000,9999]],5:[[1000,10000,99999],[10000,10000,99999]],6:[[10000,100000,999999],[100000,100000,999999]]}[g]);
+  const n=ri(lo+1,hi),place={100:'tens',1000:'hundreds',10000:'thousands',100000:'ten thousands'}[to];
+  return {label:'Rounding',prompt:`<p class="qtext">Round <b>${n.toLocaleString('en-US')}</b> to the nearest <b>${to.toLocaleString('en-US')}</b>.</p>`,answer:Math.round(n/to)*to,type:'num',hint:`<p>Look at the <b>${place}</b> digit. 5 or more: round up. 4 or less: round down.</p>`}};
+GEN.frac=()=>{const g=G();if(g===3)return GEN3.frac();
+  if(g===4&&Math.random()<.6){const d=pick([2,3,4,5,6]),n=ri(1,d-1),k=ri(2,4);return {label:'Fractions',prompt:`<div class="eq">${fracHTML(n+'/'+d)} = ${fracHTML('?/'+d*k)}</div>`,answer:n*k,type:'num',hint:`<p>The bottom was multiplied by ${k}. Multiply the top by ${k} too.</p>`}}
+  if(g===6&&Math.random()<.5){const pc=pick([10,20,25,50,75]),x=pick([20,40,60,80,100,120,200]);return {label:'Percents',prompt:`<p class="qtext">What is <b>${pc}%</b> of <b>${x}</b>?</p>`,answer:pc*x/100,type:'num',hint:`<p>${pc}% means ${pc} out of 100. Find 1% (${x} ÷ 100), or use a fraction like ${pc===25?'1/4':pc===50?'1/2':pc===75?'3/4':pc===10?'1/10':'1/5'}.</p>`}}
+  const d=pick(g===4?[2,3,4,5]:g===5?[3,4,5,6,8,10]:[4,5,6,8,10,12]),n=ri(1,d-1),k=ri(2,g===4?6:g===5?10:15);
+  return {label:'Fractions',prompt:`<p class="qtext">What is ${fracHTML(n+'/'+d)} of <b>${d*k}</b>?</p>`,answer:n*k,type:'num',hint:`<p>Divide by the bottom number: ${d*k} ÷ ${d} = ${k}. Then multiply by the top: ${n} × ${k}.</p>`}};
+GEN.time=()=>{const g=G();if(g===3)return GEN3.time();
+  const h=ri(1,9),m=ri(0,11)*5,[dh,dm]=g===4?pick([[0,35],[1,15],[1,40],[2,25]]):pick([[1,45],[2,35],[3,50],[2,55],[4,25]]),tot=h*60+m+dh*60+dm,f=x=>`${((Math.floor(x/60)-1)%12)+1}:${pad(x%60)}`;
+  const set=new Set([f(tot)]);[tot+5,tot-5,tot+60,tot-60,tot+15,tot+30].forEach(x=>{if(set.size<4)set.add(f(x))});
+  return {label:'Elapsed time',prompt:`<p class="qtext">Practice starts at <b>${f(h*60+m)}</b> and lasts <b>${dh?dh+' hour'+(dh>1?'s':'')+' ':''}${dm} minutes</b>. When does it end?</p>`,answer:f(tot),type:'choice',choices:shuffle([...set]),hint:'<p>Add the hours first, then the minutes. 60 minutes make 1 hour.</p>'}};
+GEN.word=()=>{const g=G();if(g===3)return GEN3.word();const r=pick(CWORD)();return {label:'Word problem',prompt:`<p class="wp">${r.q}</p>`,answer:r.ans,type:'num',hint:`<p>${r.why}</p>`}};
+const GSUB={4:{mult:'Facts to 12 × 12',div:'Facts to 12 and bigger numbers',addsub:'Add & subtract to 10,000',round:'Round to 100 or 1,000',frac:'Equal fractions, parts of a number',time:'Elapsed time',word:'Two-step story problems'},
+  5:{mult:'2-digit × 1-digit',div:'3-digit ÷ 1-digit',addsub:'Add & subtract to 100,000',round:'Round to 1,000 or 10,000',frac:'Fractions of a number',time:'Elapsed time',word:'Multi-step story problems'},
+  6:{mult:'2-digit × 2-digit',div:'Divide by 2-digit numbers',addsub:'Add & subtract to 1,000,000',round:'Round big numbers',frac:'Fractions and percents',time:'Elapsed time',word:'Multi-step story problems'}};
 const GAMES={
   mult:['Times Table Treasure','Multiply 0 to 10','--math','--math-soft','×','Treasure is waiting at the flag. Every right answer is one hop!'],
   div:['Cookie Share','Divide into equal groups','--write','--write-soft','÷','Let’s share cookies fairly with everyone!'],
@@ -1453,7 +1507,7 @@ function gameIcon(k){const g=GAMES[k][4];
   if(g==='bubble')return '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M8 10h32v22H22l-9 8v-8H8z"/><path d="M16 19h16M16 25h10"/></svg>';
   return g}
 function genQ(s){return GEN[s==='mixed'?pick(MIX):s]()}
-function factQ(){if(Math.random()<.6){const a=ri(2,10),b=ri(1,10);return {t:`${a} × ${b}`,a:a*b}}const b=ri(2,10),q=ri(1,10);return {t:`${b*q} ÷ ${b}`,a:q}}
+function factQ(){const m=G()>3?12:10;if(Math.random()<.6){const a=ri(2,m),b=ri(1,m);return {t:`${a} × ${b}`,a:a*b}}const b=ri(2,m),q=ri(1,m);return {t:`${b*q} ÷ ${b}`,a:q}}
 
 /* Menu */
 const M={skill:'mixed',qs:[],res:[],i:0,correct:0,tries:0,combo:0,locked:false,active:false};
@@ -1468,7 +1522,7 @@ function mathMenu(){
     <button type="button" class="gcard wide" id="goBalloon" style="--gc:var(--sky);--gs:var(--sky-soft)"><span class="gicon">${BALLOON_ICON}</span><span><span class="gname">Balloon Pop</span><span class="gsub">Pop the balloon with the right answer before it floats away!</span><span class="gbest">10 balloons to pop</span></span></button>
   </div>
   <h2 class="section-label">Adventures</h2>
-  <div class="games">${Object.keys(GAMES).map(k=>{const g=GAMES[k];return `<button type="button" class="gcard" data-game="${k}" style="--gc:var(${g[2]});--gs:var(${g[3]})"><span class="gicon">${gameIcon(k)}</span><span class="gname">${g[0]}</span><span class="gsub">${g[1]}</span></button>`}).join('')}</div>
+  <div class="games">${Object.keys(GAMES).map(k=>{const g=GAMES[k];return `<button type="button" class="gcard" data-game="${k}" style="--gc:var(${g[2]});--gs:var(${g[3]})"><span class="gicon">${gameIcon(k)}</span><span class="gname">${g[0]}</span><span class="gsub">${(GSUB[G()]||{})[k]||g[1]}</span></button>`}).join('')}</div>
   <section class="panel"><div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap"><h2>My Monster Zoo</h2><span class="note">${n} ${n===1?'monster':'monsters'} hatched</span></div><div class="zoo-grid">${zooHTML()}</div></section>`;
   $$('[data-game]').forEach(b=>b.onclick=()=>startGame(b.dataset.game));
   $('#goLightning').onclick=lightningStart;$('#goBalloon').onclick=balloonStart;
@@ -1482,7 +1536,7 @@ function keypadHTML(id){return `<div class="keypad" id="${id}">${[1,2,3,4,5,6,7,
 function renderQ(){
   const q=M.qs[M.i];M.tries=0;M.locked=false;
   const ans=q.type==='num'
-    ?`<div class="numrow"><input id="mInput" class="numin" inputmode="numeric" pattern="[0-9]*" autocomplete="off" maxlength="5" aria-label="Your answer"><button class="btn" type="button" id="mCheck">Check</button></div>${keypadHTML('keypad')}`
+    ?`<div class="numrow"><input id="mInput" class="numin" inputmode="numeric" pattern="[0-9]*" autocomplete="off" maxlength="8" aria-label="Your answer"><button class="btn" type="button" id="mCheck">Check</button></div>${keypadHTML('keypad')}`
     :`<div class="choices">${q.choices.map(c=>`<button type="button" class="choice" data-v="${c}">${c.includes('/')?fracHTML(c):c}</button>`).join('')}</div>`;
   $('#mathStage').innerHTML=`<div class="trail" id="trail" aria-hidden="true">${trailHTML()}</div>
   <div class="arena">
@@ -1502,7 +1556,7 @@ function renderQ(){
     inp.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();M.locked?nextQ():mathAnswer(inp.value)}});
     $('#mCheck').onclick=()=>mathAnswer(inp.value);
     $('#keypad').addEventListener('click',e=>{const k=e.target.closest('[data-k]');if(!k||M.locked)return;const v=k.dataset.k;
-      if(v==='clear')inp.value='';else if(v==='del')inp.value=inp.value.slice(0,-1);else if(inp.value.length<5)inp.value+=v});
+      if(v==='clear')inp.value='';else if(v==='del')inp.value=inp.value.slice(0,-1);else if(inp.value.length<8)inp.value+=v});
     if(matchMedia('(pointer:fine)').matches)inp.focus();
   }else{$$('.choice').forEach(b=>b.onclick=()=>mathAnswer(b.dataset.v,b))}
 }
@@ -1734,13 +1788,13 @@ const SAYICON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke
 function seeded(seed,fn){const o=Math.random;Math.random=rng(seed);try{return fn()}finally{Math.random=o}}
 function scramble(w){let x=w;for(let k=0;k<10&&x===w;k++)x=shuffle([...w]).join('');return x}
 function dailySet(){
-  const dn=dayNum();if(DY.day===dn)return;DY.day=dn;
-  DY.facts=seeded(dn*31+7,()=>Array.from({length:20},()=>{const t=pick(['x','x','d','a','s']);
-    if(t==='x'){const a=ri(2,10),b=ri(2,10);return {q:`${a} × ${b}`,a:a*b}}
-    if(t==='d'){const b=ri(2,10),c=ri(2,10);return {q:`${b*c} ÷ ${b}`,a:c}}
-    if(t==='a'){const a=ri(6,19),b=ri(5,19);return {q:`${a} + ${b}`,a:a+b}}
-    const a=ri(11,30),b=ri(2,a-1);return {q:`${a} − ${b}`,a:a-b}}));
-  DY.math=seeded(dn*17+3,()=>['mult','div','addsub','addsub','round','frac','frac','time','word','word','mult','div'].map(k=>GEN[k]()));
+  const dn=dayNum(),gk=dn+'-'+G();if(DY.day===gk)return;DY.day=gk;const gs=G()*1000,fm=G()>3?12:10,big=G()>3;
+  DY.facts=seeded(dn*31+7+gs,()=>Array.from({length:20},()=>{const t=pick(['x','x','d','a','s']);
+    if(t==='x'){const a=ri(2,fm),b=ri(2,fm);return {q:`${a} × ${b}`,a:a*b}}
+    if(t==='d'){const b=ri(2,fm),c=ri(2,fm);return {q:`${b*c} ÷ ${b}`,a:c}}
+    if(t==='a'){const a=big?ri(15,79):ri(6,19),b=big?ri(12,59):ri(5,19);return {q:`${a} + ${b}`,a:a+b}}
+    const a=big?ri(40,99):ri(11,30),b=ri(2,a-1);return {q:`${a} − ${b}`,a:a-b}}));
+  DY.math=seeded(dn*17+3+gs,()=>['mult','div','addsub','addsub','round','frac','frac','time','word','word','mult','div'].map(k=>GEN[k]()));
   const start=(dn*8)%SPELL.length;DY.words=Array.from({length:8},(_,i)=>SPELL[(start+i)%SPELL.length]);
   DY.hints=seeded(dn*5+11,()=>DY.words.map(scramble));
 }
@@ -1771,7 +1825,7 @@ function renderDaily(){
   <section class="panel" id="dMath">
     <div class="dhead"><span class="dstep">2</span><div><h2>Mixed math</h2><p class="note">12 questions from everything you’re learning. Show your work on paper if it helps!</p></div></div>
     <div class="dqlist">${DY.math.map((q,i)=>`<div class="dq-item" data-i="${i}"><span class="dqn">${i+1}</span><div class="dq-body"><span class="tag">${q.label}</span><div class="dq-prompt">${q.prompt}</div>
-      ${q.type==='num'?`<input class="dq-in" id="dm${i}" inputmode="numeric" pattern="[0-9]*" autocomplete="off" maxlength="5" aria-label="Answer for question ${i+1}">`:`<div class="dq-ch" role="group" aria-label="Choices for question ${i+1}">${q.choices.map(c=>`<button type="button" class="chip" data-ch="${esc(c)}" aria-pressed="false">${c.includes('/')?fracHTML(c):c}</button>`).join('')}</div>`}
+      ${q.type==='num'?`<input class="dq-in" id="dm${i}" inputmode="numeric" pattern="[0-9]*" autocomplete="off" maxlength="8" aria-label="Answer for question ${i+1}">`:`<div class="dq-ch" role="group" aria-label="Choices for question ${i+1}">${q.choices.map(c=>`<button type="button" class="chip" data-ch="${esc(c)}" aria-pressed="false">${c.includes('/')?fracHTML(c):c}</button>`).join('')}</div>`}
       <p class="dq-fb"></p></div></div>`).join('')}</div>
     <div class="dcheck"><button class="btn" type="button" data-dcheck="math">Check mixed math</button><p class="feedback" id="dMathFb" aria-live="polite"></p></div>
   </section>
@@ -1817,13 +1871,15 @@ function dailyCheck(part,btn){
 }
 
 /* ---------- Math 100 ---------- */
+const HLIM={3:{a:20,t:10,p:20,txt:'Every number is from 1 to 20.'},4:{a:100,t:12,p:144,txt:'Plus and minus up to 100. Times and divide up to 12 × 12.'},5:{a:1000,t:12,p:144,txt:'Plus and minus up to 1,000. Times and divide up to 12 × 12.'},6:{a:1000,t:15,p:225,txt:'Plus and minus up to 1,000. Times and divide up to 15 × 15.'}};
 const HU={qs:null,start:0,end:0,int:null,checked:false,pausedAt:0,pauseMs:0};
 function hundredSet(){
+  const L=HLIM[G()],T=L.t;
   const mk={
-    '+':()=>{const a=ri(1,19),b=ri(1,20-a);return {q:`${a} + ${b}`,a:a+b}},
-    '−':()=>{const a=ri(2,20),b=ri(1,a-1);return {q:`${a} − ${b}`,a:a-b}},
-    '×':()=>{const a=ri(1,10),b=ri(1,Math.floor(20/a));return Math.random()<.5?{q:`${a} × ${b}`,a:a*b}:{q:`${b} × ${a}`,a:a*b}},
-    '÷':()=>{const b=ri(1,10),c=ri(1,Math.floor(20/b));return {q:`${b*c} ÷ ${b}`,a:c}}};
+    '+':()=>{const a=ri(1,L.a-1),b=ri(1,L.a-a);return {q:`${a} + ${b}`,a:a+b}},
+    '−':()=>{const a=ri(2,L.a),b=ri(1,a-1);return {q:`${a} − ${b}`,a:a-b}},
+    '×':()=>{const a=ri(1,T),b=ri(1,Math.min(T,Math.floor(L.p/a)));return Math.random()<.5?{q:`${a} × ${b}`,a:a*b}:{q:`${b} × ${a}`,a:a*b}},
+    '÷':()=>{const b=ri(1,T),c=ri(1,Math.min(T,Math.floor(L.p/b)));return {q:`${b*c} ÷ ${b}`,a:c}}};
   HU.qs=shuffle(['+','−','×','÷'].flatMap(op=>Array.from({length:25},()=>({op,...mk[op]()}))));
   HU.start=0;HU.end=0;HU.checked=false;HU.pausedAt=0;HU.pauseMs=0;clearInterval(HU.int);HU.int=null;
 }
@@ -1833,7 +1889,7 @@ function hundredPaint(){const el=$('#huTime');if(!el)return;el.textContent=fmtTi
   const pb=$('#huPause');if(pb){pb.disabled=!HU.start||HU.checked;pb.textContent=HU.pausedAt?'Resume':'Pause';pb.classList.toggle('on',!!HU.pausedAt)}
   const n=$$('#hundredStage .fin').filter(i=>i.value!=='').length,c=$('#huCount');if(c)c.textContent=n}
 function renderHundred(){
-  if(!HU.qs)hundredSet();const best=S.hundredBest;
+  if(!HU.qs||HU.grade!==G()){hundredSet();HU.grade=G()}$('#huLimit').textContent=HLIM[G()].txt;const best=S.hundredBest;
   $('#hundredStage').innerHTML=`
   <section class="panel dtimer">
     <div style="display:grid;gap:6px"><span class="eyebrow">Stopwatch</span><span class="dtime" id="huTime">0:00</span></div>
@@ -1844,7 +1900,7 @@ function renderHundred(){
   </section>
   <section class="panel hpanel">
     <div class="hpaused" id="huPaused" hidden><div><p class="dq">Paused</p><p class="note">Take a little break. Press Resume when you’re ready.</p><button class="btn" type="button" id="huResume">Resume</button></div></div>
-    <div class="hgrid">${HU.qs.map((f,i)=>`<label class="fact hfact" for="hu${i}"><span><small class="hnum">${i+1}</small>${f.q} =</span><input id="hu${i}" class="fin" inputmode="numeric" pattern="[0-9]*" enterkeyhint="next" autocomplete="off" maxlength="3" aria-label="Question ${i+1}: ${f.q}"><span class="fans" hidden></span></label>`).join('')}</div>
+    <div class="hgrid">${HU.qs.map((f,i)=>`<label class="fact hfact" for="hu${i}"><span><small class="hnum">${i+1}</small>${f.q} =</span><input id="hu${i}" class="fin" inputmode="numeric" pattern="[0-9]*" enterkeyhint="next" autocomplete="off" maxlength="4" aria-label="Question ${i+1}: ${f.q}"><span class="fans" hidden></span></label>`).join('')}</div>
     <div class="dcheck"><button class="btn big" type="button" id="huCheck">Check all 100</button><p class="feedback" id="huFb" aria-live="polite"></p></div>
   </section>`;
   hundredPaint();
@@ -2617,6 +2673,7 @@ function logPrep(what,score,total){S.prepLog.push({date:todayKey(),what,score,to
 
 /* NNAT runner */
 function nnatMenu(){
+  if(!PR.gradeSet){PR.grade=G()>3?4:3;PR.gradeSet=true}
   pstage().innerHTML=`<section class="panel menu-top"><div class="pip small idle">${bunnyImg('melon')}</div><div><h2>Shape puzzles</h2><p class="lede">Look at the pictures, find the rule, and pick the missing piece. No reading needed!</p>
     <div class="chips" style="margin-top:8px" role="group" aria-label="Grade level"><button type="button" class="chip" data-grade="3" aria-pressed="${PR.grade===3}">3rd grade</button><button type="button" class="chip" data-grade="4" aria-pressed="${PR.grade===4}">4th grade</button></div></div></section>
   <div class="arcade">
@@ -2624,7 +2681,7 @@ function nnatMenu(){
     <button type="button" class="gcard wide" data-nnat="timed" style="--gc:var(--math);--gs:var(--math-soft)"><span class="gicon">${UI.clock}</span><span><span class="gname">Timed test</span><span class="gsub">24 puzzles in 15 minutes, the same pace as the real test. Answers are reviewed at the end.</span></span></button>
   </div>
   <section class="panel"><h2>The six kinds of puzzles</h2><div class="ptypes">${[['serial','Pattern rows'],['latin','Missing piece'],['analogy','Matching changes'],['rotate','Turning shapes'],['overlay','Stacking pictures'],['pattern','Finish the pattern']].map(([k,l])=>{const p=k==='latin'?NGEN.latin(false):NGEN[k]();return `<div class="ptype"><div class="pmini">${puzzleHTML(p)}</div><b>${l}</b></div>`}).join('')}</div></section>`;
-  $$('[data-grade]').forEach(b=>b.onclick=()=>{PR.grade=+b.dataset.grade;nnatMenu()});
+  $$('[data-grade]').forEach(b=>b.onclick=()=>{PR.grade=+b.dataset.grade;PR.gradeSet=true;nnatMenu()});
   $$('[data-nnat]').forEach(b=>b.onclick=()=>nnatStart(b.dataset.nnat));
 }
 function nnatStart(mode){
@@ -2763,7 +2820,12 @@ function renderGrownups(){
 $('#settingsForm').addEventListener('submit',e=>{e.preventDefault();const nn=$('#setName').value.trim().slice(0,16),cp=curProfile();if(cp&&nn){cp.nick=nn;saveProfiles()}S.name=cp?cp.nick:nn;S.wordGoal=+$('#setGoal').value||50;save();renderHeader();$('#setMsg').textContent='Settings saved.'});
 $('#resetBtn').onclick=()=>{$('#resetConfirm').hidden=false;$('#resetBtn').hidden=true};
 $('#resetNo').onclick=()=>{$('#resetConfirm').hidden=true;$('#resetBtn').hidden=false};
-$('#resetYes').onclick=()=>{const name=S.name,goal=S.wordGoal;S={name,stars:0,wordGoal:goal,days:{},journal:[],draft:null,readLog:{},sound:S.sound,monsters:[],lightningBest:0,ssLog:{},prepLog:[],hundredBest:null,olyLog:{}};save();renderHeader();renderGrownups();$('#setMsg').textContent='Progress has been reset.'};
+$('#resetYes').onclick=()=>{const name=S.name,goal=S.wordGoal;S={name,stars:0,wordGoal:goal,days:{},journal:[],draft:null,readLog:{},sound:S.sound,monsters:[],lightningBest:0,ssLog:{},prepLog:[],hundredBest:null,olyLog:{},grade:S.grade||3};save();renderHeader();renderGrownups();$('#setMsg').textContent='Progress has been reset.'};
+
+/* Grade picker (home page) */
+document.addEventListener('click',e=>{const b=e.target.closest('[data-sgrade]');if(!b)return;const g=+b.dataset.sgrade;if(g===G())return;
+  S.grade=g;save();DY.day=null;HU.qs=null;M.active=false;PR.gradeSet=false;if(L.active||BP.active)stopArcade();
+  renderHome();toast(`<span>Math is now set for <b>${ORD[g]} grade</b></span>`)});
 
 /* ---------- Profiles (nickname + avatar, saved on this device only) ---------- */
 const AVATARS=['orig','melon','spring','summer','fall','winter'];
