@@ -649,6 +649,22 @@ h1 em,h2 em{font-style:italic;font-weight:500;color:var(--gold)}
 .hpaused>div{display:grid;gap:10px;justify-items:center;text-align:center;background:var(--card);border:1.5px solid var(--line);border-radius:24px;padding:24px 32px;box-shadow:var(--shadow);position:sticky;top:140px}
 #huPause.on{--c:var(--read);--c-deep:var(--read-deep)}
 .cmq.cmw{font:500 1.3rem/1.55 var(--read-font);max-width:44ch;text-align:left}
+/* Olympiad */
+.strats{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-top:12px}
+.strats div{display:grid;gap:4px;padding:14px 16px;border-radius:18px;background:var(--grape-soft)}
+.strats b{font:600 1.25rem/1.1 var(--display)}
+.strats span{font-size:.92rem;color:var(--muted)}
+.oprob{display:grid;gap:16px}
+.ostars{color:var(--gold);letter-spacing:.15em;font-size:1.1rem}
+.oq{font:500 1.4rem/1.6 var(--read-font);max-width:52ch;padding:6px 2px}
+.oq b{color:var(--c-deep)}
+.oans{display:grid;gap:6px;justify-items:start}
+.oin{width:220px;max-width:60vw}
+.numin.right{border-color:var(--good);background:var(--good-soft)}
+.ohint{justify-items:start;text-align:left;margin-top:4px}
+.osol{padding:16px 18px;border-radius:18px;background:var(--good-soft);border:1.5px solid color-mix(in srgb,var(--good) 35%,transparent);display:grid;gap:6px;font-size:1.05rem;line-height:1.6}
+.osol[hidden]{display:none!important}
+.osol b{color:var(--good)}
 </style>
 
 <header class="top">
@@ -667,6 +683,7 @@ h1 em,h2 em{font-style:italic;font-weight:500;color:var(--gold)}
     <button type="button" data-go="social">Social Studies</button>
     <button type="button" data-go="daily">Daily 20</button>
     <button type="button" data-go="hundred">Math 100</button>
+    <button type="button" data-go="oly">Olympiad</button>
     <button type="button" data-go="prep">Test Prep</button>
     <button type="button" data-go="grownups">Grown-ups</button>
   </nav>
@@ -743,6 +760,15 @@ h1 em,h2 em{font-style:italic;font-weight:500;color:var(--gold)}
       <p class="lede">25 each of plus, minus, times and divide, all mixed up. Every number is from 1 to 20. Press Enter to jump to the next box.</p>
     </div>
     <div id="hundredStage" class="view"></div>
+  </section>
+
+  <!-- MATH OLYMPIAD -->
+  <section id="view-oly" class="view subject-prep" hidden>
+    <div class="view-head">
+      <div class="vh-title"><span class="pip head-bun" data-bun="spring"></span><div><p class="eyebrow">For curious minds</p><h1>Math Olympiad</h1></div></div>
+      <p class="lede">Challenge puzzles for gifted young mathematicians, in the spirit of math olympiads, Beast Academy and AoPS.</p>
+    </div>
+    <div id="olyStage" class="view"></div>
   </section>
 
   <!-- MATH -->
@@ -915,7 +941,7 @@ const PRAISE=['Great job!','You got it!','Super thinking!','Correct!','Nailed it
 const STORE='star-academy-v1',OLD_STORE=['bel','la-academy-v1'].join('');
 let S=load();
 function load(){let s=null;try{s=JSON.parse(localStorage.getItem(STORE)||localStorage.getItem(OLD_STORE))}catch(e){}s=s||{};
-  return {name:s.name||'',stars:s.stars||0,wordGoal:s.wordGoal||50,days:s.days||{},journal:s.journal||[],draft:s.draft||null,readLog:s.readLog||{},sound:s.sound!==false,monsters:s.monsters||[],ssLog:s.ssLog||{},prepLog:s.prepLog||[],lightningBest:s.lightningBest||0,hundredBest:s.hundredBest||null}}
+  return {name:s.name||'',stars:s.stars||0,wordGoal:s.wordGoal||50,days:s.days||{},journal:s.journal||[],draft:s.draft||null,readLog:s.readLog||{},sound:s.sound!==false,monsters:s.monsters||[],ssLog:s.ssLog||{},prepLog:s.prepLog||[],lightningBest:s.lightningBest||0,hundredBest:s.hundredBest||null,olyLog:s.olyLog||{}}}
 function save(){try{localStorage.setItem(STORE,JSON.stringify(S))}catch(e){}}
 function today(){const k=todayKey();return S.days[k]||(S.days[k]={})}
 function anyDone(d){return !!(d&&((d.math&&d.math.sets)||(d.reading&&d.reading.done)||(d.writing&&d.writing.done)||(d.social&&d.social.done)||(d.daily&&d.daily.done)))}
@@ -1201,7 +1227,7 @@ const GRAMMAR=[
 const SPELL=['because','friend','different','again','through','laugh','beautiful','enough','favorite','answer','early','caught','thought','believe','special','until','finally','probably','surprise','library','minute','quiet','piece','whole','heard','written','choose','neighbor','important','together','family','careful','people','question','finished','island','tomorrow','sometimes','straight','children','busy','city','either','field','great','guess','half','heart','hour','instead','knew','later','learn','money','morning','often','once','perhaps','pretty','ready','really','reason','second','several','should','since','sure','though','tired','toward','usually','weather','wrong','young','bridge','center','circle','clothes'];
 
 /* ---------- Router ---------- */
-const VIEWS=['home','daily','hundred','math','reading','writing','social','prep','grownups'];
+const VIEWS=['home','daily','hundred','oly','math','reading','writing','social','prep','grownups'];
 let current='home';
 function go(v){
   if(!VIEWS.includes(v))v='home';
@@ -1211,7 +1237,7 @@ function go(v){
   current=v;
   VIEWS.forEach(x=>{$('#view-'+x).hidden=x!==v});
   $$('.nav button').forEach(b=>b.setAttribute('aria-current',b.dataset.go===v?'page':'false'));
-  ({home:renderHome,math:renderMath,reading:renderReading,writing:renderWriting,social:renderSocial,daily:renderDaily,hundred:renderHundred,prep:renderPrep,grownups:renderGrownups})[v]();
+  ({home:renderHome,math:renderMath,reading:renderReading,writing:renderWriting,social:renderSocial,daily:renderDaily,hundred:renderHundred,oly:renderOly,prep:renderPrep,grownups:renderGrownups})[v]();
   try{history.replaceState(null,'','#'+v)}catch(e){}
   window.scrollTo(0,0);
 }
@@ -1804,6 +1830,121 @@ function hundredCheck(){
   const b=$('#huCheck');b.textContent='Try a new 100';b.onclick=()=>{hundredSet();renderHundred();window.scrollTo(0,0)};
   SFX.win();if(score>=90||rec&&score>0)confetti();fb.scrollIntoView({behavior:reduceMotion?'auto':'smooth',block:'center'});
 }
+
+/* ---------- Math Olympiad (original problems in an olympiad / Beast Academy style) ---------- */
+const OTOPICS={
+  patterns:['Patterns & Sequences','Spot the rule, predict what comes next','1,2,3','--math','--math-soft'],
+  counting:['Counting','Lists, outfits, handshakes and coins','#','--grape','--grape-soft'],
+  numbers:['Number Puzzles','Mystery numbers and clever sums','?','--sky','--sky-soft'],
+  shapes:['Shapes & Space','Perimeter, area, cubes and grids','△','--read','--read-soft'],
+  logic:['Logic','Who, which day, and how to be sure','∴','--write','--write-soft'],
+  words:['Word Puzzles','Ages, legs, trees and working backwards','Aa','--star','--star-soft']
+};
+const OLY=[
+ {t:'patterns',d:1,q:'What number comes next?<br><b>1, 4, 9, 16, 25, ___</b>',a:36,h:['Try multiplying: 1 × 1, 2 × 2, 3 × 3 …','The next one is 6 × 6.'],s:'These are square numbers: 1×1, 2×2, 3×3, 4×4, 5×5. Next is 6 × 6 = <b>36</b>.'},
+ {t:'patterns',d:1,q:'What number comes next?<br><b>2, 3, 5, 8, 12, 17, ___</b>',a:23,h:['Find how much the numbers go up each time.','They go up by 1, then 2, then 3, then 4, then 5…'],s:'The jumps are +1, +2, +3, +4, +5, so the next jump is +6. 17 + 6 = <b>23</b>.'},
+ {t:'patterns',d:2,q:'The letters <b>A B C A B C A B C …</b> keep repeating. What is the 50th letter?',a:'b',alts:['b'],text:true,h:['The pattern repeats every 3 letters. Which letter is in spots 3, 6, 9, 12…?','C is in every spot that is a multiple of 3. 48 is a multiple of 3.'],s:'Spot 48 is C, because 48 = 3 × 16. Then spot 49 is A and spot 50 is <b>B</b>.'},
+ {t:'patterns',d:2,q:'The numbers <b>1, 2, 3, 1, 2, 3, 1, 2, 3, …</b> keep repeating. What is the sum of the first 20 numbers?',a:39,h:['Each group of 1, 2, 3 adds up to 6. How many full groups fit in 20 numbers?','6 full groups use 18 numbers. What are numbers 19 and 20?'],s:'6 groups × 6 = 36 uses the first 18 numbers. Numbers 19 and 20 are 1 and 2. Total: 36 + 1 + 2 = <b>39</b>.'},
+ {t:'patterns',d:3,q:'Toothpick squares are built in a row. 1 square uses 4 toothpicks. 2 squares in a row use 7. 3 squares in a row use 10. How many toothpicks are needed for <b>10 squares</b> in a row?',a:31,h:['Each new square shares one side with the square before it. How many new toothpicks does each new square need?','Start with 4, then add 3 for each of the other 9 squares.'],s:'The first square needs 4. Each extra square adds 3 more (it shares a side). 4 + 9 × 3 = 4 + 27 = <b>31</b>.'},
+ {t:'patterns',d:3,q:'How many <b>digits</b> do you need to write all the page numbers of a book from page 1 to page 50?',a:91,h:['Pages 1 to 9 each use 1 digit. Pages 10 to 50 each use 2 digits.','How many pages are there from 10 to 50? (Careful: include both!)'],s:'Pages 1–9: 9 digits. Pages 10–50: that is 41 pages × 2 digits = 82. Total: 9 + 82 = <b>91</b>.'},
+ {t:'counting',d:1,q:'How many two-digit numbers have digits that add up to <b>5</b>?',a:5,h:['Make a list! Start with the tens digit 1.','14, 23, … keep going. Don’t forget a number ending in 0.'],s:'The list is 14, 23, 32, 41, 50. That is <b>5</b> numbers.'},
+ {t:'counting',d:1,q:'Mia has 3 shirts and 4 pairs of shorts. How many different outfits of one shirt and one pair of shorts can she make?',a:12,h:['For each shirt, how many pairs of shorts can she choose?','3 shirts, each with 4 choices.'],s:'Each of the 3 shirts goes with 4 pairs of shorts: 3 × 4 = <b>12</b> outfits.'},
+ {t:'counting',d:2,q:'Five friends meet. Each friend shakes hands with every other friend exactly once. How many handshakes happen?',a:10,h:['The first friend shakes 4 hands. The next friend has already shaken hands with the first one…','4 + 3 + 2 + 1'],s:'Friend 1 shakes 4 hands, friend 2 shakes 3 new hands, friend 3 shakes 2, friend 4 shakes 1. 4 + 3 + 2 + 1 = <b>10</b>.'},
+ {t:'counting',d:2,q:'How many numbers from 1 to 100 have the digit <b>7</b> in them at least once?',a:19,h:['Count numbers with 7 in the ones place, then numbers with 7 in the tens place.','One number was counted twice!'],s:'7 in the ones place: 7, 17, …, 97 (10 numbers). 7 in the tens place: 70–79 (10 numbers). 77 is in both lists, so 10 + 10 − 1 = <b>19</b>.'},
+ {t:'counting',d:3,q:'How many squares of <b>any size</b> can you find on a 3 by 3 grid (like a tic-tac-toe board)?',a:14,h:['Count the small 1×1 squares, then the 2×2 squares, then the big 3×3 square.','There are four 2×2 squares.'],s:'1×1 squares: 9. 2×2 squares: 4. 3×3 square: 1. Total: 9 + 4 + 1 = <b>14</b>.'},
+ {t:'counting',d:3,q:'How many different ways can you make <b>25¢</b> using pennies (1¢), nickels (5¢) and dimes (10¢)? (You don’t have to use every kind of coin.)',a:12,h:['Sort by how many dimes you use: 0, 1 or 2.','With 0 dimes, you can use 0, 1, 2, 3, 4 or 5 nickels and fill in with pennies.'],s:'0 dimes: 0–5 nickels = 6 ways. 1 dime (15¢ left): 0–3 nickels = 4 ways. 2 dimes (5¢ left): 0–1 nickel = 2 ways. 6 + 4 + 2 = <b>12</b>.'},
+ {t:'numbers',d:1,q:'I am thinking of a number. If I double it and then add 3, I get 19. What is my number?',a:8,h:['Work backwards! Undo the “add 3” first.','19 − 3 = 16. Now undo “double”.'],s:'Undo each step: 19 − 3 = 16, then 16 ÷ 2 = <b>8</b>. Check: 8 × 2 + 3 = 19.'},
+ {t:'numbers',d:1,q:'What is the smallest 3-digit number whose three digits are all <b>different</b>?',a:102,h:['The smallest 3-digit number is 100, but its digits repeat.','Keep the hundreds digit as small as possible, then the tens, then the ones.'],s:'Use 1 in the hundreds place, 0 in the tens place, and the smallest new digit, 2, in the ones place: <b>102</b>.'},
+ {t:'numbers',d:2,q:'Three numbers in a row (like 4, 5, 6) add up to 48. What is the <b>largest</b> of the three numbers?',a:17,h:['The middle number is the “average”. What is 48 ÷ 3?','The middle number is 16.'],s:'48 ÷ 3 = 16, so the numbers are 15, 16, 17. The largest is <b>17</b>.'},
+ {t:'numbers',d:2,q:'A two-digit number has a tens digit that is <b>3 times</b> its ones digit. Its two digits add up to 12. What is the number?',a:93,h:['If the ones digit is 1, the tens digit is 3. Try a few!','Ones digit + 3 × ones digit = 4 × ones digit = 12.'],s:'4 × (ones digit) = 12, so the ones digit is 3 and the tens digit is 9. The number is <b>93</b>.'},
+ {t:'numbers',d:2,q:'How many <b>odd</b> numbers are there between 10 and 50?',a:20,h:['The first one is 11 and the last one is 49.','Every group of ten (like 11–19) has 5 odd numbers.'],s:'11–19, 21–29, 31–39, 41–49: each has 5 odd numbers. 4 × 5 = <b>20</b>.'},
+ {t:'numbers',d:3,q:'What is <b>1 + 2 + 3 + … + 20</b>?',a:210,h:['Pair the numbers: 1 + 20, 2 + 19, 3 + 18…','Each pair adds to 21. How many pairs are there?'],s:'Pair the first and last numbers: 1 + 20 = 21, 2 + 19 = 21, … There are 10 pairs, so 10 × 21 = <b>210</b>.'},
+ {t:'numbers',d:3,q:'In a magic square, the numbers 1 through 9 are placed in a 3 by 3 grid so every row, every column and both diagonals have the same sum. What number must go in the <b>center</b>?',a:5,h:['First find the sum of each row: 1 + 2 + … + 9 = 45, shared by 3 rows.','Each line adds to 15. The center is in the middle of the list 1–9.'],s:'All nine numbers add to 45, so each row adds to 15. The center is part of four lines and must be the middle number, <b>5</b>. (For example: 2 7 6 / 9 5 1 / 4 3 8.)'},
+ {t:'shapes',d:1,q:'A square has a perimeter of 28 cm. How long is one side?',a:7,h:['A square has 4 equal sides.','28 ÷ 4'],s:'4 equal sides add up to 28, so each side is 28 ÷ 4 = <b>7</b> cm.'},
+ {t:'shapes',d:1,q:'How many <b>edges</b> does a cube have? (An edge is where two faces meet.)',a:12,h:['Count the edges on the top face, the bottom face, and the ones going up and down.','4 on top, 4 on the bottom…'],s:'4 edges on the top, 4 on the bottom, and 4 standing up: <b>12</b>.'},
+ {t:'shapes',d:2,q:'A rectangle is twice as long as it is wide. Its perimeter is 36 cm. What is its <b>area</b> in square cm?',a:72,h:['Length + width is half the perimeter: 18.','The width plus two widths is 18.'],s:'Length + width = 18, and length = 2 × width, so 3 × width = 18. Width = 6, length = 12. Area = 6 × 12 = <b>72</b>.'},
+ {t:'shapes',d:2,q:'A 4 by 4 square is made of 16 small squares. How many small squares touch the <b>outside edge</b> of the big square?',a:12,h:['It might be easier to count the squares that do NOT touch the edge.','The inside squares make a 2 by 2 block.'],s:'The inside 2 by 2 block has 4 squares that don’t touch the edge. 16 − 4 = <b>12</b>.'},
+ {t:'shapes',d:3,q:'A big cube is painted red on all six faces, then cut into 27 small cubes (3 by 3 by 3). How many small cubes have <b>no red paint</b> at all?',a:1,h:['Picture the cube. Which small cubes are hidden inside?','Only cubes not on any face stay unpainted.'],s:'Only the very center cube is completely hidden, so <b>1</b> small cube has no paint.'},
+ {t:'shapes',d:3,q:'The same painted 3 by 3 by 3 cube is cut into 27 small cubes. How many small cubes have red paint on <b>exactly two</b> faces?',a:12,h:['Corner cubes have 3 painted faces. Where are cubes with 2 painted faces?','They sit in the middle of each edge. How many edges does a cube have?'],s:'Cubes with exactly 2 painted faces sit in the middle of each edge. A cube has 12 edges, with 1 such cube on each: <b>12</b>.'},
+ {t:'logic',d:1,q:'Ann is taller than Ben. Ben is taller than Cal. Who is the <b>shortest</b>?',a:'cal',alts:['cal'],text:true,h:['Put them in order from tallest to shortest.','Ann, then Ben, then…'],s:'From tallest to shortest: Ann, Ben, Cal. The shortest is <b>Cal</b>.'},
+ {t:'logic',d:1,q:'Today is Monday. What day of the week will it be <b>10 days</b> from today?',a:'thursday',alts:['thursday','thurs','thu'],text:true,h:['7 days from Monday is Monday again.','Then count 3 more days.'],s:'7 days later is Monday again. 3 more days: Tuesday, Wednesday, <b>Thursday</b>.'},
+ {t:'logic',d:2,q:'Four children ran a race. Liam finished 1st. Max finished 4th. Ella finished ahead of Max, and Zoe finished right behind Ella. In what <b>place</b> did Zoe finish?',a:3,h:['Places 1 and 4 are taken. Ella and Zoe must be in places 2 and 3.','Zoe is right behind Ella.'],s:'Liam is 1st and Max is 4th. Ella is just ahead of Zoe, so Ella is 2nd and Zoe is <b>3rd</b>.'},
+ {t:'logic',d:2,q:'A frog and a toad weigh 9 ounces together. The frog weighs 3 ounces more than the toad. How many ounces does the <b>toad</b> weigh?',a:3,h:['Take away the extra 3 ounces. What is left?','9 − 3 = 6 is shared equally.'],s:'Remove the frog’s extra 3 ounces: 9 − 3 = 6. Split equally: toad = <b>3</b> ounces, frog = 6. Check: 3 + 6 = 9.'},
+ {t:'logic',d:3,q:'A snail is at the bottom of a 10-foot wall. Each day it climbs up 3 feet, and each night it slides back down 2 feet. On which <b>day</b> does it first reach the top?',a:8,h:['After each full day and night, the snail is 1 foot higher.','Careful! On the last day, it reaches the top before sliding back.'],s:'After 7 days and nights it is 7 feet up. On day <b>8</b> it climbs 3 more feet and reaches 10 feet before night comes.'},
+ {t:'logic',d:3,q:'A drawer has 6 red socks and 6 blue socks, all mixed up. It is dark, so you can’t see colors. How many socks must you take out to be <b>sure</b> you have a matching pair?',a:3,h:['Think about the unluckiest case: your first two socks are different colors.','What happens with the very next sock?'],s:'The first two socks could be one red and one blue. The third sock must match one of them, so <b>3</b> socks is enough to be sure.'},
+ {t:'words',d:1,q:'Lily is 8 years old. Her brother is 3 years older than she is. How old will her brother be <b>in 5 years</b>?',a:16,h:['How old is her brother now?','He is 11 now.'],s:'Her brother is 8 + 3 = 11 now. In 5 years he will be 11 + 5 = <b>16</b>.'},
+ {t:'words',d:1,q:'A bus leaves the station every 15 minutes, starting at 7:00. How many buses leave from 7:00 to 8:00, counting both 7:00 and 8:00?',a:5,h:['List the times: 7:00, 7:15, …','Don’t forget 8:00!'],s:'7:00, 7:15, 7:30, 7:45, 8:00. That is <b>5</b> buses.'},
+ {t:'words',d:2,q:'Sam has twice as many marbles as Jo. Together they have 24 marbles. How many marbles does <b>Sam</b> have?',a:16,h:['Draw it! Jo has 1 bar, Sam has 2 bars of the same size.','3 equal bars make 24.'],s:'Jo = 1 part, Sam = 2 parts, 3 parts = 24, so 1 part = 8. Sam has 2 × 8 = <b>16</b>.'},
+ {t:'words',d:2,q:'Kim spent half of her money on a book. Then she spent $4 on lunch. Now she has $6 left. How many dollars did she have at the <b>start</b>?',a:20,h:['Work backwards from the end.','Before lunch she had $6 + $4 = $10.'],s:'Before lunch: 6 + 4 = $10. That $10 was the half left after the book, so she started with 10 × 2 = <b>$20</b>.'},
+ {t:'words',d:3,q:'A farm has 10 animals. Some are chickens (2 legs) and some are cows (4 legs). There are 28 legs in all. How many <b>cows</b> are there?',a:4,h:['Pretend all 10 animals are chickens. How many legs would that be?','20 legs. Each cow adds 2 extra legs.'],s:'If all 10 were chickens: 20 legs. We need 8 more legs, and each cow adds 2 extra, so there are 8 ÷ 2 = <b>4</b> cows. Check: 4 × 4 + 6 × 2 = 16 + 12 = 28.'},
+ {t:'words',d:3,q:'Trees are planted along a straight path that is 40 meters long. There is a tree at each end and a tree every 5 meters. How many trees are there?',a:9,h:['Try a smaller problem: a 10-meter path has trees at 0, 5 and 10.','There are 8 gaps of 5 meters. How many trees?'],s:'40 ÷ 5 = 8 gaps. With a tree at both ends, there is one more tree than gaps: <b>9</b> trees.'}
+];
+OLY.forEach((p,i)=>p.id=i);
+const STRATS=[['Draw a picture','A quick sketch makes a problem easier to see.'],['Make a list','Write possibilities in order so you don’t miss any.'],['Look for a pattern','Try small cases and see what repeats.'],['Work backwards','Start from the end and undo each step.'],['Guess and check','Try a number, check it, then adjust.'],['Try a smaller problem','Solve an easier version first.']];
+const OL={view:'menu',list:[],i:0,tries:0,hints:0,shown:false,done:false};
+const olyLog=()=>S.olyLog||(S.olyLog={});
+const starsTxt=d=>'★'.repeat(d)+'☆'.repeat(3-d);
+function renderOly(){if(OL.view==='menu')olyMenu()}
+function olyMenu(){
+  OL.view='menu';const log=olyLog(),solved=Object.values(log).filter(x=>x.solved).length,pod=OLY[dayNum()%OLY.length];
+  $('#olyStage').innerHTML=`
+  <div class="panel menu-top"><div class="pip small photo hi-bun">${bunnyHi()}</div><div><h2>Think like a <em>mathematician</em></h2>
+    <p class="lede">These puzzles are like math olympiad problems. They take thinking, not speed. Grab scratch paper, try an idea, look for patterns, and don’t give up!</p>
+    <p class="note">${solved} of ${OLY.length} problems solved</p></div></div>
+  <button type="button" class="gcard wide" data-pod="${pod.id}" style="--gc:var(--gold);--gs:var(--star-soft)"><span class="gicon">${UI.star}</span><span><span class="gname">Problem of the day</span><span class="gsub">${OTOPICS[pod.t][0]} · ${starsTxt(pod.d)}</span>${log[pod.id]&&log[pod.id].solved?'<span class="gbest">Solved!</span>':''}</span></button>
+  <h2 class="section-label">Topics</h2>
+  <div class="games">${Object.entries(OTOPICS).map(([k,[name,sub,ic,c,cs]])=>{const ps=OLY.filter(p=>p.t===k),n=ps.filter(p=>log[p.id]&&log[p.id].solved).length;
+    return `<button type="button" class="gcard" data-otopic="${k}" style="--gc:var(${c});--gs:var(${cs})"><span class="gicon" style="${ic.length>2?'font-size:1.15rem':''}">${ic}</span><span class="gname">${name}</span><span class="gsub">${sub}</span><span class="gbest">${n} of ${ps.length} solved</span></button>`}).join('')}
+    <button type="button" class="gcard" data-otopic="mix" style="--gc:var(--ink);--gs:var(--line)"><span class="gicon">∞</span><span class="gname">Mixed challenge</span><span class="gsub">6 random problems from every topic</span></button></div>
+  <section class="panel"><h2>Problem-solving strategies</h2><div class="strats">${STRATS.map(([h,t])=>`<div><b>${h}</b><span>${t}</span></div>`).join('')}</div></section>`;
+}
+function olyStart(list){OL.view='prob';OL.list=list;OL.i=0;olyProb();window.scrollTo(0,0)}
+function olyProb(){
+  const p=OLY[OL.list[OL.i]],[tname]=OTOPICS[p.t],log=olyLog()[p.id];OL.tries=0;OL.hints=0;OL.shown=false;OL.done=false;
+  $('#olyStage').innerHTML=`<button class="link backlink" type="button" data-oback>← All topics</button>
+  <section class="panel oprob">
+    <div class="qtop"><span class="tag">${tname}</span><span class="ostars" title="Difficulty">${starsTxt(p.d)}</span><span>Problem ${OL.i+1} of ${OL.list.length}${log&&log.solved?' · solved before':''}</span></div>
+    <div class="oq">${p.q}</div>
+    <div class="oans"><label for="oIn" class="note">Your answer</label><div class="numrow"><input id="oIn" class="numin oin" ${p.text?'':'inputmode="numeric"'} autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="12"><button class="btn" type="button" id="oCheck">Submit</button></div></div>
+    <p class="feedback" id="oFb" aria-live="polite"></p>
+    <div id="oHints"></div>
+    <div class="osol" id="oSol" hidden><p class="eyebrow">Solution</p><p>${p.s}</p></div>
+    <div class="qactions"><span class="row"><button class="link" type="button" id="oHintBtn">Get a hint (1 of 2)</button><button class="link" type="button" id="oShow">Show the solution</button></span>
+      <span class="row">${OL.i>0?'<button class="btn ghost" type="button" id="oPrev">Back</button>':''}<button class="btn" type="button" id="oNext">${OL.i<OL.list.length-1?'Next problem':'Finish'}</button></span></div>
+  </section>
+  <p class="note" style="text-align:center">Stuck? That’s normal for olympiad problems. Try a strategy: draw a picture, make a list, or work backwards.</p>`;
+  const inp=$('#oIn');if(matchMedia('(pointer:fine)').matches)inp.focus();
+  inp.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();olyCheck()}});
+  $('#oCheck').onclick=olyCheck;
+  $('#oHintBtn').onclick=()=>{if(OL.hints>=2)return;const h=p.h[OL.hints];OL.hints++;$('#oHints').insertAdjacentHTML('beforeend',`<div class="hintbox ohint"><p><b>Hint ${OL.hints}:</b> ${h}</p></div>`);
+    const b=$('#oHintBtn');if(OL.hints>=2)b.hidden=true;else b.textContent='Get another hint (2 of 2)'};
+  $('#oShow').onclick=()=>{OL.shown=true;$('#oSol').hidden=false;$('#oShow').hidden=true;$('#oSol').scrollIntoView({behavior:reduceMotion?'auto':'smooth',block:'nearest'})};
+  const pv=$('#oPrev');if(pv)pv.onclick=()=>{OL.i--;olyProb()};
+  $('#oNext').onclick=()=>{if(OL.i<OL.list.length-1){OL.i++;olyProb();window.scrollTo(0,0)}else olyEnd()};
+}
+const olyText=v=>String(v).trim().toLowerCase().replace(/[^a-z]/g,'');
+function olyCheck(){
+  if(OL.done)return;const p=OLY[OL.list[OL.i]],raw=$('#oIn').value,fb=$('#oFb');if(!raw.trim()){fb.className='feedback try';fb.textContent='Type your answer first.';return}
+  const num=raw.replace(/,/g,'').match(/\d+/),ok=p.text?p.alts.some(a=>olyText(raw)===olyText(a)):!!num&&+num[0]===p.a;
+  if(ok){OL.done=true;const log=olyLog(),first=!(log[p.id]&&log[p.id].solved),earn=OL.shown?0:(OL.hints?1:p.d);
+    log[p.id]={solved:true,hints:Math.min(OL.hints,(log[p.id]||{}).hints??9),date:todayKey()};save();
+    $('#oIn').readOnly=true;$('#oIn').classList.add('right');fb.className='feedback good';fb.textContent=OL.hints?'You solved it! Hints are a smart tool.':pick(['Brilliant thinking!','You’re a real mathematician!','Solved it! Nice reasoning!','Wonderful problem solving!']);
+    if(first&&earn)addStars(earn,earn>1?'Olympiad stars!':'star');SFX[p.d===3?'combo':'right']();if(p.d===3&&!OL.hints)confetti();
+    $('#oSol').hidden=false;$('#oShow').hidden=true;$('#oHintBtn').hidden=true}
+  else{OL.tries++;SFX.wrong();shake($('#oIn'));fb.className='feedback try';
+    fb.textContent=OL.tries===1?'Not yet. Check your work and try again!':OL.hints<2?'Still not it. Want a hint?':'Keep going, or look at the solution to learn how.'}
+}
+function olyEnd(){
+  const log=olyLog(),n=OL.list.filter(id=>log[id]&&log[id].solved).length;SFX.win();if(n===OL.list.length)confetti();
+  $('#olyStage').innerHTML=`<button class="link backlink" type="button" data-oback>← All topics</button><section class="panel results"><div class="pip happy">${bunnyImg('spring')}</div><p class="eyebrow">Set complete</p><div class="score">${n}/${OL.list.length}</div>
+    <h2>${n===OL.list.length?'Every problem solved!':'Great thinking today!'}</h2><p class="lede">Problems you didn’t solve will be waiting for you. Try them again another day with fresh eyes.</p>
+    <div class="row"><button class="btn" type="button" data-oback>More problems</button></div></section>`;
+}
+$('#olyStage').addEventListener('click',e=>{
+  if(e.target.closest('[data-oback]')){OL.view='menu';olyMenu();window.scrollTo(0,0);return}
+  const pod=e.target.closest('[data-pod]');if(pod){olyStart([+pod.dataset.pod]);return}
+  const t=e.target.closest('[data-otopic]');if(t){const k=t.dataset.otopic;olyStart(k==='mix'?shuffle(OLY.map(p=>p.id)).slice(0,6):OLY.filter(p=>p.t===k).sort((a,b)=>a.d-b.d).map(p=>p.id))}
+});
 
 /* ---------- Writing ---------- */
 const W={tab:'story'};
@@ -2579,7 +2720,7 @@ function renderGrownups(){
 $('#settingsForm').addEventListener('submit',e=>{e.preventDefault();S.name=$('#setName').value.trim();S.wordGoal=+$('#setGoal').value||50;save();renderHeader();$('#setMsg').textContent='Settings saved.'});
 $('#resetBtn').onclick=()=>{$('#resetConfirm').hidden=false;$('#resetBtn').hidden=true};
 $('#resetNo').onclick=()=>{$('#resetConfirm').hidden=true;$('#resetBtn').hidden=false};
-$('#resetYes').onclick=()=>{const name=S.name,goal=S.wordGoal;S={name,stars:0,wordGoal:goal,days:{},journal:[],draft:null,readLog:{},sound:S.sound,monsters:[],lightningBest:0,ssLog:{},prepLog:[],hundredBest:null};save();renderHeader();renderGrownups();$('#setMsg').textContent='Progress has been reset.'};
+$('#resetYes').onclick=()=>{const name=S.name,goal=S.wordGoal;S={name,stars:0,wordGoal:goal,days:{},journal:[],draft:null,readLog:{},sound:S.sound,monsters:[],lightningBest:0,ssLog:{},prepLog:[],hundredBest:null,olyLog:{}};save();renderHeader();renderGrownups();$('#setMsg').textContent='Progress has been reset.'};
 
 /* ---------- Boot ---------- */
 $$('[data-bun]').forEach(el=>{el.innerHTML=el.dataset.bun==='daily'?bunnyHi():bunnyImg(el.dataset.bun)});
