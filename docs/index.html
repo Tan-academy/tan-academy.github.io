@@ -741,7 +741,7 @@ h1 em,h2 em{font-style:italic;font-weight:500;color:var(--gold)}
   <section id="view-hundred" class="view subject-math" hidden>
     <div class="view-head">
       <div class="vh-title"><span class="pip head-bun" data-bun="spring"></span><div><p class="eyebrow">100 questions</p><h1>Math 100</h1></div></div>
-      <p class="lede">25 each of plus, minus, times and divide, all mixed up. Press Enter to jump to the next box.</p>
+      <p class="lede">25 each of plus, minus, times and divide, all mixed up. Every number is from 1 to 20. Press Enter to jump to the next box.</p>
     </div>
     <div id="hundredStage" class="view"></div>
   </section>
@@ -1752,10 +1752,10 @@ function dailyCheck(part,btn){
 const HU={qs:null,start:0,end:0,int:null,checked:false};
 function hundredSet(){
   const mk={
-    '+':()=>{const a=ri(5,89),b=ri(2,Math.min(60,99-a));return {q:`${a} + ${b}`,a:a+b}},
-    '−':()=>{const a=ri(20,99),b=ri(2,a-1);return {q:`${a} − ${b}`,a:a-b}},
-    '×':()=>{const a=ri(0,10),b=ri(1,10);return {q:`${a} × ${b}`,a:a*b}},
-    '÷':()=>{const b=ri(1,10),c=ri(0,10);return {q:`${b*c} ÷ ${b}`,a:c}}};
+    '+':()=>{const a=ri(1,19),b=ri(1,20-a);return {q:`${a} + ${b}`,a:a+b}},
+    '−':()=>{const a=ri(2,20),b=ri(1,a-1);return {q:`${a} − ${b}`,a:a-b}},
+    '×':()=>{const a=ri(1,10),b=ri(1,Math.floor(20/a));return Math.random()<.5?{q:`${a} × ${b}`,a:a*b}:{q:`${b} × ${a}`,a:a*b}},
+    '÷':()=>{const b=ri(1,10),c=ri(1,Math.floor(20/b));return {q:`${b*c} ÷ ${b}`,a:c}}};
   HU.qs=shuffle(['+','−','×','÷'].flatMap(op=>Array.from({length:25},()=>({op,...mk[op]()}))));
   HU.start=0;HU.end=0;HU.checked=false;clearInterval(HU.int);HU.int=null;
 }
