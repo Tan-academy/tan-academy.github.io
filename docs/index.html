@@ -1208,7 +1208,6 @@ function go(v){
   if(!VIEWS.includes(v))v='home';
   if(current==='reading'&&v!=='reading'){stopSpeak();setReadLabel(false)}
   if(current==='math'&&v!=='math')stopArcade();
-  if(current==='hundred'&&v!=='hundred'&&HU.int&&!HU.checked){}
   if(current==='prep'&&v!=='prep'){stopPrep();PR.run=null}
   current=v;
   VIEWS.forEach(x=>{$('#view-'+x).hidden=x!==v});
