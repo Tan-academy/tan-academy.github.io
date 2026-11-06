@@ -648,6 +648,7 @@ h1 em,h2 em{font-style:italic;font-weight:500;color:var(--gold)}
 .hpaused[hidden]{display:none!important}
 .hpaused>div{display:grid;gap:10px;justify-items:center;text-align:center;background:var(--card);border:1.5px solid var(--line);border-radius:24px;padding:24px 32px;box-shadow:var(--shadow);position:sticky;top:140px}
 #huPause.on{--c:var(--read);--c-deep:var(--read-deep)}
+.cmq.cmw{font:500 1.3rem/1.55 var(--read-font);max-width:44ch;text-align:left}
 </style>
 
 <header class="top">
@@ -2331,6 +2332,25 @@ const CMATH=[
   ()=>{const P=pick([['3/4','2/3'],['5/8','1/2'],['2/5','1/2'],['5/6','3/4'],['1/3','1/4'],['7/10','3/5']]),val=f=>{const [a,b]=f.split('/');return a/b},big=val(P[0])>val(P[1])?P[0]:P[1];
     return {label:'Compare fractions',q:'Which fraction is greater?',ans:big,opts:shuffle(P),frac:true,why:'Compare each fraction to 1/2, or picture them as pizzas cut into equal slices. Bigger fraction = more pizza.'}}
 ];
+const NM=()=>pick(NAMES);
+const CWORD=[
+  ()=>{const n=NM(),a=ri(20,50),b=ri(5,12),c=ri(2,6);return {q:`${n} has $${a}. ${n} buys a book for $${b} and a pen for $${c}. How much money is left?`,ans:a-b-c,why:`Two steps! First add what was spent: $${b} + $${c} = $${b+c}. Then subtract: $${a} − $${b+c} = $${a-b-c}.`}},
+  ()=>{const [n,m]=shuffle(NAMES).slice(0,2),a=ri(12,40),k=ri(2,5);return {q:`${n} read ${a} pages this week. ${m} read ${k} times as many pages. How many pages did ${m} read?`,ans:a*k,why:`“${k} times as many” means multiply: ${a} × ${k} = ${a*k}.`}},
+  ()=>{const d=pick([2,3,4,5]),k=ri(3,8),tot=d*k,n=ri(1,d-1);return {q:`There are ${tot} cupcakes on a tray. ${fracHTML(n+'/'+d)} of them have sprinkles. How many cupcakes have sprinkles?`,ans:n*k,why:`Split ${tot} into ${d} equal groups: ${tot} ÷ ${d} = ${k}. Then take ${n} of those groups: ${n} × ${k} = ${n*k}.`}},
+  ()=>{const cap=pick([6,7,8,9]),vans=ri(3,6),extra=ri(1,cap-1),tot=cap*vans+extra;return {q:`${tot} students are going on a field trip. Each van holds ${cap} students. How many vans are needed so everyone can go?`,ans:vans+1,why:`${tot} ÷ ${cap} = ${vans} with ${extra} left over. Those ${extra} students still need a ride, so you need one more van: ${vans+1}.`}},
+  ()=>{const l=ri(8,20),w=ri(4,12);return {q:`A garden is ${l} feet long and ${w} feet wide. How many feet of fence are needed to go all the way around it?`,ans:2*(l+w),why:`All the way around means perimeter: ${l} + ${w} + ${l} + ${w} = ${2*(l+w)} feet.`}},
+  ()=>{const L=ri(8,12),W=ri(6,9),l=ri(2,5),w=ri(2,4);return {q:`A bedroom floor is ${L} feet by ${W} feet. A rug that is ${l} feet by ${w} feet is on the floor. How many square feet of floor are NOT covered by the rug?`,ans:L*W-l*w,why:`Room: ${L} × ${W} = ${L*W} square feet. Rug: ${l} × ${w} = ${l*w}. Not covered: ${L*W} − ${l*w} = ${L*W-l*w}.`}},
+  ()=>{const n=NM(),p=pick([5,10,15,20,25]),k=ri(2,Math.floor(95/p));return {q:`Pencils cost ${p}¢ each. ${n} buys ${k} pencils and pays with $1 (100¢). How much change does ${n} get?`,ans:100-p*k,unit:'¢',why:`${k} × ${p}¢ = ${p*k}¢. Change from 100¢: 100 − ${p*k} = ${100-p*k}¢.`}},
+  ()=>{const n=NM(),a=ri(3,9),w=ri(4,9);return {q:`${n} saves $${a} every week. How many weeks will it take ${n} to save $${a*w}?`,ans:w,why:`How many groups of $${a} make $${a*w}? ${a*w} ÷ ${a} = ${w} weeks.`}},
+  ()=>{const g=ri(2,6),st=ri(5,20),w=ri(3,8);return {q:`A sunflower is ${st} cm tall. It grows ${g} cm every week. How tall will it be after ${w} weeks?`,ans:st+g*w,why:`Growth: ${g} × ${w} = ${g*w} cm. Add it to the start: ${st} + ${g*w} = ${st+g*w} cm.`}},
+  ()=>{const x=ri(210,480),y=ri(210,480),r=Math.round((x+y)/100)*100;return {q:`A zoo had ${x} visitors on Saturday and ${y} visitors on Sunday. About how many visitors came in all? Round to the nearest hundred.`,ans:r,opts:shuffle([...new Set([r,r-100,r+100,x+y])]).slice(0,4),why:`${x} + ${y} = ${x+y}. Rounded to the nearest hundred, that is about ${r}.`}},
+  ()=>{const a=ri(450,580),b=ri(120,180);return {q:`A giraffe is ${a} cm tall. A zebra is ${b} cm tall. How much taller is the giraffe than the zebra?`,ans:a-b,why:`“How much taller” means find the difference: ${a} − ${b} = ${a-b} cm.`}},
+  ()=>{const r=ri(5,9),c=ri(6,10),x=ri(4,15);return {q:`The school stage has ${r} rows of chairs with ${c} chairs in each row. ${x} chairs are empty. How many chairs have someone sitting in them?`,ans:r*c-x,why:`All chairs: ${r} × ${c} = ${r*c}. Take away the empty ones: ${r*c} − ${x} = ${r*c-x}.`}},
+  ()=>{const n=NM(),a=ri(12,45),b=ri(15,60);return {q:`${n} had some stickers. After giving ${a} stickers to friends, ${n} has ${b} stickers left. How many stickers did ${n} have at the start?`,ans:a+b,why:`Work backwards! Add back the ones given away: ${b} + ${a} = ${a+b}.`}},
+  ()=>{const k=ri(3,6),per=ri(4,8),boxes=ri(2,4);return {q:`A baker puts ${per} muffins in each box. She fills ${boxes} boxes for each of ${k} classrooms. How many muffins is that in all?`,ans:per*boxes*k,why:`Muffins per classroom: ${per} × ${boxes} = ${per*boxes}. For ${k} classrooms: ${per*boxes} × ${k} = ${per*boxes*k}.`}},
+  ()=>{const t=ri(3,6),each=pick([15,20,25,30]);return {q:`A movie has ${t} parts. Each part is ${each} minutes long. How many minutes long is the whole movie?`,ans:t*each,why:`${t} parts × ${each} minutes = ${t*each} minutes.`}},
+  ()=>{const n=NM(),legs=pick([[4,'dogs'],[2,'chickens']]),k=ri(3,9),c2=ri(2,6);return {q:`A farm has ${k} dogs and ${c2} chickens. How many legs are there in all?`,ans:k*4+c2*2,why:`Dogs: ${k} × 4 = ${k*4} legs. Chickens: ${c2} × 2 = ${c2*2} legs. Total: ${k*4} + ${c2*2} = ${k*4+c2*2}.`}}
+].map(g=>()=>{const r=g();return {label:'Word problem',q:r.q,ans:r.ans,opts:r.opts||nearNums(r.ans,Math.max(3,Math.round(r.ans*.15))),why:r.why}});
 const WORDS=[
   ['The hikers were <b>weary</b> after climbing the mountain all day.',['tired','excited','lost','hungry'],'They climbed all day, so they would feel worn out.'],
   ['Maya was <b>reluctant</b> to jump into the cold lake, so she stayed on the dock.',['not wanting to','eager','proud','fast'],'She stayed on the dock, so she did not want to jump.'],
@@ -2471,7 +2491,7 @@ function nnatEnd(timeUp){
 
 /* Challenge Math + Word Power share a simple multiple-choice runner */
 function mcRun(kind){
-  const cm=kind==='cmath';const qs=cm?Array.from({length:10},()=>pick(CMATH)()):shuffle(WORDS).slice(0,10).map(([s,o,why])=>({label:'Word in context',q:s,ans:o[0],opts:shuffle(o),why}));
+  const cm=kind==='cmath';const qs=cm?shuffle([...shuffle(CWORD).slice(0,5).map(g=>g()),...Array.from({length:5},()=>pick(CMATH)())]):shuffle(WORDS).slice(0,10).map(([s,o,why])=>({label:'Word in context',q:s,ans:o[0],opts:shuffle(o),why}));
   const st={kind,qs,i:0,score:0};if(cm)PR.cm=st;else PR.wp=st;mcRender(st);
 }
 const cmathStart=()=>mcRun('cmath'),wordsStart=()=>mcRun('words');
@@ -2479,7 +2499,7 @@ function mcRender(st){
   const q=st.qs[st.i],cm=st.kind==='cmath';
   pstage().innerHTML=`<section class="panel"><div class="qtop"><span class="tag">${cm?'Challenge Math':'Word Power'} · ${q.label}</span><span>Question ${st.i+1} of ${st.qs.length} · ${st.score} correct</span></div>
     <div class="bar" aria-hidden="true"><i style="width:${st.i/st.qs.length*100}%"></i></div>
-    <p class="${cm?'cmq':'wpq'}">${q.q}</p>${cm?'':'<p class="note" style="text-align:center">What does the bold word mean?</p>'}
+    <p class="${cm?(q.label==='Word problem'?'cmq cmw':'cmq'):'wpq'}">${q.q}</p>${cm?'':'<p class="note" style="text-align:center">What does the bold word mean?</p>'}
     <div class="${cm?'choices':'opts'}" style="${cm?'':'max-width:520px;margin:0 auto'}">${q.opts.map(o=>`<button type="button" class="${cm?'choice small':'opt'}" data-v="${esc(String(o))}">${q.frac?fracHTML(o):esc(String(o))}</button>`).join('')}</div>
     <p class="feedback" id="mcFb" aria-live="polite" style="margin-top:14px"></p><div class="hintbox" id="mcWhy" hidden><p>${q.why}</p></div>
     <div class="qactions"><span class="note">${cm?'These are a little harder than 3rd grade, like the STAR Math test.':'Use the other words in the sentence as clues.'}</span><button class="btn" type="button" id="mcNext" hidden>Next</button></div></section>`;
