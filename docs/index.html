@@ -650,6 +650,12 @@ h1 em,h2 em{font-style:italic;font-weight:500;color:var(--gold)}
 .hgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
 .hfact span:first-child{display:flex;align-items:baseline;gap:8px}
 .hnum{font:500 .72rem/1 var(--num);color:var(--muted);min-width:1.6em}
+.hpanel{position:relative}
+.hgrid.blurred{filter:blur(9px);pointer-events:none;user-select:none}
+.hpaused{position:absolute;inset:0;z-index:3;display:grid;place-items:start center;padding-top:80px;border-radius:28px;background:color-mix(in srgb,var(--card) 55%,transparent)}
+.hpaused[hidden]{display:none!important}
+.hpaused>div{display:grid;gap:10px;justify-items:center;text-align:center;background:var(--card);border:1.5px solid var(--line);border-radius:24px;padding:24px 32px;box-shadow:var(--shadow);position:sticky;top:140px}
+#huPause.on{--c:var(--read);--c-deep:var(--read-deep)}
 </style>
 
 <header class="top">
@@ -1749,7 +1755,7 @@ function dailyCheck(part,btn){
 }
 
 /* ---------- Math 100 ---------- */
-const HU={qs:null,start:0,end:0,int:null,checked:false};
+const HU={qs:null,start:0,end:0,int:null,checked:false,pausedAt:0,pauseMs:0};
 function hundredSet(){
   const mk={
     '+':()=>{const a=ri(1,19),b=ri(1,20-a);return {q:`${a} + ${b}`,a:a+b}},
@@ -1757,10 +1763,12 @@ function hundredSet(){
     '×':()=>{const a=ri(1,10),b=ri(1,Math.floor(20/a));return Math.random()<.5?{q:`${a} × ${b}`,a:a*b}:{q:`${b} × ${a}`,a:a*b}},
     '÷':()=>{const b=ri(1,10),c=ri(1,Math.floor(20/b));return {q:`${b*c} ÷ ${b}`,a:c}}};
   HU.qs=shuffle(['+','−','×','÷'].flatMap(op=>Array.from({length:25},()=>({op,...mk[op]()}))));
-  HU.start=0;HU.end=0;HU.checked=false;clearInterval(HU.int);HU.int=null;
+  HU.start=0;HU.end=0;HU.checked=false;HU.pausedAt=0;HU.pauseMs=0;clearInterval(HU.int);HU.int=null;
 }
 const fmtTime=ms=>{const t=Math.floor(ms/1000);return Math.floor(t/60)+':'+pad(t%60)};
-function hundredPaint(){const el=$('#huTime');if(!el)return;el.textContent=fmtTime(HU.start?(HU.end||Date.now())-HU.start:0);
+const huElapsed=()=>HU.start?(HU.end||HU.pausedAt||Date.now())-HU.start-HU.pauseMs:0;
+function hundredPaint(){const el=$('#huTime');if(!el)return;el.textContent=fmtTime(huElapsed());
+  const pb=$('#huPause');if(pb){pb.disabled=!HU.start||HU.checked;pb.textContent=HU.pausedAt?'Resume':'Pause';pb.classList.toggle('on',!!HU.pausedAt)}
   const n=$$('#hundredStage .fin').filter(i=>i.value!=='').length,c=$('#huCount');if(c)c.textContent=n}
 function renderHundred(){
   if(!HU.qs)hundredSet();const best=S.hundredBest;
@@ -1770,26 +1778,33 @@ function renderHundred(){
     <div style="display:grid;gap:6px"><span class="eyebrow">Answered</span><span class="dtime"><span id="huCount">0</span><small style="font-size:1.4rem;color:var(--muted)">/100</small></span></div>
     <div style="display:grid;gap:6px;flex:1;min-width:200px"><span class="eyebrow">My best</span><span>${best?`<b>${best.score}/100</b> in ${fmtTime(best.time)}`:'No record yet. This is your first try!'}</span>
       <span class="note">The stopwatch starts when you type your first answer.</span></div>
-    <button class="btn ghost" type="button" id="huNew">New 100</button>
+    <div class="row"><button class="btn" type="button" id="huPause" disabled>Pause</button><button class="btn ghost" type="button" id="huNew">New 100</button></div>
   </section>
-  <section class="panel">
+  <section class="panel hpanel">
+    <div class="hpaused" id="huPaused" hidden><div><p class="dq">Paused</p><p class="note">Take a little break. Press Resume when you’re ready.</p><button class="btn" type="button" id="huResume">Resume</button></div></div>
     <div class="hgrid">${HU.qs.map((f,i)=>`<label class="fact hfact" for="hu${i}"><span><small class="hnum">${i+1}</small>${f.q} =</span><input id="hu${i}" class="fin" inputmode="numeric" pattern="[0-9]*" enterkeyhint="next" autocomplete="off" maxlength="3" aria-label="Question ${i+1}: ${f.q}"><span class="fans" hidden></span></label>`).join('')}</div>
     <div class="dcheck"><button class="btn big" type="button" id="huCheck">Check all 100</button><p class="feedback" id="huFb" aria-live="polite"></p></div>
   </section>`;
   hundredPaint();
   $('#huNew').onclick=()=>{hundredSet();renderHundred();window.scrollTo(0,0)};
   $('#huCheck').onclick=hundredCheck;
+  $('#huPause').onclick=huTogglePause;$('#huResume').onclick=huTogglePause;
 }
+function huTogglePause(){if(!HU.start||HU.checked)return;
+  if(HU.pausedAt){HU.pauseMs+=Date.now()-HU.pausedAt;HU.pausedAt=0;HU.int=setInterval(hundredPaint,500)}else{HU.pausedAt=Date.now();clearInterval(HU.int)}
+  const paused=!!HU.pausedAt;$('#huPaused').hidden=!paused;$('.hgrid').classList.toggle('blurred',paused);$$('#hundredStage .fin').forEach(i=>{if(!HU.checked)i.readOnly=paused});
+  hundredPaint();if(!paused){const nxt=$$('#hundredStage .fin').find(i=>i.value==='');if(nxt)nxt.focus()}}
 $('#hundredStage').addEventListener('input',e=>{const t=e.target;if(!t.matches('.fin'))return;t.value=t.value.replace(/\D/g,'');
   if(!HU.start&&t.value!==''&&!HU.checked){HU.start=Date.now();HU.int=setInterval(hundredPaint,500)}hundredPaint()});
 $('#hundredStage').addEventListener('keydown',e=>{if(e.key!=='Enter'||!e.target.matches('.fin'))return;e.preventDefault();
   const i=+e.target.id.slice(2),n=$('#hu'+(i+1));if(n)n.focus();else $('#huCheck').focus()});
 function hundredCheck(){
-  if(HU.checked)return;HU.checked=true;HU.end=HU.start?Date.now():0;clearInterval(HU.int);
+  if(HU.checked)return;if(HU.pausedAt){HU.pauseMs+=Date.now()-HU.pausedAt;HU.pausedAt=0;$('#huPaused').hidden=true;$('.hgrid').classList.remove('blurred')}
+  HU.checked=true;HU.end=HU.start?Date.now():0;clearInterval(HU.int);
   let score=0;const byOp={'+':0,'−':0,'×':0,'÷':0};
   HU.qs.forEach((f,i)=>{const inp=$('#hu'+i),ok=inp.value!==''&&+inp.value===f.a,box=inp.closest('.fact');if(ok){score++;byOp[f.op]++}
     box.classList.add(ok?'right':'wrong');inp.readOnly=true;if(!ok){const a=$('.fans',box);a.hidden=false;a.textContent=f.a}});
-  const time=HU.end?HU.end-HU.start:0,best=S.hundredBest,rec=!best||score>best.score||(score===best.score&&time&&time<best.time);
+  const time=HU.end?HU.end-HU.start-HU.pauseMs:0,best=S.hundredBest,rec=!best||score>best.score||(score===best.score&&time&&time<best.time);
   if(rec&&score>0)S.hundredBest={score,time};const st=Math.floor(score/10);if(st)addStars(st,'Math 100 stars!');save();hundredPaint();
   const fb=$('#huFb');fb.className='feedback '+(score>=80?'good':'try');
   fb.innerHTML=`${score} of 100 correct${time?` in ${fmtTime(time)}`:''}. ${rec&&score>0?'New personal best!':score>=90?'Amazing!':score>=70?'Great work!':'Practice the red ones and try again!'}<br><span class="note">Plus ${byOp['+']}/25 · Minus ${byOp['−']}/25 · Times ${byOp['×']}/25 · Divide ${byOp['÷']}/25</span>`;
