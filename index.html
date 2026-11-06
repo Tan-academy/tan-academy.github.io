@@ -665,12 +665,44 @@ h1 em,h2 em{font-style:italic;font-weight:500;color:var(--gold)}
 .osol{padding:16px 18px;border-radius:18px;background:var(--good-soft);border:1.5px solid color-mix(in srgb,var(--good) 35%,transparent);display:grid;gap:6px;font-size:1.05rem;line-height:1.6}
 .osol[hidden]{display:none!important}
 .osol b{color:var(--good)}
+/* Profiles */
+.pchip{display:inline-flex;align-items:center;gap:8px;padding:4px 10px 4px 4px;border-radius:999px;border:1px solid var(--line-strong);background:var(--card);font:500 .92rem/1 var(--ui);color:var(--ink);max-width:190px}
+.pchip:hover{border-color:var(--gold)}
+.pnick{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pcaret{width:16px;height:16px;flex:none;color:var(--muted)}
+.pav{width:30px;height:30px;border-radius:50%;overflow:hidden;flex:none;background:var(--line);display:block}
+.pav img{width:100%;height:100%;object-fit:cover;display:block}
+.pav.big{width:88px;height:88px;border:3px solid var(--card);box-shadow:0 0 0 1.5px var(--line-strong),0 6px 16px rgba(120,80,90,.15)}
+.padd{display:grid;place-items:center;font:500 2.4rem/1 var(--ui);color:var(--gold);background:var(--star-soft)}
+.pmodal{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:16px;background:rgba(51,38,58,.45);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.pmodal[hidden]{display:none!important}
+.pmcard{width:min(620px,100%);max-height:calc(100% - 32px);overflow:auto;background:var(--card);border-radius:30px;padding:28px;box-shadow:0 30px 80px rgba(40,20,40,.35);display:grid;gap:16px;background-image:radial-gradient(circle at 100% 0,var(--star-soft),transparent 40%)}
+.plist{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:14px}
+.pcard{display:grid;justify-items:center;gap:8px;padding:16px 8px;border-radius:22px;border:1.5px solid var(--line);background:var(--paper);text-align:center}
+.pcard:hover{border-color:var(--gold)}
+.pcard.on{border-color:var(--gold);background:var(--star-soft)}
+.pname{font:600 1.3rem/1.1 var(--display);overflow-wrap:anywhere}
+.pmfoot{justify-content:flex-start;align-items:center}
+.pmform{display:grid;gap:12px}
+.pmform .field input{font-size:1.1rem}
+.avpick{border:0;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:12px}
+.avpick legend{margin-bottom:8px}
+.avopt{cursor:pointer;position:relative}
+.avopt input{position:absolute;opacity:0;width:1px;height:1px}
+.avopt .pav.big{width:72px;height:72px;transition:transform .15s}
+.avopt input:checked+.pav{box-shadow:0 0 0 4px var(--gold),0 6px 16px rgba(120,80,90,.2);transform:scale(1.06)}
+.avopt input:focus-visible+.pav{outline:3px solid var(--c);outline-offset:4px}
+.pdel{border-top:1px solid var(--line);padding-top:12px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.pdel .confirm[hidden]{display:none!important}
+body.modal-open{overflow:hidden}
+@media (max-width:520px){.pnick{max-width:80px}.pmcard{padding:20px}}
 </style>
 
 <header class="top">
   <div class="wrap topin">
     <a class="brand" href="#home" data-go="home"><span class="mark"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M8 46l4-27 12 12 8-19 8 19 12-12 4 27z" fill="#F6D98B" stroke="#C9A24D" stroke-width="2.5" stroke-linejoin="round"/><rect x="7" y="45" width="50" height="9" rx="4" fill="#E9C46A" stroke="#C9A24D" stroke-width="2.5"/><circle cx="32" cy="36" r="4.5" fill="#F2A7B8"/><circle cx="12" cy="17" r="3.4" fill="#F2A7B8"/><circle cx="52" cy="17" r="3.4" fill="#F2A7B8"/><circle cx="32" cy="10" r="3.4" fill="#C9B6EC"/><circle cx="20" cy="49.5" r="2" fill="#fff"/><circle cx="32" cy="49.5" r="2" fill="#fff"/><circle cx="44" cy="49.5" r="2" fill="#fff"/></svg></span><span id="brandName">Star <span class="gold">Academy</span></span></a>
     <div class="stats">
+      <button type="button" class="pchip" id="pChip" aria-haspopup="dialog" title="Switch or edit profile"><span class="pav" id="pChipAv"></span><span class="pnick" id="pChipNick">Profile</span><svg class="pcaret" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       <span class="stat streak" title="Days in a row with a finished mission"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-8.5-5.3-8.5-11.2A4.7 4.7 0 0 1 12 7a4.7 4.7 0 0 1 8.5 2.8C20.5 15.7 12 21 12 21z"/></svg><b id="streakCount">0</b><span class="lbl">day streak</span></span>
       <span class="stat stars" title="Stars earned"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.8-4.9 4.6 1.3 6.5L12 17.2l-5.9 3.2 1.3-6.5L2.5 9.3l6.6-.8z"/></svg><b id="starCount">0</b><span class="lbl">stars</span></span>
     </div>
@@ -900,7 +932,7 @@ h1 em,h2 em{font-style:italic;font-weight:500;color:var(--gold)}
     <section class="panel">
       <h2>Settings</h2>
       <form class="settings" id="settingsForm" style="margin-top:14px">
-        <label class="field" for="setName">Child's name<input id="setName" type="text" maxlength="20" autocomplete="off" placeholder="Optional. Saved only on this device"></label>
+        <label class="field" for="setName">Nickname<input id="setName" type="text" maxlength="16" autocomplete="off" placeholder="A nickname, like Star Girl"></label>
         <label class="field" for="setGoal">Daily writing goal
           <select id="setGoal"><option value="30">30 words</option><option value="50">50 words</option><option value="75">75 words</option><option value="100">100 words</option><option value="150">150 words</option></select>
         </label>
@@ -917,6 +949,7 @@ h1 em,h2 em{font-style:italic;font-weight:500;color:var(--gold)}
   </section>
 </main>
 
+<div class="pmodal" id="profileModal" hidden role="dialog" aria-modal="true" aria-labelledby="pmTitle"><div class="pmcard" id="pmBody"></div></div>
 <div class="toast" id="toast" hidden role="status"></div>
 <canvas id="confetti" aria-hidden="true"></canvas>
 
@@ -938,11 +971,20 @@ const CHECK='<svg viewBox="0 0 24 24" fill="none" stroke-width="3.4" stroke-line
 const PRAISE=['Great job!','You got it!','Super thinking!','Correct!','Nailed it!','Way to go!','Awesome!','Brilliant!'];
 
 /* ---------- Storage ---------- */
-const STORE='star-academy-v1',OLD_STORE=['bel','la-academy-v1'].join('');
+const STORE='star-academy-v1',OLD_STORE=['bel','la-academy-v1'].join(''),PKEY='star-academy-profiles';
+const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}},lsSet=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}},lsDel=k=>{try{localStorage.removeItem(k)}catch(e){}};
+let PF=(()=>{let p=null;try{p=JSON.parse(lsGet(PKEY))}catch(e){}return p&&Array.isArray(p.list)?p:{active:null,list:[]}})();
+const saveProfiles=()=>lsSet(PKEY,JSON.stringify(PF));
+const newId=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+if(!PF.list.length){const old=lsGet(STORE)||lsGet(OLD_STORE);
+  if(old){let o={};try{o=JSON.parse(old)}catch(e){}const id=newId();PF.list.push({id,nick:(o.name||'Star Learner').slice(0,16),avatar:'orig'});PF.active=id;lsSet(STORE+':'+id,old);saveProfiles()}}
+if(PF.active&&!PF.list.some(x=>x.id===PF.active))PF.active=PF.list[0]?PF.list[0].id:null;
+const storeKey=()=>PF.active?STORE+':'+PF.active:STORE+':guest';
+const curProfile=()=>PF.list.find(x=>x.id===PF.active)||null;
 let S=load();
-function load(){let s=null;try{s=JSON.parse(localStorage.getItem(STORE)||localStorage.getItem(OLD_STORE))}catch(e){}s=s||{};
+function load(){let s=null;try{s=JSON.parse(lsGet(storeKey()))}catch(e){}s=s||{};const cp=curProfile();if(cp)s.name=cp.nick;
   return {name:s.name||'',stars:s.stars||0,wordGoal:s.wordGoal||50,days:s.days||{},journal:s.journal||[],draft:s.draft||null,readLog:s.readLog||{},sound:s.sound!==false,monsters:s.monsters||[],ssLog:s.ssLog||{},prepLog:s.prepLog||[],lightningBest:s.lightningBest||0,hundredBest:s.hundredBest||null,olyLog:s.olyLog||{}}}
-function save(){try{localStorage.setItem(STORE,JSON.stringify(S))}catch(e){}}
+function save(){lsSet(storeKey(),JSON.stringify(S))}
 function today(){const k=todayKey();return S.days[k]||(S.days[k]={})}
 function anyDone(d){return !!(d&&((d.math&&d.math.sets)||(d.reading&&d.reading.done)||(d.writing&&d.writing.done)||(d.social&&d.social.done)||(d.daily&&d.daily.done)))}
 function streak(){let n=0;const d=new Date();if(!anyDone(S.days[keyOf(d)]))d.setDate(d.getDate()-1);
@@ -1245,6 +1287,7 @@ document.addEventListener('click',e=>{const g=e.target.closest('[data-go]');if(g
 
 function renderHeader(){
   $('#starCount').textContent=S.stars;$('#streakCount').textContent=streak();
+  const cp=curProfile();$('#pChipNick').textContent=cp?cp.nick:'Add profile';$('#pChipAv').innerHTML=cp&&typeof BUNS!=='undefined'?`<img src="${BUNS[cp.avatar]||BUNS.orig}" alt="">`:'';
 }
 
 /* ---------- Home ---------- */
@@ -2717,14 +2760,67 @@ function renderGrownups(){
   $('#setName').value=S.name;$('#setGoal').value=String(S.wordGoal);$('#setMsg').textContent='';
   $('#resetConfirm').hidden=true;$('#resetBtn').hidden=false;
 }
-$('#settingsForm').addEventListener('submit',e=>{e.preventDefault();S.name=$('#setName').value.trim();S.wordGoal=+$('#setGoal').value||50;save();renderHeader();$('#setMsg').textContent='Settings saved.'});
+$('#settingsForm').addEventListener('submit',e=>{e.preventDefault();const nn=$('#setName').value.trim().slice(0,16),cp=curProfile();if(cp&&nn){cp.nick=nn;saveProfiles()}S.name=cp?cp.nick:nn;S.wordGoal=+$('#setGoal').value||50;save();renderHeader();$('#setMsg').textContent='Settings saved.'});
 $('#resetBtn').onclick=()=>{$('#resetConfirm').hidden=false;$('#resetBtn').hidden=true};
 $('#resetNo').onclick=()=>{$('#resetConfirm').hidden=true;$('#resetBtn').hidden=false};
 $('#resetYes').onclick=()=>{const name=S.name,goal=S.wordGoal;S={name,stars:0,wordGoal:goal,days:{},journal:[],draft:null,readLog:{},sound:S.sound,monsters:[],lightningBest:0,ssLog:{},prepLog:[],hundredBest:null,olyLog:{}};save();renderHeader();renderGrownups();$('#setMsg').textContent='Progress has been reset.'};
+
+/* ---------- Profiles (nickname + avatar, saved on this device only) ---------- */
+const AVATARS=['orig','melon','spring','summer','fall','winter'];
+const pmOpen=()=>{$('#profileModal').hidden=false;document.body.classList.add('modal-open')};
+const pmClose=()=>{if(!PF.list.length)return;$('#profileModal').hidden=true;document.body.classList.remove('modal-open')};
+const avImg=k=>`<img src="${BUNS[k]||BUNS.orig}" alt="">`;
+function pmPicker(){
+  $('#pmBody').innerHTML=`<p class="eyebrow">Profiles</p><h2 id="pmTitle">Who’s learning <em>today?</em></h2>
+    <div class="plist">${PF.list.map(x=>`<button type="button" class="pcard${x.id===PF.active?' on':''}" data-pick="${x.id}"><span class="pav big">${avImg(x.avatar)}</span><span class="pname">${esc(x.nick)}</span>${x.id===PF.active?'<span class="note">Playing now</span>':''}</button>`).join('')}
+      ${PF.list.length<8?'<button type="button" class="pcard add" data-padd><span class="pav big padd">+</span><span class="pname">Add profile</span></button>':''}</div>
+    <div class="row pmfoot">${curProfile()?`<button type="button" class="btn ghost" data-pedit="${PF.active}">Edit ${esc(curProfile().nick)}</button>`:''}<button type="button" class="link" data-pclose>Close</button></div>
+    <p class="note" style="text-align:center">Profiles are saved only on this device. No email or password needed.</p>`;
+  pmOpen();
+}
+function pmEdit(id){
+  const x=id?PF.list.find(p=>p.id===id):null,first=!PF.list.length,av=x?x.avatar:AVATARS[PF.list.length%AVATARS.length];
+  $('#pmBody').innerHTML=`<p class="eyebrow">${first?'Welcome to Star Academy':x?'Edit profile':'New profile'}</p><h2 id="pmTitle">${first?'Let’s make your <em>profile</em>':x?'Edit <em>'+esc(x.nick)+'</em>':'Add a <em>profile</em>'}</h2>
+    <form id="pmForm" class="pmform">
+      <label class="field" for="pmNick">Nickname<input id="pmNick" type="text" maxlength="16" autocomplete="off" required value="${x?esc(x.nick):''}" placeholder="Like Star Girl or Math Bunny"></label>
+      <p class="note">Use a fun nickname instead of your full real name.</p>
+      <fieldset class="avpick"><legend class="note">Pick your BunBun</legend>${AVATARS.map(k=>`<label class="avopt"><input type="radio" name="pmAv" value="${k}"${k===av?' checked':''}><span class="pav big">${avImg(k)}</span></label>`).join('')}</fieldset>
+      <p class="feedback" id="pmErr" aria-live="polite"></p>
+      <div class="row pmfoot"><button class="btn" type="submit">${first?'Let’s go!':'Save'}</button>${first?'':`<button type="button" class="link" data-pback>Cancel</button>`}</div>
+      ${x&&PF.list.length>1?`<div class="pdel"><button type="button" class="link" data-pdel="${x.id}">Delete this profile</button><span class="confirm" id="pdelConfirm" hidden>Delete ${esc(x.nick)} and all of ${esc(x.nick)}’s progress? <button type="button" class="btn danger" data-pdelyes="${x.id}">Yes, delete</button><button type="button" class="link" data-pdelno>Keep</button></span></div>`:''}
+    </form>`;
+  pmOpen();const n=$('#pmNick');setTimeout(()=>n.focus(),50);
+  $('#pmForm').addEventListener('submit',e=>{e.preventDefault();const nick=n.value.trim().slice(0,16),avatar=($('input[name="pmAv"]:checked')||{}).value||'orig';
+    if(!nick){$('#pmErr').className='feedback try';$('#pmErr').textContent='Type a nickname first.';return}
+    if(PF.list.some(p=>p.nick.toLowerCase()===nick.toLowerCase()&&(!x||p.id!==x.id))){$('#pmErr').className='feedback try';$('#pmErr').textContent='That nickname is taken. Try another one!';return}
+    if(x){x.nick=nick;x.avatar=avatar;saveProfiles();if(x.id===PF.active){S.name=nick;save();renderHeader();if(current==='home')renderHome();if(current==='grownups')renderGrownups()}pmPicker();return}
+    const id=newId();PF.list.push({id,nick,avatar});
+    if(first){const guest=lsGet(STORE+':guest');if(guest){lsSet(STORE+':'+id,guest);lsDel(STORE+':guest')}}
+    switchProfile(id);
+  });
+}
+function switchProfile(id){PF.active=id;saveProfiles();try{sessionStorage.setItem('sa-picked','1')}catch(e){}
+  if(location.hash.slice(1)!=='home'){try{history.replaceState(null,'','#home')}catch(e){}}location.reload()}
+$('#profileModal').addEventListener('click',e=>{const t=e.target;
+  if(t===$('#profileModal')){pmClose();return}
+  const pk=t.closest('[data-pick]');if(pk){if(pk.dataset.pick===PF.active){try{sessionStorage.setItem('sa-picked','1')}catch(e){}pmClose()}else switchProfile(pk.dataset.pick);return}
+  if(t.closest('[data-padd]')){pmEdit(null);return}
+  const ed=t.closest('[data-pedit]');if(ed){pmEdit(ed.dataset.pedit);return}
+  if(t.closest('[data-pback]')){pmPicker();return}
+  if(t.closest('[data-pclose]')){try{sessionStorage.setItem('sa-picked','1')}catch(e){}pmClose();return}
+  const d=t.closest('[data-pdel]');if(d){d.hidden=true;$('#pdelConfirm').hidden=false;return}
+  if(t.closest('[data-pdelno]')){$('#pdelConfirm').hidden=true;$('[data-pdel]').hidden=false;return}
+  const dy=t.closest('[data-pdelyes]');if(dy){const id=dy.dataset.pdelyes;PF.list=PF.list.filter(p=>p.id!==id);lsDel(STORE+':'+id);
+    if(PF.active===id){switchProfile(PF.list[0].id)}else{saveProfiles();pmPicker()}}
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#profileModal').hidden)pmClose()});
+$('#pChip').onclick=pmPicker;
 
 /* ---------- Boot ---------- */
 $$('[data-bun]').forEach(el=>{el.innerHTML=el.dataset.bun==='daily'?bunnyHi():bunnyImg(el.dataset.bun)});
 renderHeader();
 go((location.hash||'').slice(1)||'home');
+let picked=false;try{picked=sessionStorage.getItem('sa-picked')==='1'}catch(e){}
+if(!PF.list.length)pmEdit(null);else if(PF.list.length>1&&!picked)pmPicker();
 })();
 </script>
