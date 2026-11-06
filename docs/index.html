@@ -647,6 +647,9 @@ h1 em,h2 em{font-style:italic;font-weight:500;color:var(--gold)}
 .jconfirm{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 12px;border-radius:14px;background:var(--bad-soft);font-size:.95rem}
 .jconfirm[hidden]{display:none!important}
 .jconfirm .btn{padding:9px 16px;font-size:.9rem;min-height:0}
+.hgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.hfact span:first-child{display:flex;align-items:baseline;gap:8px}
+.hnum{font:500 .72rem/1 var(--num);color:var(--muted);min-width:1.6em}
 </style>
 
 <header class="top">
@@ -664,6 +667,7 @@ h1 em,h2 em{font-style:italic;font-weight:500;color:var(--gold)}
     <button type="button" data-go="writing">Writing</button>
     <button type="button" data-go="social">Social Studies</button>
     <button type="button" data-go="daily">Daily 20</button>
+    <button type="button" data-go="hundred">Math 100</button>
     <button type="button" data-go="prep">Test Prep</button>
     <button type="button" data-go="grownups">Grown-ups</button>
   </nav>
@@ -731,6 +735,15 @@ h1 em,h2 em{font-style:italic;font-weight:500;color:var(--gold)}
       <p class="lede">Start the timer, then work from top to bottom. New questions and words every day.</p>
     </div>
     <div id="dailyStage" class="view"></div>
+  </section>
+
+  <!-- MATH 100 -->
+  <section id="view-hundred" class="view subject-math" hidden>
+    <div class="view-head">
+      <div class="vh-title"><span class="pip head-bun" data-bun="spring"></span><div><p class="eyebrow">100 questions</p><h1>Math 100</h1></div></div>
+      <p class="lede">25 each of plus, minus, times and divide, all mixed up. Press Enter to jump to the next box.</p>
+    </div>
+    <div id="hundredStage" class="view"></div>
   </section>
 
   <!-- MATH -->
@@ -903,7 +916,7 @@ const PRAISE=['Great job!','You got it!','Super thinking!','Correct!','Nailed it
 const STORE='star-academy-v1',OLD_STORE=['bel','la-academy-v1'].join('');
 let S=load();
 function load(){let s=null;try{s=JSON.parse(localStorage.getItem(STORE)||localStorage.getItem(OLD_STORE))}catch(e){}s=s||{};
-  return {name:s.name||'',stars:s.stars||0,wordGoal:s.wordGoal||50,days:s.days||{},journal:s.journal||[],draft:s.draft||null,readLog:s.readLog||{},sound:s.sound!==false,monsters:s.monsters||[],ssLog:s.ssLog||{},prepLog:s.prepLog||[],lightningBest:s.lightningBest||0}}
+  return {name:s.name||'',stars:s.stars||0,wordGoal:s.wordGoal||50,days:s.days||{},journal:s.journal||[],draft:s.draft||null,readLog:s.readLog||{},sound:s.sound!==false,monsters:s.monsters||[],ssLog:s.ssLog||{},prepLog:s.prepLog||[],lightningBest:s.lightningBest||0,hundredBest:s.hundredBest||null}}
 function save(){try{localStorage.setItem(STORE,JSON.stringify(S))}catch(e){}}
 function today(){const k=todayKey();return S.days[k]||(S.days[k]={})}
 function anyDone(d){return !!(d&&((d.math&&d.math.sets)||(d.reading&&d.reading.done)||(d.writing&&d.writing.done)||(d.social&&d.social.done)||(d.daily&&d.daily.done)))}
@@ -1189,17 +1202,18 @@ const GRAMMAR=[
 const SPELL=['because','friend','different','again','through','laugh','beautiful','enough','favorite','answer','early','caught','thought','believe','special','until','finally','probably','surprise','library','minute','quiet','piece','whole','heard','written','choose','neighbor','important','together','family','careful','people','question','finished','island','tomorrow','sometimes','straight','children','busy','city','either','field','great','guess','half','heart','hour','instead','knew','later','learn','money','morning','often','once','perhaps','pretty','ready','really','reason','second','several','should','since','sure','though','tired','toward','usually','weather','wrong','young','bridge','center','circle','clothes'];
 
 /* ---------- Router ---------- */
-const VIEWS=['home','daily','math','reading','writing','social','prep','grownups'];
+const VIEWS=['home','daily','hundred','math','reading','writing','social','prep','grownups'];
 let current='home';
 function go(v){
   if(!VIEWS.includes(v))v='home';
   if(current==='reading'&&v!=='reading'){stopSpeak();setReadLabel(false)}
   if(current==='math'&&v!=='math')stopArcade();
+  if(current==='hundred'&&v!=='hundred'&&HU.int&&!HU.checked){}
   if(current==='prep'&&v!=='prep'){stopPrep();PR.run=null}
   current=v;
   VIEWS.forEach(x=>{$('#view-'+x).hidden=x!==v});
   $$('.nav button').forEach(b=>b.setAttribute('aria-current',b.dataset.go===v?'page':'false'));
-  ({home:renderHome,math:renderMath,reading:renderReading,writing:renderWriting,social:renderSocial,daily:renderDaily,prep:renderPrep,grownups:renderGrownups})[v]();
+  ({home:renderHome,math:renderMath,reading:renderReading,writing:renderWriting,social:renderSocial,daily:renderDaily,hundred:renderHundred,prep:renderPrep,grownups:renderGrownups})[v]();
   try{history.replaceState(null,'','#'+v)}catch(e){}
   window.scrollTo(0,0);
 }
@@ -1733,6 +1747,55 @@ function dailyCheck(part,btn){
   save();
   const plan=$$('.dplan li'),idx={facts:0,math:1,words:2}[part],tot={facts:20,math:12,words:8}[part];
   if(plan[idx]){plan[idx].classList.add('done');$('.ck',plan[idx]).innerHTML=DCHECK;plan[idx].lastElementChild.insertAdjacentHTML('beforeend',` · ${score}/${tot}`)}
+}
+
+/* ---------- Math 100 ---------- */
+const HU={qs:null,start:0,end:0,int:null,checked:false};
+function hundredSet(){
+  const mk={
+    '+':()=>{const a=ri(5,89),b=ri(2,Math.min(60,99-a));return {q:`${a} + ${b}`,a:a+b}},
+    '−':()=>{const a=ri(20,99),b=ri(2,a-1);return {q:`${a} − ${b}`,a:a-b}},
+    '×':()=>{const a=ri(0,10),b=ri(1,10);return {q:`${a} × ${b}`,a:a*b}},
+    '÷':()=>{const b=ri(1,10),c=ri(0,10);return {q:`${b*c} ÷ ${b}`,a:c}}};
+  HU.qs=shuffle(['+','−','×','÷'].flatMap(op=>Array.from({length:25},()=>({op,...mk[op]()}))));
+  HU.start=0;HU.end=0;HU.checked=false;clearInterval(HU.int);HU.int=null;
+}
+const fmtTime=ms=>{const t=Math.floor(ms/1000);return Math.floor(t/60)+':'+pad(t%60)};
+function hundredPaint(){const el=$('#huTime');if(!el)return;el.textContent=fmtTime(HU.start?(HU.end||Date.now())-HU.start:0);
+  const n=$$('#hundredStage .fin').filter(i=>i.value!=='').length,c=$('#huCount');if(c)c.textContent=n}
+function renderHundred(){
+  if(!HU.qs)hundredSet();const best=S.hundredBest;
+  $('#hundredStage').innerHTML=`
+  <section class="panel dtimer">
+    <div style="display:grid;gap:6px"><span class="eyebrow">Stopwatch</span><span class="dtime" id="huTime">0:00</span></div>
+    <div style="display:grid;gap:6px"><span class="eyebrow">Answered</span><span class="dtime"><span id="huCount">0</span><small style="font-size:1.4rem;color:var(--muted)">/100</small></span></div>
+    <div style="display:grid;gap:6px;flex:1;min-width:200px"><span class="eyebrow">My best</span><span>${best?`<b>${best.score}/100</b> in ${fmtTime(best.time)}`:'No record yet. This is your first try!'}</span>
+      <span class="note">The stopwatch starts when you type your first answer.</span></div>
+    <button class="btn ghost" type="button" id="huNew">New 100</button>
+  </section>
+  <section class="panel">
+    <div class="hgrid">${HU.qs.map((f,i)=>`<label class="fact hfact" for="hu${i}"><span><small class="hnum">${i+1}</small>${f.q} =</span><input id="hu${i}" class="fin" inputmode="numeric" pattern="[0-9]*" enterkeyhint="next" autocomplete="off" maxlength="3" aria-label="Question ${i+1}: ${f.q}"><span class="fans" hidden></span></label>`).join('')}</div>
+    <div class="dcheck"><button class="btn big" type="button" id="huCheck">Check all 100</button><p class="feedback" id="huFb" aria-live="polite"></p></div>
+  </section>`;
+  hundredPaint();
+  $('#huNew').onclick=()=>{hundredSet();renderHundred();window.scrollTo(0,0)};
+  $('#huCheck').onclick=hundredCheck;
+}
+$('#hundredStage').addEventListener('input',e=>{const t=e.target;if(!t.matches('.fin'))return;t.value=t.value.replace(/\D/g,'');
+  if(!HU.start&&t.value!==''&&!HU.checked){HU.start=Date.now();HU.int=setInterval(hundredPaint,500)}hundredPaint()});
+$('#hundredStage').addEventListener('keydown',e=>{if(e.key!=='Enter'||!e.target.matches('.fin'))return;e.preventDefault();
+  const i=+e.target.id.slice(2),n=$('#hu'+(i+1));if(n)n.focus();else $('#huCheck').focus()});
+function hundredCheck(){
+  if(HU.checked)return;HU.checked=true;HU.end=HU.start?Date.now():0;clearInterval(HU.int);
+  let score=0;const byOp={'+':0,'−':0,'×':0,'÷':0};
+  HU.qs.forEach((f,i)=>{const inp=$('#hu'+i),ok=inp.value!==''&&+inp.value===f.a,box=inp.closest('.fact');if(ok){score++;byOp[f.op]++}
+    box.classList.add(ok?'right':'wrong');inp.readOnly=true;if(!ok){const a=$('.fans',box);a.hidden=false;a.textContent=f.a}});
+  const time=HU.end?HU.end-HU.start:0,best=S.hundredBest,rec=!best||score>best.score||(score===best.score&&time&&time<best.time);
+  if(rec&&score>0)S.hundredBest={score,time};const st=Math.floor(score/10);if(st)addStars(st,'Math 100 stars!');save();hundredPaint();
+  const fb=$('#huFb');fb.className='feedback '+(score>=80?'good':'try');
+  fb.innerHTML=`${score} of 100 correct${time?` in ${fmtTime(time)}`:''}. ${rec&&score>0?'New personal best!':score>=90?'Amazing!':score>=70?'Great work!':'Practice the red ones and try again!'}<br><span class="note">Plus ${byOp['+']}/25 · Minus ${byOp['−']}/25 · Times ${byOp['×']}/25 · Divide ${byOp['÷']}/25</span>`;
+  const b=$('#huCheck');b.textContent='Try a new 100';b.onclick=()=>{hundredSet();renderHundred();window.scrollTo(0,0)};
+  SFX.win();if(score>=90||rec&&score>0)confetti();fb.scrollIntoView({behavior:reduceMotion?'auto':'smooth',block:'center'});
 }
 
 /* ---------- Writing ---------- */
@@ -2490,7 +2553,7 @@ function renderGrownups(){
 $('#settingsForm').addEventListener('submit',e=>{e.preventDefault();S.name=$('#setName').value.trim();S.wordGoal=+$('#setGoal').value||50;save();renderHeader();$('#setMsg').textContent='Settings saved.'});
 $('#resetBtn').onclick=()=>{$('#resetConfirm').hidden=false;$('#resetBtn').hidden=true};
 $('#resetNo').onclick=()=>{$('#resetConfirm').hidden=true;$('#resetBtn').hidden=false};
-$('#resetYes').onclick=()=>{const name=S.name,goal=S.wordGoal;S={name,stars:0,wordGoal:goal,days:{},journal:[],draft:null,readLog:{},sound:S.sound,monsters:[],lightningBest:0,ssLog:{},prepLog:[]};save();renderHeader();renderGrownups();$('#setMsg').textContent='Progress has been reset.'};
+$('#resetYes').onclick=()=>{const name=S.name,goal=S.wordGoal;S={name,stars:0,wordGoal:goal,days:{},journal:[],draft:null,readLog:{},sound:S.sound,monsters:[],lightningBest:0,ssLog:{},prepLog:[],hundredBest:null};save();renderHeader();renderGrownups();$('#setMsg').textContent='Progress has been reset.'};
 
 /* ---------- Boot ---------- */
 $$('[data-bun]').forEach(el=>{el.innerHTML=el.dataset.bun==='daily'?bunnyHi():bunnyImg(el.dataset.bun)});
